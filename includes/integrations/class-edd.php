@@ -78,7 +78,8 @@ class Affiliate_WP_EDD extends Affiliate_WP_Base {
 				$amount = affwp_currency_filter( affwp_format_amount( $referral_total ) );
 				$name   = affiliate_wp()->affiliates->get_affiliate_name( $this->affiliate_id );
 
-				edd_insert_payment_note( $payment_id, sprintf( __( 'Referral #%d for %s recorded for %s', 'affiliate-wp' ), $referral_id, $amount, $name ) );
+				$message = apply_filters( 'affwp_' . $this->context . '_insert_payment_note', sprintf( __( 'Referral #%d for %s recorded for %s', 'affiliate-wp' ), $referral_id, $amount, $name ), $referral_id, $amount, $name, $payment_id );
+				edd_insert_payment_note( $payment_id, $message );
 			}
 		}
 
