@@ -73,6 +73,9 @@ class Affiliate_WP_Referrals_DB extends Affiliate_WP_DB  {
 
 		$args = wp_parse_args( $data, $defaults );
 
+		// allow filters of the args, right before the referral gets added to the DB
+		$args = apply_filters( 'affwp_add_referral_args', $args );
+
 		if( empty( $args['affiliate_id'] ) ) {
 			return false;
 		}
