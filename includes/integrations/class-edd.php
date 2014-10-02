@@ -106,17 +106,17 @@ class Affiliate_WP_EDD extends Affiliate_WP_Base {
 			foreach( $discounts as $code ) {
 
 				$discount_id  = edd_get_discount_id_by_code( $code );
-				$affiliate_id = get_post_meta( $discount_id, 'affwp_discount_affiliate', true );
+				$affiliate_id = apply_filters( 'affwp_discount_affiliate', get_post_meta( $discount_id, 'affwp_discount_affiliate', true ), $payment_id, $discount_id );
 
 				if( ! $affiliate_id ) {
 					continue;
 				}
 
 				$existing = affiliate_wp()->referrals->get_by( 'reference', $payment_id, $this->context );
-
+					
 				if( ! empty( $existing->referral_id ) ) {
-
-					// If a referral was already recored, overwrite it with the affiliate from the coupon
+					
+					// If a referral was already recorded, overwrite it with the affiliate from the coupon
 					affiliate_wp()->referrals->update( $existing->referral_id, array( 'affiliate_id' => $affiliate_id, 'status' => 'unpaid' ) );
 
 				} else {
@@ -150,6 +150,7 @@ class Affiliate_WP_EDD extends Affiliate_WP_Base {
 						'context'      => $this->context
 					) );
 
+				
 					affwp_set_referral_status( $referral_id, 'unpaid' );
 
 					$referral_total = affwp_currency_filter( affwp_format_amount( $referral_total ) );
