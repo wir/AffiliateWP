@@ -13,7 +13,7 @@ class Affiliate_WP_EDD extends Affiliate_WP_Base {
 		$this->context = 'edd';
 
 		add_action( 'edd_insert_payment', array( $this, 'add_pending_referral' ), 10, 2 );
-		add_action( 'edd_complete_purchase', array( $this, 'track_discount_referral' ), 10 );
+		add_action( 'edd_complete_purchase', array( $this, 'track_discount_referral' ), 9 );
 		add_action( 'edd_complete_purchase', array( $this, 'mark_referral_complete' ) );
 		add_action( 'edd_update_payment_status', array( $this, 'revoke_referral_on_refund' ), 10, 3 );
 		add_action( 'edd_payment_delete', array( $this, 'revoke_referral_on_delete' ), 10 );
@@ -78,8 +78,7 @@ class Affiliate_WP_EDD extends Affiliate_WP_Base {
 				$amount = affwp_currency_filter( affwp_format_amount( $referral_total ) );
 				$name   = affiliate_wp()->affiliates->get_affiliate_name( $this->affiliate_id );
 
-				$message = apply_filters( 'affwp_' . $this->context . '_insert_payment_note', sprintf( __( 'Referral #%d for %s recorded for %s', 'affiliate-wp' ), $referral_id, $amount, $name ), $referral_id, $amount, $name, $payment_id );
-				edd_insert_payment_note( $payment_id, $message );
+				edd_insert_payment_note( $payment_id, sprintf( __( 'Referral #%d for %s recorded for %s', 'affiliate-wp' ), $referral_id, $amount, $name ) );
 			}
 		}
 
@@ -106,18 +105,20 @@ class Affiliate_WP_EDD extends Affiliate_WP_Base {
 			foreach( $discounts as $code ) {
 
 				$discount_id  = edd_get_discount_id_by_code( $code );
-				$affiliate_id = apply_filters( 'affwp_discount_affiliate', get_post_meta( $discount_id, 'affwp_discount_affiliate', true ), $payment_id, $discount_id );
+				$affiliate_id = get_post_meta( $discount_id, 'affwp_discount_affiliate', true );
 
 				if( ! $affiliate_id ) {
 					continue;
 				}
 
+				$this->affiliate_id = $affiliate_id;
+
 				$existing = affiliate_wp()->referrals->get_by( 'reference', $payment_id, $this->context );
-					
+
 				if( ! empty( $existing->referral_id ) ) {
-					
-					// If a referral was already recorded, overwrite it with the affiliate from the coupon
-					affiliate_wp()->referrals->update( $existing->referral_id, array( 'affiliate_id' => $affiliate_id, 'status' => 'unpaid' ) );
+
+					// If a referral was already recored, overwrite it with the affiliate from the coupon
+					affiliate_wp()->referrals->update( $existing->referral_id, array( 'affiliate_id' => $this->affiliate_id, 'status' => 'unpaid' ) );
 
 				} else {
 
@@ -146,12 +147,9 @@ class Affiliate_WP_EDD extends Affiliate_WP_Base {
 						'amount'       => $referral_total,
 						'reference'    => $payment_id,
 						'description'  => $this->get_referral_description( $payment_id ),
-						'affiliate_id' => $affiliate_id,
+						'affiliate_id' => $this->affiliate_id,
 						'context'      => $this->context
 					) );
-
-				
-					affwp_set_referral_status( $referral_id, 'unpaid' );
 
 					$referral_total = affwp_currency_filter( affwp_format_amount( $referral_total ) );
 					$name           = affiliate_wp()->affiliates->get_affiliate_name( $affiliate_id );
