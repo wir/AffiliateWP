@@ -79,6 +79,9 @@ abstract class Affiliate_WP_Base {
 
 		$visit_id = affiliate_wp()->tracking->get_visit_id();
 
+		// allow the affiliate ID to be filtered before referral amounts are calculated
+		$this->affiliate_id = apply_filters( 'affwp_pending_referral_affiliate_id', $this->affiliate_id, $reference );
+
 		$args = apply_filters( 'affwp_insert_pending_referral', array(
 			'amount'       => $amount,
 			'reference'    => $reference,
@@ -227,7 +230,7 @@ abstract class Affiliate_WP_Base {
 	public function get_product_rate( $product_id = 0, $affiliate_id = 0 ) {
 
 		$rate = get_post_meta( $product_id, '_affwp_' . $this->context . '_product_rate', true );
-		if( empty( $rate ) ) {
+		if ( empty( $rate ) ) {
 
 			$rate = affwp_get_affiliate_rate( $affiliate_id );
 
