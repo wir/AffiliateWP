@@ -79,9 +79,6 @@ abstract class Affiliate_WP_Base {
 
 		$visit_id = affiliate_wp()->tracking->get_visit_id();
 
-		// allow the affiliate ID to be filtered before referral amounts are calculated
-		$this->affiliate_id = apply_filters( 'affwp_pending_referral_affiliate_id', $this->affiliate_id, $reference );
-
 		$args = apply_filters( 'affwp_insert_pending_referral', array(
 			'amount'       => $amount,
 			'reference'    => $reference,
@@ -165,7 +162,6 @@ abstract class Affiliate_WP_Base {
 		}
 
 		return false;
-
 	}
 
 	/**
@@ -186,14 +182,19 @@ abstract class Affiliate_WP_Base {
 	 * @since   1.2
 	 * @return  array
 	 */
-	public function calculate_referral_amount( $base_amount = '', $reference = '', $product_id = 0 ) {
+	public function calculate_referral_amount( $base_amount = '', $reference = '', $product_id = 0, $affiliate_id = 0 ) {
+
+		// If not affiliate ID is passed in, retrieve the affiliate ID from the tracking cookie
+		if ( ! $affiliate_id ) {
+			$affiliate_id = $this->affiliate_id;
+		}
 
 		$rate = '';
 
 		if( ! empty( $product_id ) ) {
 
-			$rate = $this->get_product_rate( $product_id );
-			$type = affwp_get_affiliate_rate_type( $this->affiliate_id );
+			$rate = $this->get_product_rate( $product_id, $affiliate_id );
+			$type = affwp_get_affiliate_rate_type( $affiliate_id );
 
 			if ( 'percentage' == $type ) {
 
@@ -208,8 +209,8 @@ abstract class Affiliate_WP_Base {
 
 		}
 
-		$amount = affwp_calc_referral_amount( $base_amount, $this->affiliate_id, $reference, $rate, $product_id );
-	
+		$amount = affwp_calc_referral_amount( $base_amount, $affiliate_id, $reference, $rate, $product_id );
+		
 		return $amount;
 
 	}
@@ -221,13 +222,12 @@ abstract class Affiliate_WP_Base {
 	 * @since   1.2
 	 * @return  float
 	*/
-	public function get_product_rate( $product_id = 0 ) {
+	public function get_product_rate( $product_id = 0, $affiliate_id = 0 ) {
 
 		$rate = get_post_meta( $product_id, '_affwp_' . $this->context . '_product_rate', true );
+		
 		if ( empty( $rate ) ) {
-
-			$rate = affwp_get_affiliate_rate( $this->affiliate_id );
-
+			$rate = affwp_get_affiliate_rate( $affiliate_id );
 		}
 
 		return (float) $rate;
