@@ -17,15 +17,18 @@ class Affiliate_WP_Exchange extends Affiliate_WP_Base {
 
 	public function add_pending_referral( $transaction_id = 0 ) {
 
-		if( $this->was_referred() ) {
+		if ( $this->was_referred() ) {
 
 			$transaction = get_post_meta( $transaction_id, '_it_exchange_cart_object', true );
 
-			if( $this->get_affiliate_email() === $transaction->shipping_address['email'] ) {
+			if ( $this->get_affiliate_email() === $transaction->shipping_address['email'] ) {
 				return; // Customers cannot refer themselves
 			}
 
-			$referral_total = $this->calculate_referral_amount( $transaction->total, $transaction_id );
+			// allow the affiliate ID to be filtered before referral amounts are calculated
+			$this->affiliate_id = apply_filters( 'affwp_pending_referral_affiliate_id', $this->affiliate_id, $transaction_id );
+
+			$referral_total = $this->calculate_referral_amount( $transaction->total, $transaction_id, '', $this->affiliate_id );
 
 			$this->insert_pending_referral( $referral_total, $transaction_id, $transaction->description );
 	
@@ -48,11 +51,11 @@ class Affiliate_WP_Exchange extends Affiliate_WP_Base {
 
 	public function revoke_referral_on_refund( $transaction, $old_status, $old_status_cleared ) {
 	
-		if( ! affiliate_wp()->settings->get( 'revoke_on_refund' ) ) {
+		if ( ! affiliate_wp()->settings->get( 'revoke_on_refund' ) ) {
 			return;
 		}
 
-		if( 'refunded' == $transaction->get_status() && 'paid' == $old_status ) {
+		if ( 'refunded' == $transaction->get_status() && 'paid' == $old_status ) {
 
 			$this->reject_referral( $transaction->ID );
 
@@ -62,11 +65,11 @@ class Affiliate_WP_Exchange extends Affiliate_WP_Base {
 
 	public function revoke_referral_on_void( $transaction, $old_status, $old_status_cleared ) {
 	
-		if( ! affiliate_wp()->settings->get( 'revoke_on_refund' ) ) {
+		if ( ! affiliate_wp()->settings->get( 'revoke_on_refund' ) ) {
 			return;
 		}
 
-		if( 'voided' == $transaction->get_status() ) {
+		if ( 'voided' == $transaction->get_status() ) {
 
 			$this->reject_referral( $transaction->ID );
 
@@ -76,17 +79,17 @@ class Affiliate_WP_Exchange extends Affiliate_WP_Base {
 
 	public function revoke_referral_on_delete( $transaction_id = 0 ) {
 
-		if( ! affiliate_wp()->settings->get( 'revoke_on_refund' ) ) {
+		if ( ! affiliate_wp()->settings->get( 'revoke_on_refund' ) ) {
 			return;
 		}
 
 		$post = get_post( $transaction_id );
 
-		if( ! $post ) {
+		if ( ! $post ) {
 			return;
 		}
 
-		if( 'it_exchange_tran' != $post->post_type ) {
+		if ( 'it_exchange_tran' != $post->post_type ) {
 			return;
 		}
 
@@ -96,7 +99,7 @@ class Affiliate_WP_Exchange extends Affiliate_WP_Base {
 
 	public function reference_link( $reference = 0, $referral ) {
 
-		if( empty( $referral->context ) || 'it-exchange' != $referral->context ) {
+		if ( empty( $referral->context ) || 'it-exchange' != $referral->context ) {
 
 			return $reference;
 
