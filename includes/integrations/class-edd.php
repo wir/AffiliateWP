@@ -56,7 +56,7 @@ class Affiliate_WP_EDD extends Affiliate_WP_Base {
 			}
 
 			// get referral total
-			$referral_total = $this->get_referral_total( $payment_id, $this->affiliate_id );
+			$referral_total = $this->get_referral_total( $payment_id );
 
 			// insert a pending referral
 			$referral_id = $this->insert_pending_referral( $referral_total, $payment_id, $this->get_referral_description( $payment_id ) );
@@ -96,7 +96,7 @@ class Affiliate_WP_EDD extends Affiliate_WP_Base {
 				$existing = affiliate_wp()->referrals->get_by( 'reference', $payment_id, $this->context );
 
 				// calculate the referral total
-				$referral_total = $this->get_referral_total( $payment_id, $this->affiliate_id );
+				$referral_total = $this->get_referral_total( $payment_id );
 
 				// referral already exists, update it
 				if ( ! empty( $existing->referral_id ) ) {
@@ -132,7 +132,7 @@ class Affiliate_WP_EDD extends Affiliate_WP_Base {
 	 * @access  public
 	 * @since   1.3
 	*/
-	public function get_referral_total( $payment_id = 0, $affiliate_id = 0 ) {
+	public function get_referral_total( $payment_id = 0 ) {
 
 		$downloads = edd_get_payment_meta_cart_details( $payment_id );
 
@@ -142,11 +142,11 @@ class Affiliate_WP_EDD extends Affiliate_WP_Base {
 			$referral_total = 0.00;
 
 			foreach ( $downloads as $download ) {
-				$referral_total += $this->calculate_referral_amount( $download['price'], $payment_id, $download['id'], $affiliate_id );
+				$referral_total += $this->calculate_referral_amount( $download['price'], $payment_id, $download['id'] );
 			}
 
 		} else {
-			$referral_total = $this->calculate_referral_amount( edd_get_payment_subtotal( $payment_id ), $payment_id, '', $affiliate_id );
+			$referral_total = $this->calculate_referral_amount( edd_get_payment_subtotal( $payment_id ), $payment_id );
 		}
 
 		return $referral_total;
