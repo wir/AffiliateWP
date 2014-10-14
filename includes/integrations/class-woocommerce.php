@@ -55,13 +55,17 @@ class Affiliate_WP_WooCommerce extends Affiliate_WP_Base {
 		// Check if an affiliate coupon was used
 		$affiliate_id = $this->get_coupon_affiliate_id();
 
-		if( $this->was_referred() || $affiliate_id ) {
+		if ( $this->was_referred() || $affiliate_id ) {
 
-			if( false !== $affiliate_id ) {
+			// set affiliate ID to the affiliate linked to the coupon
+			if ( false !== $affiliate_id ) {
 				$this->affiliate_id = $affiliate_id;
+			} else {
+				// allow the affiliate ID to be filtered before referral amounts are calculated
+				$this->affiliate_id = apply_filters( 'affwp_pending_referral_affiliate_id', $this->affiliate_id, $order_id );
 			}
 
-			if( affwp_get_affiliate_email( $this->affiliate_id ) == $this->order->billing_email ) {
+			if ( affwp_get_affiliate_email( $this->affiliate_id ) == $this->order->billing_email ) {
 				return; // Customers cannot refer themselves
 			}
 
@@ -69,7 +73,7 @@ class Affiliate_WP_WooCommerce extends Affiliate_WP_Base {
 
 			$items = $this->order->get_items();
 
-			if( is_array( $items ) ) {
+			if ( is_array( $items ) ) {
 
 				// Calculate the referral amount based on product prices
 				$amount = 0.00;
@@ -79,7 +83,7 @@ class Affiliate_WP_WooCommerce extends Affiliate_WP_Base {
 					
 					$discount = 0;
 	
-					if( $cart_discount > 0 ) {
+					if ( $cart_discount > 0 ) {
 
 						$discount = $cart_discount / count( $items );
 	
@@ -87,18 +91,18 @@ class Affiliate_WP_WooCommerce extends Affiliate_WP_Base {
 
 					$product_total = $product['line_total'] - $discount;
 					
-					$amount += $this->calculate_referral_amount( $product_total, $order_id, $product['product_id'] );
+					$amount += $this->calculate_referral_amount( $product_total, $order_id, $product['product_id'], $this->affiliate_id );
 
 				}
 
 			} else {
 
 				$total  = $this->order->get_total() - $cart_discount;
-				$amount = $this->calculate_referral_amount( $this->order->get_total(), $order_id );
+				$amount = $this->calculate_referral_amount( $this->order->get_total(), $order_id, '', $this->affiliate_id );
 
 			}
 			
-			if( 0 == $amount && affiliate_wp()->settings->get( 'ignore_zero_referrals' ) ) {
+			if ( 0 == $amount && affiliate_wp()->settings->get( 'ignore_zero_referrals' ) ) {
 				return false; // Ignore a zero amount referral
 			}
 
@@ -114,7 +118,7 @@ class Affiliate_WP_WooCommerce extends Affiliate_WP_Base {
 				'context'      => $this->context
 			), $amount, $order_id, $description, $this->affiliate_id, $visit_id, array(), $this->context ) );
 
-			if( $referral_id ) {
+			if ( $referral_id ) {
 
 				$amount = affwp_currency_filter( affwp_format_amount( $amount ) );
 				$name   = affiliate_wp()->affiliates->get_affiliate_name( $this->affiliate_id );
@@ -147,7 +151,7 @@ class Affiliate_WP_WooCommerce extends Affiliate_WP_Base {
 	*/
 	public function revoke_referral_on_refund( $order_id = 0 ) {
 
-		if( ! affiliate_wp()->settings->get( 'revoke_on_refund' ) ) {
+		if ( ! affiliate_wp()->settings->get( 'revoke_on_refund' ) ) {
 			return;
 		}
 
@@ -163,7 +167,7 @@ class Affiliate_WP_WooCommerce extends Affiliate_WP_Base {
 	*/
 	public function reference_link( $reference = 0, $referral ) {
 
-		if( empty( $referral->context ) || 'woocommerce' != $referral->context ) {
+		if ( empty( $referral->context ) || 'woocommerce' != $referral->context ) {
 
 			return $reference;
 
@@ -213,13 +217,13 @@ class Affiliate_WP_WooCommerce extends Affiliate_WP_Base {
 	*/
 	public function store_discount_affiliate( $coupon_id = 0 ) {
 
-		if( empty( $_POST['user_id'] ) && empty( $_POST['user_name'] ) ) {
+		if ( empty( $_POST['user_id'] ) && empty( $_POST['user_name'] ) ) {
 			return;
 		}
 
-		if( empty( $_POST['user_id'] ) ) {
+		if ( empty( $_POST['user_id'] ) ) {
 			$user = get_user_by( 'login', $_POST['user_name'] );
-			if( $user ) {
+			if ( $user ) {
 				$user_id = $user->ID;
 			}
 		} else {
@@ -241,7 +245,7 @@ class Affiliate_WP_WooCommerce extends Affiliate_WP_Base {
 		
 		$coupons = $this->order->get_used_coupons();
 
-		if( empty( $coupons ) ) {
+		if ( empty( $coupons ) ) {
 			return false;
 		}
 
@@ -250,7 +254,7 @@ class Affiliate_WP_WooCommerce extends Affiliate_WP_Base {
 			$coupon       = new WC_Coupon( $code );
 			$affiliate_id = get_post_meta( $coupon->id, 'affwp_discount_affiliate', true );
 
-			if( $affiliate_id ) {
+			if ( $affiliate_id ) {
 
 				return $affiliate_id;
 			
@@ -273,7 +277,7 @@ class Affiliate_WP_WooCommerce extends Affiliate_WP_Base {
 		$items       = $this->order->get_items();
 		foreach( $items as $key => $item ) {
 			$description .= $item['name'];
-			if( $key + 1 < count( $items ) ) {
+			if ( $key + 1 < count( $items ) ) {
 				$description .= ', ';
 			}
 		}
@@ -292,7 +296,7 @@ class Affiliate_WP_WooCommerce extends Affiliate_WP_Base {
 
 		global $post;
 
-		if( isset( $post->ID ) ) {
+		if ( isset( $post->ID ) ) {
 
 			$rate = $this->get_product_rate( $post->ID );
 		
@@ -326,7 +330,7 @@ class Affiliate_WP_WooCommerce extends Affiliate_WP_Base {
 
 		$post = get_post( $post_id );
 
-		if( ! $post ) {
+		if ( ! $post ) {
 			return $post_id;
 		}
 
@@ -340,7 +344,7 @@ class Affiliate_WP_WooCommerce extends Affiliate_WP_Base {
 			return $post_id;
 		}
 
-		if( ! empty( $_POST['_affwp_' . $this->context . '_product_rate'] ) ) {
+		if ( ! empty( $_POST['_affwp_' . $this->context . '_product_rate'] ) ) {
 
 			$rate = sanitize_text_field( $_POST['_affwp_' . $this->context . '_product_rate'] );
 			update_post_meta( $post_id, '_affwp_' . $this->context . '_product_rate', $rate );
