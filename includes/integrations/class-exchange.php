@@ -26,7 +26,7 @@ class Affiliate_WP_Exchange extends Affiliate_WP_Base {
 			}
 
 			// allow the affiliate ID to be filtered before referral amounts are calculated
-			$this->affiliate_id = apply_filters( 'affwp_pending_referral_affiliate_id', $this->affiliate_id, $transaction_id );
+			$this->affiliate_id = apply_filters( 'affwp_pending_referral_affiliate_id', $this->affiliate_id, $transaction_id, $this->context );
 
 			$referral_total = $this->calculate_referral_amount( $transaction->total, $transaction_id, '', $this->affiliate_id );
 

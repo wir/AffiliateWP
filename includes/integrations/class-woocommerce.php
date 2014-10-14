@@ -62,7 +62,7 @@ class Affiliate_WP_WooCommerce extends Affiliate_WP_Base {
 				$this->affiliate_id = $affiliate_id;
 			} else {
 				// allow the affiliate ID to be filtered before referral amounts are calculated
-				$this->affiliate_id = apply_filters( 'affwp_pending_referral_affiliate_id', $this->affiliate_id, $order_id );
+				$this->affiliate_id = apply_filters( 'affwp_pending_referral_affiliate_id', $this->affiliate_id, $order_id, $this->context );
 			}
 
 			if ( affwp_get_affiliate_email( $this->affiliate_id ) == $this->order->billing_email ) {

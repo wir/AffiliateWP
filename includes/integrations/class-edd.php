@@ -56,7 +56,7 @@ class Affiliate_WP_EDD extends Affiliate_WP_Base {
 			}
 
 			// allow the affiliate ID to be filtered before referral amounts are calculated
-			$this->affiliate_id = apply_filters( 'affwp_pending_referral_affiliate_id', $this->affiliate_id, $payment_id );
+			$this->affiliate_id = apply_filters( 'affwp_pending_referral_affiliate_id', $this->affiliate_id, $payment_id, $this->context );
 
 			// get referral total
 			$referral_total = $this->get_referral_total( $payment_id, $this->affiliate_id );
