@@ -3,12 +3,12 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.5.6\n"
+"X-Generator: Poedit 1.6.5\n"
 "Project-Id-Version: AffiliateWP\n"
 "Language: de\n"
 "POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
-"Last-Translator: Rene Hermenau <admin@x-simulator.de>\n"
+"Last-Translator: Andrew Munro, Sumobi <andrew@sumobi.com>\n"
 "Language-Team: \n"
 
 #: affiliate-wp.php:115 affiliate-wp.php:127
@@ -375,7 +375,7 @@ msgstr "Partner erfolgreich aktualisiert"
 
 #: includes/admin/class-notices.php:38
 msgid "<a href=\"%s\">Back to Affiliates</a>"
-msgstr "<a href=\"%s\"> Zurück zu Affiliates </ a>"
+msgstr "<a href=\"%s\"> Zurück zu Affiliates </a>"
 
 #: includes/admin/class-notices.php:44
 msgid "Affiliate update failed, please try again"
@@ -774,7 +774,7 @@ msgid ""
 "The Affiliate Area, shown on any page containing the <em>[affiliate_area]</"
 "em> short code, gives your affiliates access to their performance reports."
 msgstr ""
-"Der Affiliate Bereich kann auf jeder Seite mit dem <em> [affiliate_area] </ "
+"Der Affiliate Bereich kann auf jeder Seite mit dem <em> [affiliate_area] </"
 "em> Shortcode angezeigtwerden und gibt Ihrem Partner den Zugriff auf dessen "
 "Leistungsberichte."
 
@@ -846,7 +846,7 @@ msgid ""
 msgstr ""
 "Wir tun unser Bestes, um Ihnen den besten Support bieten können. Wenn Sie "
 "auf ein Problem stoßen oder eine Frage haben, besuchen Sie unseren <a href="
-"\"http://affiliatewp.com/support\"> Support </ a>, um ein Ticket zu öffnen."
+"\"http://affiliatewp.com/support\"> Support </a>, um ein Ticket zu öffnen."
 
 #: includes/admin/class-welcome.php:335
 msgid "Thank you for updating to the latest version!"
@@ -879,7 +879,7 @@ msgstr ""
 "Verwenden Sie diese Anzeige um ein neuen Affiliate-Partner zu registrieren. "
 "Jeder Affiliate wird direkt an ein Benutzerkonto gebunden. Wenn das "
 "Benutzerkonto für den Partner noch nicht existiert, <a href=\"%s\" target="
-"\"_blank\"> erstellen Sie einen</ a>."
+"\"_blank\"> erstellen Sie einen</a>."
 
 #: includes/admin/affiliates/new.php:16
 msgid "User"
@@ -1249,7 +1249,7 @@ msgid ""
 "install. If you have already collected affiliate or referral data, do not "
 "use this tool."
 msgstr ""
-"<strong> HINWEIS: </ strong> Dieses Tool sollte immer nur auf einer frischen "
+"<strong> HINWEIS: </strong> Dieses Tool sollte immer nur auf einer frischen "
 "Installation verwendet werden. Wenn Sie bereits Affiliate-Partner oder "
 "Verkäufe haben, verwenden Sie nicht dieses Tool."
 
@@ -1408,7 +1408,7 @@ msgid ""
 msgstr ""
 "Bitte geben Sie Ihren Lizenzschlüssel ein. Ein aktiver Lizenzschlüssel wird "
 "für automatische Plugin-Updates und <a href=\"%s\" target=\"_blank\"> "
-"Support </ a> benötigt."
+"Support </a> benötigt."
 
 #: includes/admin/settings/class-settings.php:182
 msgid "Pages"
@@ -1440,7 +1440,7 @@ msgstr "Affiliate Variable"
 #: includes/admin/settings/class-settings.php:205
 msgid "The URL variable for referral URLs. For example: <strong>%s</strong>."
 msgstr ""
-"Die URL-Variable für Affiliate-URLs. Zum Beispiel: <strong>% s </ strong>."
+"Die URL-Variable für Affiliate-URLs. Zum Beispiel: <strong>% s </strong>."
 
 #: includes/admin/settings/class-settings.php:211
 msgid "Should referrals be based on a percentage or flat rate amounts?"
@@ -1526,9 +1526,9 @@ msgid ""
 "\">documentation</a> for help using this."
 msgstr ""
 "Wählen Sie Integrationen zum aktivieren. Wenn Sie diese nicht nutzen, können "
-"Sie den Shortcode <strong> [affiliate_conversion_script] </ strong> "
+"Sie den Shortcode <strong> [affiliate_conversion_script] </strong> "
 "verwenden, um Verkäufe zu tracken und Provisionsauzahlungen zu generieren. "
-"In der <a href=\"%s\" target=\"_blank\"> Dokumentation </ a> finden Sie "
+"In der <a href=\"%s\" target=\"_blank\"> Dokumentation </a> finden Sie "
 "weitere Hilfe."
 
 #: includes/admin/settings/class-settings.php:280
@@ -1653,7 +1653,7 @@ msgstr "Lizenz aktivieren"
 msgid ""
 "The callback function used for the <strong>%s</strong> setting is missing."
 msgstr ""
-"Die Callback-Funktion, die für <strong>% s </ strong> verwendet wird fehlt."
+"Die Callback-Funktion, die für <strong>% s </strong> verwendet wird fehlt."
 
 #: includes/admin/settings/display-settings.php:73
 msgid "General"
@@ -1729,9 +1729,9 @@ msgid ""
 "\">Tools &rarr; Export</a> page."
 msgstr ""
 "Dies wird alle nicht ausbezahkten Verkäufe in diesem Zeitraum als bezahlt "
-"markieren. Um Überweisungen mit einem anderen als <em> nicht ausbezhalt </ "
+"markieren. Um Überweisungen mit einem anderen als <em> nicht ausbezhalt </"
 "em>-Status zu exportieren, gehen Sie zu der <a href=\"%s\">Tools &rarr; "
-"Export </ a>-Seite."
+"Export </a>-Seite."
 
 #: includes/admin/referrals/referrals.php:228
 #: includes/admin/referrals/new.php:46
@@ -1820,13 +1820,13 @@ msgstr "Für weitere Informationen:"
 #: includes/admin/referrals/contextual-help.php:30
 msgid "Visit the <a href=\"%s\">documentation</a> on the AffiliateWP website."
 msgstr ""
-"Besuchen Sie die <a href=\"%s\"> Dokumentation </ a> auf der AffiliateWP "
+"Besuchen Sie die <a href=\"%s\"> Dokumentation </a> auf der AffiliateWP "
 "Website."
 
 #: includes/admin/referrals/contextual-help.php:31
 msgid "<a href=\"%s\">Post an issue</a> on <a href=\"%s\">GitHub</a>."
 msgstr ""
-"<a href=\"%s\"> Melden Sie ein Problem</a> auf  <a href=\"%s\"> GitHub </ a>."
+"<a href=\"%s\"> Melden Sie ein Problem</a> auf  <a href=\"%s\"> GitHub </a>."
 
 #: includes/admin/referrals/contextual-help.php:39
 msgid "This screen provides access to your site's referral history."
@@ -1839,8 +1839,8 @@ msgid ""
 "<strong>Reference</strong>: this refers to the order number (or similar) "
 "that created this referral."
 msgstr ""
-"<strong> Referenz </ strong>: Diese bezieht sich auf die Auftragsnummer "
-"(oder ähnlich), die den Verkauf generiert hat."
+"<strong> Referenz </strong>: Diese bezieht sich auf die Auftragsnummer (oder "
+"ähnlich), die den Verkauf generiert hat."
 
 #: includes/admin/referrals/contextual-help.php:41
 msgid "Referral statuses:"
@@ -1851,22 +1851,22 @@ msgid ""
 "<strong>Paid</strong> - this is a referral that has been paid to the "
 "affiliate"
 msgstr ""
-"<strong> Ausbezahlt </ strong> - das ist eine Provision, die an den "
-"Affiliate gezahlt wurde"
+"<strong> Ausbezahlt </strong> - das ist eine Provision, die an den Affiliate "
+"gezahlt wurde"
 
 #: includes/admin/referrals/contextual-help.php:44
 msgid ""
 "<strong>Unpaid</strong> - this is a referral that has been accepted but not "
 "yet paid to the affiliate"
 msgstr ""
-"Nicht ausbezahlt <strong> </ strong> - das ist ein Affiliate-Verkauf der "
+"Nicht ausbezahlt <strong> </strong> - das ist ein Affiliate-Verkauf der "
 "akzeptiert, aber noch nicht an den Affiliate ausbezahlt wurde"
 
 #: includes/admin/referrals/contextual-help.php:45
 msgid ""
 "<strong>Pending</strong> - this is a referral that is waiting to be accepted"
 msgstr ""
-"<strong> Ausstehend </ strong> - das ist ein Affiliate-Verkauf, der darauf "
+"<strong> Ausstehend </strong> - das ist ein Affiliate-Verkauf, der darauf "
 "wartet angenommen werden"
 
 #: includes/admin/referrals/contextual-help.php:46
@@ -1874,8 +1874,8 @@ msgid ""
 "<strong>Rejected</strong> - this is a referral that has been rejected and "
 "will not be paid to the affiliate"
 msgstr ""
-"<strong> Abgelehnt </ strong> - das ist eine Affiliate-Verkauf, der "
-"abgelehnt und nicht an den Affiliate-Partner ausbezahlt wurde."
+"<strong> Abgelehnt </strong> - das ist eine Affiliate-Verkauf, der abgelehnt "
+"und nicht an den Affiliate-Partner ausbezahlt wurde."
 
 #: includes/admin/referrals/contextual-help.php:52
 msgid "Searching Referrals"
@@ -2026,8 +2026,8 @@ msgstr "Passwort bestätigen"
 #: templates/register.php:50
 msgid "Agree to our <a href=\"%s\" target=\"_blank\">Terms of Use</a>"
 msgstr ""
-"Zustimmen zu unseren <a href=\"%s\" target=\"_blank\"> Nutzungsbedingungen "
-"</ a>"
+"Zustimmen zu unseren <a href=\"%s\" target=\"_blank\"> Nutzungsbedingungen </"
+"a>"
 
 #: templates/register.php:60
 msgid "Register"
@@ -2055,11 +2055,11 @@ msgstr "Partner URL Generator"
 
 #: templates/dashboard.php:37
 msgid "Your affiliate ID is: <strong>%d</strong>"
-msgstr "Ihre Partner-ID ist: <strong>% d </ strong>"
+msgstr "Ihre Partner-ID ist: <strong>% d </strong>"
 
 #: templates/dashboard.php:38
 msgid "Your referral URL is: <strong>%s</strong>"
-msgstr "Ihre Partner URL lautet: <strong>% s </ strong>"
+msgstr "Ihre Partner URL lautet: <strong>% s </strong>"
 
 #: templates/dashboard.php:39
 msgid "Enter any URL on this website below to generate a referral link!"

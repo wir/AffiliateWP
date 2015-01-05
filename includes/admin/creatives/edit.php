@@ -18,8 +18,21 @@ $creative = affwp_get_creative( absint( $_GET['creative_id'] ) );
 				</th>
 
 				<td>
-					<input type="text" name="name" id="name" value="<?php echo esc_attr( $creative->name ); ?>" class="regular-text" />
+					<input type="text" name="name" id="name" value="<?php echo esc_attr( stripslashes( $creative->name ) ); ?>" class="regular-text" />
 					<p class="description"><?php _e( 'The name of this creative. For your identification only.', 'affiliate-wp' ); ?></p>
+				</td>
+
+			</tr>
+
+			<tr class="form-row form-required">
+
+				<th scope="row">
+					<label for="name"><?php _e( 'Description', 'affiliate-wp' ); ?></label>
+				</th>
+
+				<td>
+					<textarea name="description" id="description" class="large-text" rows="8"><?php echo esc_textarea( stripslashes( $creative->description ) ); ?></textarea>
+					<p class="description"><?php _e( 'An optional description for this creative. This is displayed below the creative for affiliates.', 'affiliate-wp' ); ?></p>
 				</td>
 
 			</tr>
@@ -44,7 +57,7 @@ $creative = affwp_get_creative( absint( $_GET['creative_id'] ) );
 				</th>
 
 				<td>
-					<input type="text" name="text" id="text" value="<?php echo esc_attr( $creative->text ); ?>" class="regular-text" />
+					<input type="text" name="text" id="text" value="<?php echo esc_attr( stripslashes( $creative->text ) ); ?>" class="regular-text" />
 					<p class="description"><?php _e( 'Text for this creative.', 'affiliate-wp' ); ?></p>
 				</td>
 

@@ -53,7 +53,7 @@ abstract class Affiliate_WP_Base {
 	}
 
 	/**
-	 * Inserts a pending referal. Used when orders are initially created
+	 * Inserts a pending referral. Used when orders are initially created
 	 *
 	 * @access  public
 	 * @since   1.0
@@ -122,9 +122,6 @@ abstract class Affiliate_WP_Base {
 
 		if ( affwp_set_referral_status( $referral->referral_id, 'unpaid' ) ) {
 
-			// Update the visit ID that spawned this referral
-			affiliate_wp()->visits->update( $referral->visit_id, array( 'referral_id' => $referral->referral_id ) );
-
 			do_action( 'affwp_complete_referral', $referral->referral_id, $referral, $reference );
 
 			return true;
@@ -192,7 +189,7 @@ abstract class Affiliate_WP_Base {
 
 		if( ! empty( $product_id ) ) {
 
-			$rate = $this->get_product_rate( $product_id );
+			$rate = $this->get_product_rate( $product_id, $args = array( 'reference' => $reference ) );
 			$type = affwp_get_affiliate_rate_type( $this->affiliate_id );
 
 			if ( 'percentage' == $type ) {
@@ -208,8 +205,8 @@ abstract class Affiliate_WP_Base {
 
 		}
 
-		$amount = affwp_calc_referral_amount( $base_amount, $this->affiliate_id, $reference, $rate );
-	
+		$amount = affwp_calc_referral_amount( $base_amount, $this->affiliate_id, $reference, $rate, $product_id );
+
 		return $amount;
 
 	}
@@ -222,16 +219,16 @@ abstract class Affiliate_WP_Base {
 	 * @since   1.2
 	 * @return  float
 	*/
-	public function get_product_rate( $product_id = 0 ) {
+	public function get_product_rate( $product_id = 0, $args = array() ) {
 
 		$rate = get_post_meta( $product_id, '_affwp_' . $this->context . '_product_rate', true );
 		if( empty( $rate ) ) {
 
-			$rate = affwp_get_affiliate_rate();
+			$rate = affwp_get_affiliate_rate( $this->affiliate_id );
 
 		}
 
-		return (float) $rate;
+		return apply_filters( 'affwp_get_product_rate', (float) $rate, $product_id, $args, $this->affiliate_id, $this->context );
 
 	}
 

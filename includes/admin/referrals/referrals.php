@@ -21,6 +21,10 @@ function affwp_referrals_admin() {
 
 		include AFFILIATEWP_PLUGIN_DIR . 'includes/admin/referrals/new.php';
 
+	} else if( isset( $_GET['action'] ) && 'edit_referral' == $_GET['action'] ) {
+
+		include AFFILIATEWP_PLUGIN_DIR . 'includes/admin/referrals/edit.php';
+
 	} else {
 
 		$referrals_table = new AffWP_Referrals_Table();
@@ -364,6 +368,7 @@ class AffWP_Referrals_Table extends WP_List_Table {
 
 		}
 		
+		$action_links[] = '<span class="trash"><a href="' . esc_url( add_query_arg( array( 'action' => 'edit_referral', 'referral_id' => $referral->referral_id ) ) ) . '" class="edit">' . __( 'Edit', 'affiliate-wp' ) . '</a></span>';
 		$action_links[] = '<span class="trash"><a href="' . esc_url( add_query_arg( array( 'action' => 'delete', 'referral_id' => $referral->referral_id ) ) ) . '" class="delete">' . __( 'Delete', 'affiliate-wp' ) . '</a></span>';
 		
 		$action_links   = array_unique( apply_filters( 'affwp_referral_action_links', $action_links, $referral ) );
@@ -388,7 +393,7 @@ class AffWP_Referrals_Table extends WP_List_Table {
 	 * @since 1.0
 	 * @return void
 	 */
-	public function bulk_actions() {
+	public function bulk_actions( $which = '' ) {
 		
 		if ( is_null( $this->_actions ) ) {
 			$no_new_actions = $this->_actions = $this->get_bulk_actions();
@@ -510,10 +515,19 @@ class AffWP_Referrals_Table extends WP_List_Table {
 	 * @return void
 	 */
 	public function get_referral_counts() {
-		$this->paid_count     = affiliate_wp()->referrals->count( array( 'status' => 'paid' ) );
-		$this->unpaid_count   = affiliate_wp()->referrals->count( array( 'status' => 'unpaid' ) );
-		$this->pending_count  = affiliate_wp()->referrals->count( array( 'status' => 'pending' ) );
-		$this->rejected_count = affiliate_wp()->referrals->count( array( 'status' => 'rejected' ) );
+
+		$affiliate_id = isset( $_GET['affiliate_id'] ) ? $_GET['affiliate_id'] : ''; 
+
+		if( is_array( $affiliate_id ) ) {
+			$affiliate_id = array_map( 'absint', $affiliate_id );
+		} else {
+			$affiliate_id = absint( $affiliate_id );
+		}
+
+		$this->paid_count     = affiliate_wp()->referrals->count( array( 'affiliate_id' => $affiliate_id, 'status' => 'paid' ) );
+		$this->unpaid_count   = affiliate_wp()->referrals->count( array( 'affiliate_id' => $affiliate_id, 'status' => 'unpaid' ) );
+		$this->pending_count  = affiliate_wp()->referrals->count( array( 'affiliate_id' => $affiliate_id, 'status' => 'pending' ) );
+		$this->rejected_count = affiliate_wp()->referrals->count( array( 'affiliate_id' => $affiliate_id, 'status' => 'rejected' ) );
 		$this->total_count    = $this->paid_count + $this->unpaid_count + $this->pending_count + $this->rejected_count;
 	}
 

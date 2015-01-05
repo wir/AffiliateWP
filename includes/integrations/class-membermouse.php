@@ -45,13 +45,22 @@ class Affiliate_WP_Membermouse extends Affiliate_WP_Base {
 				return; // Customers cannot refer themselves
 			}
 
-			$products = json_decode( $affiliate_data['order_products'] );
+			if( is_string( $affiliate_data['order_products'] ) ) {
 
-			if ( ! is_array( $products ) ) {
-				$products = array();
+				$products = json_decode( $affiliate_data['order_products'] );
+
+			} else {
+
+				$products = $affiliate_data['order_products'];
+
 			}
 
-			$description = implode( ', ', $products );
+			$description = '';
+			if( is_string( $products ) ) {
+
+				$description = $products;
+
+			}
 
 			$reference = $affiliate_data['member_id'] . '|' . $affiliate_data['order_number'];
 

@@ -17,7 +17,7 @@ function affwp_process_add_affiliate( $data ) {
 	}
 
 	if ( ! current_user_can( 'manage_affiliates' ) ) {
-		wp_die( __( 'You do not have permission to manage affiliates', 'affiliate-wp' ) );
+		wp_die( __( 'You do not have permission to manage affiliates', 'affiliate-wp' ), __( 'Error', 'affiliate-wp' ), array( 'response' => 403 ) );
 	}
 
 	if ( affwp_add_affiliate( $data ) ) {
@@ -46,15 +46,15 @@ function affwp_process_affiliate_deletion( $data ) {
 	}
 
 	if ( ! current_user_can( 'manage_affiliates' ) ) {
-		wp_die( __( 'You do not have permission to delete affiliate accounts', 'affiliate-wp' ) );
+		wp_die( __( 'You do not have permission to delete affiliate accounts', 'affiliate-wp' ), __( 'Error', 'affiliate-wp' ), array( 'response' => 403 ) );
 	}
 
 	if ( ! wp_verify_nonce( $data['affwp_delete_affiliates_nonce'], 'affwp_delete_affiliates_nonce' ) ) {
-		wp_die( __( 'Security check failed', 'affiliate-wp' ) );
+		wp_die( __( 'Security check failed', 'affiliate-wp' ), __( 'Error', 'affiliate-wp' ), array( 'response' => 403 ) );
 	}
 
 	if ( empty( $data['affwp_affiliate_ids'] ) || ! is_array( $data['affwp_affiliate_ids'] ) ) {
-		wp_die( __( 'No affiliate IDs specified for deletion', 'affiliate-wp' ) );
+		wp_die( __( 'No affiliate IDs specified for deletion', 'affiliate-wp' ), __( 'Error', 'affiliate-wp' ), array( 'response' => 400 ) );
 	}
 
 	$to_delete    = array_map( 'absint', $data['affwp_affiliate_ids'] );
@@ -66,7 +66,12 @@ function affwp_process_affiliate_deletion( $data ) {
 			require_once( ABSPATH . 'wp-admin/includes/user.php' );
 
 			$user_id = affwp_get_affiliate_user_id( $affiliate_id );
-			wp_delete_user( $user_id );
+
+			if( (int) $user_id !== (int) get_current_user_id() ) {
+				// Don't allow a user to delete themself
+				wp_delete_user( $user_id );
+			}
+
 		}
 
 		affwp_delete_affiliate( $affiliate_id, true );
@@ -80,7 +85,7 @@ function affwp_process_affiliate_deletion( $data ) {
 add_action( 'affwp_delete_affiliates', 'affwp_process_affiliate_deletion' );
 
 /**
- * Process the add affiliate request
+ * Process the update affiliate request
  *
  * @since 1.2
  * @return void
@@ -96,7 +101,7 @@ function affwp_process_update_affiliate( $data ) {
 	}
 
 	if ( ! current_user_can( 'manage_affiliates' ) ) {
-		wp_die( __( 'You do not have permission to manage affiliates', 'affiliate-wp' ) );
+		wp_die( __( 'You do not have permission to manage affiliates', 'affiliate-wp' ), __( 'Error', 'affiliate-wp' ), array( 'response' => 403 ) );
 	}
 
 	if ( affwp_update_affiliate( $data ) ) {

@@ -5,7 +5,7 @@
  * Description: Affiliate Plugin for WordPress
  * Author: Pippin Williamson and Andrew Munro
  * Author URI: http://affiliatewp.com
- * Version: 1.1.4
+ * Version: 1.4.3
  * Text Domain: affiliate-wp
  * Domain Path: languages
  *
@@ -24,7 +24,7 @@
  * @package AffiliateWP
  * @category Core
  * @author Pippin Williamson
- * @version 1.1.4
+ * @version 1.4.3
  */
 
 // Exit if accessed directly
@@ -51,7 +51,7 @@ final class Affiliate_WP {
 	 *
 	 * @since 1.0
 	 */
-	private $version = '1.1.4';
+	private $version = '1.4.3';
 
 	/**
 	 * The affiliates DB instance variable.
@@ -136,10 +136,18 @@ final class Affiliate_WP {
 	/**
 	 * The creatives instance variable
 	 *
-	 * @var Affiliate_WP_Creatives
+	 * @var Affiliate_WP_Creatives_DB
 	 * @since 1.2
 	 */
 	public $creatives;
+
+	/**
+	 * The creative class instance variable
+	 *
+	 * @var Affiliate_WP_Creatives
+	 * @since 1.3
+	 */
+	public $creative;
 
 	/**
 	 * Main Affiliate_WP Instance
@@ -167,7 +175,6 @@ final class Affiliate_WP {
 			self::$instance->affiliates   = new Affiliate_WP_DB_Affiliates;
 			self::$instance->referrals    = new Affiliate_WP_Referrals_DB;
 			self::$instance->visits       = new Affiliate_WP_Visits_DB;
-			self::$instance->creatives    = new Affiliate_WP_Creatives_DB;
 			self::$instance->settings     = new Affiliate_WP_Settings;
 			self::$instance->tracking     = new Affiliate_WP_Tracking;
 			self::$instance->templates    = new Affiliate_WP_Templates;
@@ -175,6 +182,7 @@ final class Affiliate_WP {
 			self::$instance->register     = new Affiliate_WP_Register;
 			self::$instance->integrations = new Affiliate_WP_Integrations;
 			self::$instance->emails       = new Affiliate_WP_Emails;
+			self::$instance->creatives    = new Affiliate_WP_Creatives_DB;
 			self::$instance->creative     = new Affiliate_WP_Creatives;
 
 			self::$instance->updater();
@@ -325,6 +333,7 @@ final class Affiliate_WP {
 					'version' 	=> AFFILIATEWP_VERSION,
 					'license' 	=> $license_key,
 					'item_name' => 'AffiliateWP',
+					'item_id'   => 17,
 					'author' 	=> 'Pippin Williamson'
 				)
 			);
@@ -378,7 +387,7 @@ endif; // End if class_exists check
  * Example: <?php $affiliate_wp = affiliate_wp(); ?>
  *
  * @since 1.0
- * @return object The one true Affiliate_WP Instance
+ * @return Affiliate_WP The one true Affiliate_WP Instance
  */
 function affiliate_wp() {
 	return Affiliate_WP::instance();
