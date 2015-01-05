@@ -626,7 +626,7 @@ class Affiliate_WP_Referrals_DB extends Affiliate_WP_DB  {
 		custom longtext NOT NULL,
 		context tinytext NOT NULL,
 		reference mediumtext NOT NULL,
-		date datetime NOT NULL,
+		date datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
 		PRIMARY KEY  (referral_id),
 		KEY affiliate_id (affiliate_id)
 		) CHARACTER SET utf8 COLLATE utf8_general_ci;";

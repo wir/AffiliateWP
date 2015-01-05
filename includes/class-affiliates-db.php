@@ -371,7 +371,7 @@ class Affiliate_WP_DB_Affiliates extends Affiliate_WP_DB {
 			earnings mediumtext NOT NULL,
 			referrals bigint(20) NOT NULL,
 			visits bigint(20) NOT NULL,
-			date_registered datetime NOT NULL,
+			date_registered datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
 			PRIMARY KEY  (affiliate_id),
 			KEY user_id (user_id)
 			) CHARACTER SET utf8 COLLATE utf8_general_ci;";

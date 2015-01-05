@@ -171,7 +171,7 @@ class Affiliate_WP_Creatives_DB extends Affiliate_WP_DB {
 			text tinytext NOT NULL,
 			image varchar(255) NOT NULL,
 			status tinytext NOT NULL,
-			date datetime NOT NULL,
+			date datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
 			PRIMARY KEY  (creative_id),
 			KEY creative_id (creative_id)
 			) CHARACTER SET utf8 COLLATE utf8_general_ci;";

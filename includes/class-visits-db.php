@@ -259,7 +259,7 @@ class Affiliate_WP_Visits_DB extends Affiliate_WP_DB {
 			url mediumtext NOT NULL,
 			referrer mediumtext NOT NULL,
 			ip tinytext NOT NULL,
-			date datetime NOT NULL,
+			date datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
 			PRIMARY KEY  (visit_id),
 			KEY affiliate_id (affiliate_id)
 			) CHARACTER SET utf8 COLLATE utf8_general_ci;";
