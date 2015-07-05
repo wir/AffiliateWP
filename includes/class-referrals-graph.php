@@ -2,12 +2,23 @@
 
 class Affiliate_WP_Referrals_Graph extends Affiliate_WP_Graph {
 
+	public $totals;
+
 	/**
 	 * Get things started
 	 *
 	 * @since 1.0
 	 */
 	public function __construct( $_data = array() ) {
+
+		$this->totals = array(
+			'pending' => 0,
+			'paid' => 0,
+			'unpaid' => 0,
+			'rejected' => 0,
+			'earnings' => '0.00',
+			'unpaid_earnings' => '0.00'
+		);
 
 		if( empty( $_data ) ) {
 
@@ -47,10 +58,10 @@ class Affiliate_WP_Referrals_Graph extends Affiliate_WP_Graph {
 	 */
 	public function get_data() {
 
-		$paid     = array();
-		$unpaid   = array();
-		$rejected = array();
-		$pending  = array();
+		$paid         = array();
+		$unpaid       = array();
+		$rejected     = array();
+		$pending      = array();
 
 		$dates = affwp_get_report_dates();
 
@@ -82,24 +93,30 @@ class Affiliate_WP_Referrals_Graph extends Affiliate_WP_Graph {
 					case 'paid' :
 
 						$paid[] = array( strtotime( $referral->date ) * 1000, $referral->amount );
+						$this->totals['earnings'] += $referral->amount;
+						$this->totals['paid'] += 1;
 
 						break;
 
 					case 'unpaid' :
 
 						$unpaid[] = array( strtotime( $referral->date ) * 1000, $referral->amount );
+						$this->totals['unpaid_earnings'] += $referral->amount;
+						$this->totals['unpaid'] += 1;
 
 						break;
 
 					case 'rejected' :
 
 						$rejected[] = array( strtotime( $referral->date ) * 1000, $referral->amount );
+						$this->totals['rejected'] += 1;
 
 						break;
 
 					case 'pending' :
 
 						$pending[] = array( strtotime( $referral->date ) * 1000, $referral->amount );
+						$this->totals['pending'] += 1;
 
 						break;
 

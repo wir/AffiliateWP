@@ -48,6 +48,39 @@ $affiliate_id = isset( $_GET['affiliate_id'] ) ? absint( $_GET['affiliate_id'] )
 	$graph->set( 'x_mode', 'time' );
 	$graph->set( 'affiliate_id', $affiliate_id );
 	$graph->display();
-	
+?>
+	<p><?php _e( 'Totals for selected date range', 'affiliate-wp' ); ?></p>
+	<table id="affwp_affiliate_stats_for_range" class="affwp_table">
+
+		<thead>
+
+			<tr>
+				<th><?php _e( 'Paid Earnings', 'affiliate-wp' ); ?></th>
+				<th><?php _e( 'Unpaid earnings', 'affiliate-wp' ); ?></th>
+				<th><?php _e( 'Paid referrals', 'affiliate-wp' ); ?></th>
+				<th><?php _e( 'Unpaid referrals', 'affiliate-wp' ); ?></th>
+				<th><?php _e( 'Pending referrals', 'affiliate-wp' ); ?></th>
+				<th><?php _e( 'Rejected referrals', 'affiliate-wp' ); ?></th>
+				<?php do_action( 'affwp_view_affiliate_report_table_header', $affiliate_id ); ?>
+			</tr>
+
+		</thead>
+
+		<tbody>
+
+			<tr>
+				<td><?php echo affwp_currency_filter( $graph->totals['earnings'] ); ?></td>
+				<td><?php echo affwp_currency_filter( $graph->totals['unpaid_earnings'] ); ?></td>
+				<td><?php echo $graph->totals['paid']; ?></td>
+				<td><?php echo $graph->totals['unpaid']; ?></td>
+				<td><?php echo $graph->totals['pending']; ?></td>
+				<td><?php echo $graph->totals['rejected']; ?></td>
+				<?php do_action( 'affwp_view_affiliate_report_table_row', $affiliate_id ); ?>
+			</tr>
+
+		</tbody>
+
+	</table>
+<?php	
 	do_action( 'affwp_view_affiliate_report_bottom' ); ?>
 </div>
