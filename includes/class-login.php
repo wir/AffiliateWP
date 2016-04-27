@@ -164,7 +164,7 @@ class Affiliate_WP_Login {
 	 * @since 1.1
 	 */
 	function get_login_url() {
-	    return apply_filters( 'affwp_login_url', get_permalink( affiliate_wp()->settings->get( 'affiliates_page' ) ) );
+	    return apply_filters( 'affwp_login_url', affwp_get_affiliate_area_url() );
 	}
 
 }
