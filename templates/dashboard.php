@@ -30,19 +30,69 @@
 
 		<ul id="affwp-affiliate-dashboard-tabs">
 
-			<?php echo affwp_affiliate_area_tab( 'urls', __( 'Affiliate URLs', 'affiliate-wp' ) ); ?>
 
-			<?php echo affwp_affiliate_area_tab( 'stats', __( 'Statistics', 'affiliate-wp' ) ); ?>
+			<?php
+			$tab = 'urls';
 
-			<?php echo affwp_affiliate_area_tab( 'graphs', __( 'Graphs', 'affiliate-wp' ) ); ?>
+			if ( affwp_tabs_show_tab( $tab ) ) : ?>
+			<li class="affwp-affiliate-dashboard-tab <?php echo $tab; ?><?php echo affwp_tabs_active_class( $active_tab, $tab ); ?>">
+				<a href="<?php echo affwp_tabs_get_url( $tab ); ?>"><?php _e( 'Affiliate URLs', 'affiliate-wp' ); ?></a>
+			</li>
+			<?php endif; ?>
 
-			<?php echo affwp_affiliate_area_tab( 'referrals', __( 'Referrals', 'affiliate-wp' ) ); ?>
+			<?php
+			$tab = 'stats';
 
-			<?php echo affwp_affiliate_area_tab( 'visits', __( 'Visits', 'affiliate-wp' ) ); ?>
+			if ( affwp_tabs_show_tab( $tab ) ) : ?>
+			<li class="affwp-affiliate-dashboard-tab <?php echo $tab; ?><?php echo affwp_tabs_active_class( $active_tab, $tab ); ?>">
+				<a href="<?php echo affwp_tabs_get_url( $tab ); ?>"><?php _e( 'Statistics', 'affiliate-wp' ); ?></a>
+			</li>
+			<?php endif; ?>
 
-			<?php echo affwp_affiliate_area_tab( 'creatives', __( 'Creatives', 'affiliate-wp' ) ); ?>
+			<?php
+			$tab = 'graphs';
 
-			<?php echo affwp_affiliate_area_tab( 'settings', __( 'Settings', 'affiliate-wp' ) ); ?>
+			if ( affwp_tabs_show_tab( $tab ) ) : ?>
+			<li class="affwp-affiliate-dashboard-tab <?php echo $tab; ?><?php echo affwp_tabs_active_class( $active_tab, $tab ); ?>">
+				<a href="<?php echo affwp_tabs_get_url( $tab ); ?>"><?php _e( 'Graphs', 'affiliate-wp' ); ?></a>
+			</li>
+			<?php endif; ?>
+
+			<?php
+			$tab = 'referrals';
+
+			if ( affwp_tabs_show_tab( $tab ) ) : ?>
+			<li class="affwp-affiliate-dashboard-tab <?php echo $tab; ?><?php echo affwp_tabs_active_class( $active_tab, $tab ); ?>">
+				<a href="<?php echo affwp_tabs_get_url( $tab ); ?>"><?php _e( 'Referrals', 'affiliate-wp' ); ?></a>
+			</li>
+			<?php endif; ?>
+
+			<?php
+			$tab = 'visits';
+
+			if ( affwp_tabs_show_tab( $tab ) ) : ?>
+			<li class="affwp-affiliate-dashboard-tab <?php echo $tab; ?><?php echo affwp_tabs_active_class( $active_tab, $tab ); ?>">
+				<a href="<?php echo affwp_tabs_get_url( $tab ); ?>"><?php _e( 'Visits', 'affiliate-wp' ); ?></a>
+			</li>
+			<?php endif; ?>
+
+			<?php
+			$tab = 'creatives';
+
+			if ( affwp_tabs_show_tab( $tab ) ) : ?>
+			<li class="affwp-affiliate-dashboard-tab <?php echo $tab; ?><?php echo affwp_tabs_active_class( $active_tab, $tab ); ?>">
+				<a href="<?php echo affwp_tabs_get_url( $tab ); ?>"><?php _e( 'Creatives', 'affiliate-wp' ); ?></a>
+			</li>
+			<?php endif; ?>
+
+			<?php
+			$tab = 'settings';
+
+			if ( affwp_tabs_show_tab( $tab ) ) : ?>
+			<li class="affwp-affiliate-dashboard-tab <?php echo $tab; ?><?php echo affwp_tabs_active_class( $active_tab, $tab ); ?>">
+				<a href="<?php echo affwp_tabs_get_url( $tab ); ?>"><?php _e( 'Settings', 'affiliate-wp' ); ?></a>
+			</li>
+			<?php endif; ?>
 
 			<?php do_action( 'affwp_affiliate_dashboard_tabs', affwp_get_affiliate_id(), $active_tab ); ?>
 		</ul>
