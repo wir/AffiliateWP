@@ -30,19 +30,19 @@
 
 		<ul id="affwp-affiliate-dashboard-tabs">
 
-			<?php echo affwp_tab( 'urls', __( 'Affiliate URLs', 'affiliate-wp' ) ); ?>
+			<?php echo affwp_affiliate_area_tab( 'urls', __( 'Affiliate URLs', 'affiliate-wp' ) ); ?>
 
-			<?php echo affwp_tab( 'stats', __( 'Statistics', 'affiliate-wp' ) ); ?>
+			<?php echo affwp_affiliate_area_tab( 'stats', __( 'Statistics', 'affiliate-wp' ) ); ?>
 
-			<?php echo affwp_tab( 'graphs', __( 'Graphs', 'affiliate-wp' ) ); ?>
+			<?php echo affwp_affiliate_area_tab( 'graphs', __( 'Graphs', 'affiliate-wp' ) ); ?>
 
-			<?php echo affwp_tab( 'referrals', __( 'Referrals', 'affiliate-wp' ) ); ?>
+			<?php echo affwp_affiliate_area_tab( 'referrals', __( 'Referrals', 'affiliate-wp' ) ); ?>
 
-			<?php echo affwp_tab( 'visits', __( 'Visits', 'affiliate-wp' ) ); ?>
+			<?php echo affwp_affiliate_area_tab( 'visits', __( 'Visits', 'affiliate-wp' ) ); ?>
 
-			<?php echo affwp_tab( 'creatives', __( 'Creatives', 'affiliate-wp' ) ); ?>
+			<?php echo affwp_affiliate_area_tab( 'creatives', __( 'Creatives', 'affiliate-wp' ) ); ?>
 
-			<?php echo affwp_tab( 'settings', __( 'Settings', 'affiliate-wp' ) ); ?>
+			<?php echo affwp_affiliate_area_tab( 'settings', __( 'Settings', 'affiliate-wp' ) ); ?>
 
 			<?php do_action( 'affwp_affiliate_dashboard_tabs', affwp_get_affiliate_id(), $active_tab ); ?>
 		</ul>

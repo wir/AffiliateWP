@@ -510,7 +510,7 @@ function affwp_get_affiliate_area_url() {
  * @since  1.7.18
  * @return string
  */
-function affwp_tab( $tab = '', $label = '' ) {
+function affwp_affiliate_area_tab( $tab = '', $label = '' ) {
 
 	$active_tab = ! empty( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : 'urls';
 
