@@ -538,7 +538,7 @@ function affwp_tabs_show_tab( $tab = '' ) {
  * @return string active CSS class
  */
 function affwp_tabs_active_class( $active_tab, $tab = '' ) {
-	$class = apply_filters( 'affwp_tabs_active_class', 'active' );
+	$class = apply_filters( 'affwp_tabs_active_class', 'active', $tab );
 	return $active_tab == $tab ? ' ' . $class : '';
 }
 
