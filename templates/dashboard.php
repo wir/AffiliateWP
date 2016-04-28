@@ -48,7 +48,7 @@
 		</ul>
 
 		<?php
-			if ( apply_filters( 'affwp_dashboard_tabs', true, $active_tab ) ) {
+			if ( affwp_tabs_show_tab( $active_tab ) ) {
 				affiliate_wp()->templates->get_template_part( 'dashboard-tab', $active_tab );
 			}
 		?>
