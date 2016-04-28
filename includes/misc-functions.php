@@ -515,7 +515,7 @@ function affwp_tab( $tab = '', $label = '' ) {
 	$active_tab = ! empty( $_GET['tab'] ) ? sanitize_text_field( $_GET['tab'] ) : 'urls';
 
 	if ( affwp_tabs_show_tab( $tab ) ) : ?>
-	<li class="affwp-affiliate-dashboard-tab<?php echo affwp_tabs_active_class( $active_tab, $tab ); ?>">
+	<li class="affwp-affiliate-dashboard-tab <?php echo $tab; ?><?php echo affwp_tabs_active_class( $active_tab, $tab ); ?>">
 		<a href="<?php echo affwp_tabs_get_url( $tab ); ?>"><?php echo $label; ?></a>
 	</li>
 	<?php endif;
