@@ -16,11 +16,11 @@ class AffWP_CLI extends WP_CLI_Command {
 	 */
 	public function details( $_, $assoc_args ) {
 		if ( ! class_exists( 'Affiliate_WP' ) ) {
-			WP_CLI::error( 'AffiliateWP is not installed' );
+			WP_CLI::error( __( 'AffiliateWP is not installed', 'affiliate-wp' ) );
 		}
 
 		if ( defined( 'AFFILIATEWP_VERSION' ) ) {
-			WP_CLI::line( sprintf( __( 'AffiliateWP version: %s', 'affiliate-wp' ), AFFILIATEWP_VERSION ) );
+			WP_CLI::line( sprintf( __( 'AffiliateWP version: %d', 'affiliate-wp' ), AFFILIATEWP_VERSION ) );
 		}
 
 	}
