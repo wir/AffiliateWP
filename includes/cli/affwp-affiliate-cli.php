@@ -207,8 +207,6 @@ class AffWP_Affiliate_CLI extends \WP_CLI\CommandWithDBObject {
 	 * @param array $assoc_args Associated arguments.
 	 */
 	public function update( $args, $assoc_args ) {
-		$affiliate = $user = false;
-
 		if ( empty( $args[0] ) ) {
 			WP_CLI::error( __( 'An affiliate username or ID is required.', 'affiliate-wp' ) );
 		} else {
@@ -221,7 +219,6 @@ class AffWP_Affiliate_CLI extends \WP_CLI\CommandWithDBObject {
 			if ( ! $affiliate ) {
 				WP_CLI::error( __( 'Invalid affiliate username or ID.', 'affiliate-wp' ) );
 			}
-			unset( $user );
 		}
 
 		$data['affiliate_id']  = $affiliate->affiliate_id;
