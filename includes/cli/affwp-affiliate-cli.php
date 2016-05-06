@@ -113,7 +113,7 @@ class AffWP_Affiliate_CLI extends \WP_CLI\CommandWithDBObject {
 	 * @since 1.9
 	 * @access public
 	 *
-	 * @param array $_          Arguments (unused).
+	 * @param array $args       Arguments.
 	 * @param array $assoc_args Associated arguments (flags).
 	 */
 	public function create( $args, $assoc_args ) {
