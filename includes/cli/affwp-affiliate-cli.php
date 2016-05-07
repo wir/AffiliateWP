@@ -51,6 +51,12 @@ class AffWP_Affiliate_CLI extends \WP_CLI\CommandWithDBObject {
 	 *
 	 *     # save the affiliate field value to a file
 	 *     wp post get 12 --field=earnings > earnings.txt
+	 *
+	 * @since 1.9
+	 * @access public
+	 *
+	 * @param array $args       Top-level arguments.
+	 * @param array $assoc_args Associated arguments (flags).
 	 */
 	public function get( $args, $assoc_args ) {
 		$affiliate_id = $this->fetcher->get_check( $args[0] );
