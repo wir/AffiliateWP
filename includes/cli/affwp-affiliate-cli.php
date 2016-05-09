@@ -13,8 +13,8 @@ class AffWP_Affiliate_CLI extends \WP_CLI\CommandWithDBObject {
 	 * @var array
 	 */
 	protected $obj_fields = array(
+		'ID',
 		'user_login',
-		'affiliate_id',
 		'earnings',
 		'referrals',
 		'status'
@@ -359,8 +359,8 @@ class AffWP_Affiliate_CLI extends \WP_CLI\CommandWithDBObject {
 	 *
 	 * These fields will be displayed by default for each affiliate:
 	 *
+	 * * ID (alias for affiliate_id)
 	 * * user_login
-	 * * affiliate_id
 	 * * earnings
 	 * * referrals
 	 * * status
@@ -394,7 +394,9 @@ class AffWP_Affiliate_CLI extends \WP_CLI\CommandWithDBObject {
 	public function list_( $_, $assoc_args ) {
 		$formatter = $this->get_formatter( $assoc_args );
 
-		$defaults = array();
+		$defaults = array(
+			'order' => 'ASC',
+		);
 
 		$args = array_merge( $defaults, $assoc_args );
 
@@ -405,7 +407,7 @@ class AffWP_Affiliate_CLI extends \WP_CLI\CommandWithDBObject {
 		} else {
 			$affiliates = affiliate_wp()->affiliates->get_affiliates( $args );
 
-			$affiliates = $this->process_extra_fields( array( 'payment_email', 'user_login' ), $affiliates );
+			$affiliates = $this->process_extra_fields( array( 'ID', 'payment_email', 'user_login' ), $affiliates );
 
 			$formatter->display_items( $affiliates );
 		}
@@ -425,6 +427,11 @@ class AffWP_Affiliate_CLI extends \WP_CLI\CommandWithDBObject {
 		$processed = array();
 
 		foreach ( $items as $item ) {
+			// Alias for affiliate_id.
+			if ( in_array( 'ID', $fields ) ) {
+				$item->ID = $item->affiliate_id;
+			}
+
 			if ( in_array( 'payment_email', $fields ) ) {
 				if ( empty( $item->payment_email ) ) {
 					$item->payment_email = affwp_get_affiliate_payment_email( $item->affiliate_id );
