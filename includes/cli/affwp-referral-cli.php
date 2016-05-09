@@ -66,6 +66,39 @@ class AffWP_Referral_CLI extends \WP_CLI\CommandWithDBObject {
 	/**
 	 * Adds a referral.
 	 *
+	 * ## OPTIONS
+	 *
+	 * <username|ID>
+	 * : Affiliate username or ID
+	 *
+	 * [--amount=<number>]
+	 * : Referral amount.
+	 *
+	 * [--description=<description>]
+	 * : Referral description.
+	 *
+	 * [--reference=<reference>]
+	 * : Referral reference (usually product information).
+	 *
+	 * [--context=<context>]
+	 * : Referral context (usually related to the integration, e.g. woocommerce)
+	 *
+	 * [--status=<status>]
+	 * : Referral status. Accepts 'unpaid', 'paid', 'pending', or 'rejected'.
+	 *
+	 * If not specified, 'pending' will be used.
+	 *
+	 * ## EXAMPLES
+	 *
+	 *     # Creates a referral for affiliate edduser1 with an amount of $2 and 'unpaid' status
+	 *     wp affwp referral create edduser1 --amount=2 --status=unpaid
+	 *
+	 *     # Creates a referral for affiliate woouser1 with a context of woocommerce and 'pending' status
+	 *     wp affwp referral create woouser1 --context=woocommerce --status=pending
+	 *
+	 *     # Creates a referral for affiliate ID 142 with description of "For services rendered."
+	 *     wp affwp referral create 142 --description='For services rendered.'
+	 *
 	 * @since 1.9
 	 * @access public
 	 *
@@ -73,7 +106,38 @@ class AffWP_Referral_CLI extends \WP_CLI\CommandWithDBObject {
 	 * @param array $assoc_args Associated arguments (flags).
 	 */
 	public function create( $args, $assoc_args ) {
+		if ( empty( $args[0] ) ) {
+			WP_CLI::error( __( 'A valid affiliate username or ID must be specified as the first argument.', 'affiliate-wp' ) );
+		} else {
+			$affiliate = affwp_get_affiliate( $args[0] );
 
+			if ( ! $affiliate ) {
+				WP_CLI::error( sprintf( __( 'An affiliate with the ID or username "%s" does not exist. See wp affwp affiliate create for adding affiliates.', 'affiliate-wp' ), $args[0] ) );
+			}
+
+			// Grab flag values.
+			$amount      = WP_CLI\Utils\get_flag_value( $assoc_args, 'amount' );
+			$description = WP_CLI\Utils\get_flag_value( $assoc_args, 'description' );
+			$reference   = WP_CLI\Utils\get_flag_value( $assoc_args, 'reference' );
+			$context     = WP_CLI\Utils\get_flag_value( $assoc_args, 'context' );
+			$status      = WP_CLI\Utils\get_flag_value( $assoc_args, 'status' );
+		}
+
+		$referral = affwp_add_referral( array(
+			'affiliate_id' => $affiliate->affiliate_id,
+			'user_id'      => $affiliate->user_id,
+			'amount'       => $amount,
+			'description'  => $description,
+			'reference'    => $reference,
+			'context'      => $context,
+			'status'       => $status
+		) );
+
+		if ( $referral ) {
+			WP_CLI::success( sprintf( __( 'A referral with the ID "%d" has been created.', 'affiliate-wp' ), $referral->referral_id ) );
+		} else {
+			WP_CLI::error( __( 'The referral could not be added.', 'affiliate-wp' ) );
+		}
 	}
 
 	/**
