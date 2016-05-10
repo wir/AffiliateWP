@@ -351,6 +351,7 @@ final class Affiliate_WP {
 
 		if ( defined( 'WP_CLI' ) && WP_CLI ) {
 			require_once AFFILIATEWP_PLUGIN_DIR . 'includes/cli/affwp-cli.php';
+			require_once AFFILIATEWP_PLUGIN_DIR . 'includes/cli/affwp-object-cli.php';
 
 			require_once AFFILIATEWP_PLUGIN_DIR . 'includes/cli/utilities/affiliate-fetcher.php';
 			require_once AFFILIATEWP_PLUGIN_DIR . 'includes/cli/utilities/referral-fetcher.php';

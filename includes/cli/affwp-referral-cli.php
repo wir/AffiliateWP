@@ -1,6 +1,6 @@
 <?php
 
-class AffWP_Referral_CLI extends \WP_CLI\CommandWithDBObject {
+class AffWP_Referral_CLI extends AffWP_Object_CLI {
 
 	/**
 	 * Referral display fields.
@@ -50,17 +50,7 @@ class AffWP_Referral_CLI extends \WP_CLI\CommandWithDBObject {
 	 *     wp post get 12 --field=earnings > earnings.txt
 	 */
 	public function get( $args, $assoc_args ) {
-		$referral = $this->fetcher->get_check( $args[0] );
-
-		$fields_array = get_object_vars( $referral );
-		unset( $fields_array['filter'] );
-
-		if ( empty( $assoc_args['fields'] ) ) {
-			$assoc_args['fields'] = array_keys( $fields_array );
-		}
-
-		$formatter = $this->get_formatter( $assoc_args );
-		$formatter->display_item( $fields_array );
+		parent::get( $args, $assoc_args );
 	}
 
 	/**
@@ -241,35 +231,41 @@ class AffWP_Referral_CLI extends \WP_CLI\CommandWithDBObject {
 	}
 
 	/**
-	 * Processes extra fields that can't be derived from a simple db lookup.
+	 * Handler for the 'ID' (referral_id alias) field.
 	 *
 	 * @since 1.9
 	 * @access protected
 	 *
-	 * @param array $fields Array of fields to process for.
-	 * @param array $items  Array of items to process `$fields` for.
-	 * @return array Processed array of items.
+	 * @param AffWP_Affiliate &$item Affiliate object (passed by reference).
 	 */
-	protected function process_extra_fields( $fields, $items ) {
-		$processed = array();
+	protected function ID_field( &$item ) {
+		$item->ID = $item->referral_id;
+	}
 
-		foreach ( $items as $item ) {
-			// Alias for referral_id.
-			if ( in_array( 'ID', $fields ) ) {
-				$item->ID = $item->referral_id;
-			}
+	/**
+	 * Handler for the 'date' field.
+	 *
+	 * Reformats the date for display.
+	 *
+	 * @since 1.9
+	 * @access protected
+	 *
+	 * @param AffWP_Affiliate &$item Affiliate object (passed by reference).
+	 */
+	protected function date_field( &$item ) {
+		$item->date = mysql2date( 'M j, Y', $item->date, false );
+	}
 
-			if ( in_array( 'date', $fields ) ) {
-				$item->date = mysql2date( 'M j, Y', $item->date, false );
-			}
-
-			if ( in_array( 'affiliate_name', $fields ) ) {
-				$item->affiliate_name = affwp_get_affiliate_name( $item->affiliate_id );
-			}
-			$processed[] = $item;
-		}
-
-		return $processed;
+	/**
+	 * Handler for the 'affiliate_name' field.
+	 *
+	 * @since 1.9
+	 * @access protected
+	 *
+	 * @param AffWP_Affiliate &$item Affiliate object (passed by reference).
+	 */
+	protected function affiliate_name_field( &$item ) {
+		$item->affiliate_name = affwp_get_affiliate_name( $item->affiliate_id );
 	}
 
 }

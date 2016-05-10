@@ -3,7 +3,7 @@
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-class AffWP_Affiliate_CLI extends \WP_CLI\CommandWithDBObject {
+class AffWP_Affiliate_CLI extends AffWP_Object_CLI {
 
 	/**
 	 * Affiliate display fields.
@@ -59,17 +59,7 @@ class AffWP_Affiliate_CLI extends \WP_CLI\CommandWithDBObject {
 	 * @param array $assoc_args Associated arguments (flags).
 	 */
 	public function get( $args, $assoc_args ) {
-		$affiliate_id = $this->fetcher->get_check( $args[0] );
-
-		$fields_array = get_object_vars( $affiliate_id );
-		unset( $fields_array['filled'] );
-
-		if ( empty( $assoc_args['filled'] ) ) {
-			$assoc_args['fields'] = array_keys( $fields_array );
-		}
-
-		$formatter = $this->get_formatter( $assoc_args );
-		$formatter->display_item( $fields_array );
+		parent::get( $args, $assoc_args );
 	}
 
 	/**
@@ -394,6 +384,8 @@ class AffWP_Affiliate_CLI extends \WP_CLI\CommandWithDBObject {
 	public function list_( $_, $assoc_args ) {
 		$formatter = $this->get_formatter( $assoc_args );
 
+		$fields = $this->get_fields( $assoc_args );
+
 		$defaults = array(
 			'order' => 'ASC',
 		);
@@ -407,46 +399,49 @@ class AffWP_Affiliate_CLI extends \WP_CLI\CommandWithDBObject {
 		} else {
 			$affiliates = affiliate_wp()->affiliates->get_affiliates( $args );
 
-			$affiliates = $this->process_extra_fields( array( 'ID', 'payment_email', 'user_login' ), $affiliates );
+			$affiliates = $this->process_extra_fields( $fields, $affiliates );
 
 			$formatter->display_items( $affiliates );
 		}
 	}
 
 	/**
-	 * Processes extra fields that can't be derived from a simple db lookup.
+	 * Handler for the 'ID' (affiliate_id alias) field.
 	 *
 	 * @since 1.9
 	 * @access protected
 	 *
-	 * @param array $fields Array of fields to process for.
-	 * @param array $items  Array of items to process `$fields` for.
-	 * @return array Processed array of items.
+	 * @param AffWP_Affiliate &$item Affiliate object (passed by reference).
 	 */
-	protected function process_extra_fields( $fields, $items ) {
-		$processed = array();
+	protected function ID_field( &$item ) {
+		$item->ID = $item->affiliate_id;
+	}
 
-		foreach ( $items as $item ) {
-			// Alias for affiliate_id.
-			if ( in_array( 'ID', $fields ) ) {
-				$item->ID = $item->affiliate_id;
-			}
-
-			if ( in_array( 'payment_email', $fields ) ) {
-				if ( empty( $item->payment_email ) ) {
-					$item->payment_email = affwp_get_affiliate_payment_email( $item->affiliate_id );
-				}
-			}
-
-			if ( in_array( 'user_login', $fields ) ) {
-				$user = get_userdata( affwp_get_affiliate_user_id( $item->affiliate_id ) );
-				$item->user_login = $user->user_login;
-			}
-
-			$processed[] = $item;
+	/**
+	 * Handler for the 'payment_email' field.
+	 *
+	 * @since 1.9
+	 * @access protected
+	 *
+	 * @param AffWP_Affiliate &$item Affiliate object (passed by reference).
+	 */
+	protected function payment_email_field( &$item ) {
+		if ( empty( $item->payment_email ) ) {
+			$item->payment_email = affwp_get_affiliate_payment_email( $item->affiliate_id );
 		}
+	}
 
-		return $processed;
+	/**
+	 * Handler for the 'user_login' field.
+	 *
+	 * @since 1.9
+	 * @access protected
+	 *
+	 * @param AffWP_Affiliate &$item Affiliate object (passed by reference).
+	 */
+	protected function user_login_field( &$item ) {
+		$user = get_userdata( $item->user_id );
+		$item->user_login = $user->user_login;
 	}
 
 	/**
