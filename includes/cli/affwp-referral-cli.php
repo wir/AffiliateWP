@@ -212,6 +212,8 @@ class AffWP_Referral_CLI extends AffWP_Object_CLI {
 	public function list_( $_, $assoc_args ) {
 		$formatter = $this->get_formatter( $assoc_args );
 
+		$fields = $this->get_fields( $assoc_args );
+
 		$defaults = array(
 			'order'   => 'ASC',
 		);
@@ -224,7 +226,7 @@ class AffWP_Referral_CLI extends AffWP_Object_CLI {
 			WP_CLI::line( sprintf( __( 'Number of referrals: %d', 'affiliate-wp' ), $affiliates ) );
 		} else {
 			$referrals = affiliate_wp()->referrals->get_referrals( $args );
-			$referrals = $this->process_extra_fields( array( 'ID', 'date', 'affiliate_name' ), $referrals );
+			$referrals = $this->process_extra_fields( $fields, $referrals );
 
 			$formatter->display_items( $referrals );
 		}
