@@ -99,7 +99,11 @@ class AffWP_Referral_CLI extends AffWP_Object_CLI {
 		if ( empty( $args[0] ) ) {
 			WP_CLI::error( __( 'A valid affiliate username or ID must be specified as the first argument.', 'affiliate-wp' ) );
 		} else {
-			$affiliate = affwp_get_affiliate( $args[0] );
+			if ( is_numeric( $args[0] ) ) {
+				$affiliate = affwp_get_affiliate( $args[0] );
+			} else {
+				$affiliate = $this->get_affiliate_by_username( $args[0] );
+			}
 
 			if ( ! $affiliate ) {
 				WP_CLI::error( sprintf( __( 'An affiliate with the ID or username "%s" does not exist. See wp affwp affiliate create for adding affiliates.', 'affiliate-wp' ), $args[0] ) );
