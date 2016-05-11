@@ -137,6 +137,31 @@ class AffWP_Referral_CLI extends AffWP_Object_CLI {
 	/**
 	 * Updates a referral.
 	 *
+	 * ## OPTIONS
+	 *
+	 * <referral_id>
+	 * : Referral ID.
+	 *
+	 * [--affiliate_id=<id>]
+	 * : Affiliate ID.
+	 *
+	 * [--amount=<number>]
+	 * : Referral amount.
+	 *
+	 * [--description=<description>]
+	 * : Referral description.
+	 *
+	 * [--reference=<reference>]
+	 * : Referral reference (usually product information).
+	 *
+	 * [--context=<context>]
+	 * : Referral context (usually related to the integration, e.g. woocommerce)
+	 *
+	 * [--status=<status>]
+	 * : Referral status. Accepts 'unpaid', 'paid', 'pending', or 'rejected'.
+	 *
+	 * ## EXAMPLES
+	 *
 	 * @since 1.9
 	 * @access public
 	 *
