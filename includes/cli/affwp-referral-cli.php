@@ -287,7 +287,7 @@ class AffWP_Referral_CLI extends AffWP_Object_CLI {
 		$fields = $this->get_fields( $assoc_args );
 
 		$defaults = array(
-			'order'   => 'ASC',
+			'order' => 'ASC',
 		);
 
 		$args = array_merge( $defaults, $assoc_args );
