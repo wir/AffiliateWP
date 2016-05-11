@@ -124,9 +124,10 @@ class AffWP_Referral_CLI extends AffWP_Object_CLI {
 			$status = 'pending';
 		}
 
-		$referral = affwp_add_referral( $data );
+		$referral_id = affwp_add_referral( $data );
 
-		if ( $referral ) {
+		if ( $referral_id ) {
+			$referral = affwp_get_referral( $referral_id );
 			WP_CLI::success( sprintf( __( 'A referral with the ID "%d" has been created.', 'affiliate-wp' ), $referral->referral_id ) );
 		} else {
 			WP_CLI::error( __( 'The referral could not be added.', 'affiliate-wp' ) );
