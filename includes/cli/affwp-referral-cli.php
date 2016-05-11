@@ -140,6 +140,30 @@ class AffWP_Referral_CLI extends AffWP_Object_CLI {
 	 * @param array $assoc_args Associated arguments (flags).
 	 */
 	public function update( $args, $assoc_args ) {
+		if ( empty( $args[0] ) || ! is_numeric( $args[0] ) ) {
+			WP_CLI::error( __( 'A valid referral ID is required to proceed.', 'affiliate-wp' ) );
+		} else {
+			$referral = affwp_get_referral( $args[0] );
+		}
+
+		if ( ! $referral ) {
+			WP_CLI::error( __( 'A valid referral ID is required to proceed.', 'affiliate-wp' ) );
+		}
+
+		$data['affiliate_id'] = WP_CLI\Utils\get_flag_value( $assoc_args, 'affiliate_id', $referral->affiliate_id );
+		$data['amount']       = WP_CLI\Utils\get_flag_value( $assoc_args, 'amount',       $referral->amount       );
+		$data['description']  = WP_CLI\Utils\get_flag_value( $assoc_args, 'description',  $referral->description  );
+		$data['reference']    = WP_CLI\Utils\get_flag_value( $assoc_args, 'reference',    $referral->reference    );
+		$data['context']      = WP_CLI\Utils\get_flag_value( $assoc_args, 'context',      $referral->context      );
+		$data['status']       = WP_CLI\Utils\get_flag_value( $assoc_args, 'status',       $referral->status       );
+
+		$update = affiliate_wp()->referrals->update( $referral->referral_id, $data );
+
+		if ( $update ) {
+			WP_CLI::success( __( 'The referral was updated successfully.', 'affiliate-wp' ) );
+		} else {
+			WP_CLI::error( __( 'The referral could not be updated', 'affiliate-wp' ) );
+		}
 
 	}
 
