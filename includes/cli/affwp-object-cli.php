@@ -113,7 +113,7 @@ abstract class AffWP_Object_CLI extends \WP_CLI\CommandWithDBObject {
 
 		foreach ( $items as $item ) {
 			foreach ( $fields as $field ) {
-				// Handle field special cases. Methods should be named {$field}_field( &$item ).
+				// Handle field special cases. Methods should follow the pattern: {$field}_field( &$item ).
 				$method = "{$field}_field";
 				if ( method_exists( $this, $method ) ) {
 					$this->$method( $item );
