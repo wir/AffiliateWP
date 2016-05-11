@@ -106,11 +106,15 @@ class AffWP_Referral_CLI extends AffWP_Object_CLI {
 			}
 
 			// Grab flag values.
-			$amount      = WP_CLI\Utils\get_flag_value( $assoc_args, 'amount' );
+			$amount      = WP_CLI\Utils\get_flag_value( $assoc_args, 'amount'      );
 			$description = WP_CLI\Utils\get_flag_value( $assoc_args, 'description' );
-			$reference   = WP_CLI\Utils\get_flag_value( $assoc_args, 'reference' );
-			$context     = WP_CLI\Utils\get_flag_value( $assoc_args, 'context' );
-			$status      = WP_CLI\Utils\get_flag_value( $assoc_args, 'status' );
+			$reference   = WP_CLI\Utils\get_flag_value( $assoc_args, 'reference'   );
+			$context     = WP_CLI\Utils\get_flag_value( $assoc_args, 'context'     );
+			$status      = WP_CLI\Utils\get_flag_value( $assoc_args, 'status'      );
+		}
+
+		if ( ! in_array( $status, array( 'unpaid', 'paid', 'pending', 'rejected' ) ) ) {
+			$status = 'pending';
 		}
 
 		$referral = affwp_add_referral( array(
