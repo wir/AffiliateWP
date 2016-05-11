@@ -106,11 +106,11 @@ class AffWP_Referral_CLI extends AffWP_Object_CLI {
 			}
 
 			// Grab flag values.
-			$data['amount']       = WP_CLI\Utils\get_flag_value( $assoc_args, 'amount'      );
-			$data['description']  = WP_CLI\Utils\get_flag_value( $assoc_args, 'description' );
-			$data['reference']    = WP_CLI\Utils\get_flag_value( $assoc_args, 'reference'   );
-			$data['context']      = WP_CLI\Utils\get_flag_value( $assoc_args, 'context'     );
-			$data['status']       = WP_CLI\Utils\get_flag_value( $assoc_args, 'status'      );
+			$data['amount']       = WP_CLI\Utils\get_flag_value( $assoc_args, 'amount'     , '' );
+			$data['description']  = WP_CLI\Utils\get_flag_value( $assoc_args, 'description', '' );
+			$data['reference']    = WP_CLI\Utils\get_flag_value( $assoc_args, 'reference'  , '' );
+			$data['context']      = WP_CLI\Utils\get_flag_value( $assoc_args, 'context'    , '' );
+			$data['status']       = WP_CLI\Utils\get_flag_value( $assoc_args, 'status'     , '' );
 			$data['affiliate_id'] = $affiliate->affiliate_id;
 			$data['user_id']      = $affiliate->user_id;
 
