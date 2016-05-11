@@ -223,6 +223,11 @@ class AffWP_Referral_CLI extends AffWP_Object_CLI {
 	 * <referral_id>
 	 * : Referral ID.
 	 *
+	 * ## EXAMPLES
+	 *
+	 *     # Deletes the referral with ID 20
+	 *     wp affwp referral delete 20
+	 *
 	 * @since 1.9
 	 * @access public
 	 *
