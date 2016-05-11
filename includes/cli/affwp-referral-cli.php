@@ -137,8 +137,8 @@ class AffWP_Referral_CLI extends AffWP_Object_CLI {
 	 * <referral_id>
 	 * : Referral ID.
 	 *
-	 * [--affiliate_id=<id>]
-	 * : Affiliate ID.
+	 * [--affiliate=<username|affiliate_id>]
+	 * : Affiliate ID or username.
 	 *
 	 * [--amount=<number>]
 	 * : Referral amount.
@@ -157,6 +157,15 @@ class AffWP_Referral_CLI extends AffWP_Object_CLI {
 	 *
 	 * ## EXAMPLES
 	 *
+	 *     # Updates referral ID 120 with an amount of $1
+	 *     wp affwp referral update 120 --amount=1
+	 *
+	 *     # Updates referral ID 33 with a status of 'paid'
+	 *     wp affwp referral update 33 --status=paid
+	 *
+	 *     # Updates referral ID 50 to belong to affiliate username woouser1
+	 *     wp affwp referral update 50 --affiliate=woouser1
+	 *
 	 * @since 1.9
 	 * @access public
 	 *
@@ -174,7 +183,22 @@ class AffWP_Referral_CLI extends AffWP_Object_CLI {
 			WP_CLI::error( __( 'A valid referral ID is required to proceed.', 'affiliate-wp' ) );
 		}
 
-		$data['affiliate_id'] = WP_CLI\Utils\get_flag_value( $assoc_args, 'affiliate_id', $referral->affiliate_id );
+		$affiliate = WP_CLI\Utils\get_flag_value( $assoc_args, 'affiliate' );
+
+		if ( $affiliate ) {
+			if ( is_numeric( $affiliate ) ) {
+				$_affiliate = affwp_get_affiliate( $affiliate );
+			} else {
+				$_affiliate = $this->get_affiliate_by_username( $affiliate );
+			}
+
+			if ( ! $_affiliate ) {
+				WP_CLI::error( __( 'Invalid affiliate username or ID.', 'affiliate-wp' ) );
+			}
+
+			$data['affiliate_id'] = $affiliate->affiliate_id;
+		}
+
 		$data['amount']       = WP_CLI\Utils\get_flag_value( $assoc_args, 'amount',       $referral->amount       );
 		$data['description']  = WP_CLI\Utils\get_flag_value( $assoc_args, 'description',  $referral->description  );
 		$data['reference']    = WP_CLI\Utils\get_flag_value( $assoc_args, 'reference',    $referral->reference    );
