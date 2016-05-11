@@ -431,26 +431,5 @@ class AffWP_Affiliate_CLI extends AffWP_Object_CLI {
 		$user = get_userdata( $item->user_id );
 		$item->user_login = $user->user_login;
 	}
-
-	/**
-	 * Retrieves an affiliate by username.
-	 *
-	 * @since 1.9
-	 * @access protected
-	 *
-	 * @param string $username Username.
-	 * @return AffWP_Affiliate|false Affiliate object on success, false otherwise.
-	 */
-	protected function get_affiliate_by_username( $username ) {
-		$user = get_user_by( 'login', $username );
-
-		if ( $user ) {
-			$affiliate = affiliate_wp()->affiliates->get_by( 'user_id', $user->ID );
-		} else {
-			$affiliate = false;
-		}
-
-		return $affiliate;
-	}
 }
 WP_CLI::add_command( 'affwp affiliate', 'AffWP_Affiliate_CLI' );
