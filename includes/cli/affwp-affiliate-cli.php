@@ -142,7 +142,7 @@ class AffWP_Affiliate_CLI extends AffWP_Object_CLI {
 		$data['earnings']      = \WP_CLI\Utils\get_flag_value( $assoc_args, 'earnings'     , 0  );
 		$data['referrals']     = \WP_CLI\Utils\get_flag_value( $assoc_args, 'referrals'    , 0  );
 		$data['visits']        = \WP_CLI\Utils\get_flag_value( $assoc_args, 'visits'       , 0  );
-		$data['user_id']       = $user->ID
+		$data['user_id']       = $user->ID;
 
 		// Add the affiliate.
 		$affiliate = affwp_add_affiliate( $data );
