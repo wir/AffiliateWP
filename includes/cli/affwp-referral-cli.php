@@ -218,14 +218,37 @@ class AffWP_Referral_CLI extends AffWP_Object_CLI {
 	/**
 	 * Deletes a referral.
 	 *
+	 * ## OPTIONS
+	 *
+	 * <referral_id>
+	 * : Referral ID.
+	 *
 	 * @since 1.9
 	 * @access public
 	 *
 	 * @param array $args       Top-level arguments.
-	 * @param array $assoc_args Associated arguments (flags).
+	 * @param array $assoc_args Associated arguments (flags, unused).
 	 */
 	public function delete( $args, $assoc_args ) {
+		if ( empty( $args[0] ) || ! is_numeric( $args[0] ) ) {
+			WP_CLI::error( __( 'A valid referral ID is required to proceed.', 'affiliate-wp' ) );
+		} else {
+			$referral = affwp_get_referral( $args[0] );
+		}
 
+		if ( ! $referral ) {
+			WP_CLI::error( __( 'A valid referral ID is required to proceed.', 'affiliate-wp' ) );
+		}
+
+		WP_CLI::confirm( __( 'Are you sure you want to delete this referral?', 'affiliate-wp' ), $assoc_args );
+
+		$deleted = affwp_delete_referral( $referral );
+
+		if ( $deleted ) {
+			WP_CLI::success( __( 'The referral has been successfully deleted.', 'affiliate-wp' ) );
+		} else {
+			WP_CLI::error( __( 'The referral could not be deleted.', 'affiliate-wp' ) );
+		}
 	}
 
 	/**
