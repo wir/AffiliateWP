@@ -182,7 +182,13 @@ function affwp_get_affiliate( $affiliate ) {
 	} elseif ( is_numeric( $affiliate ) ) {
 		$affiliate_id = absint( $affiliate );
 	} else {
-		return false;
+		if ( $user = get_user_by( 'login', $affiliate ) ) {
+			if ( $affiliate = affiliate_wp()->affiliates->get_by( 'user_id', $user->ID ) ) {
+				$affiliate_id = $affiliate->affiliate_id;
+			}
+		} else {
+			return false;
+		}
 	}
 
 	$cache_key = md5( 'affwp_get_affiliate' . $affiliate_id );
