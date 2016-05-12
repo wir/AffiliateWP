@@ -326,9 +326,9 @@ class AffWP_Referral_CLI extends AffWP_Object_CLI {
 		$args = array_merge( $defaults, $assoc_args );
 
 		if ( 'count' == $formatter->format ) {
-			$affiliates = affiliate_wp()->referrals->get_referrals( $args, $count = true );
+			$referrals = affiliate_wp()->referrals->get_referrals( $args, $count = true );
 
-			WP_CLI::line( sprintf( __( 'Number of referrals: %d', 'affiliate-wp' ), $affiliates ) );
+			WP_CLI::line( sprintf( __( 'Number of referrals: %d', 'affiliate-wp' ), $referrals ) );
 		} else {
 			$referrals = affiliate_wp()->referrals->get_referrals( $args );
 			$referrals = $this->process_extra_fields( $fields, $referrals );
