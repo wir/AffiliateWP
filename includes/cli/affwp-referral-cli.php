@@ -98,21 +98,20 @@ class AffWP_Referral_CLI extends AffWP_Object_CLI {
 	public function create( $args, $assoc_args ) {
 		if ( empty( $args[0] ) ) {
 			WP_CLI::error( __( 'A valid affiliate username or ID must be specified as the first argument.', 'affiliate-wp' ) );
-		} else {
-			if ( ! $affiliate = affwp_get_affiliate( $args[0] ) ) {
-				WP_CLI::error( sprintf( __( 'An affiliate with the ID or username "%s" does not exist. See wp affwp affiliate create for adding affiliates.', 'affiliate-wp' ), $args[0] ) );
-			}
-
-			// Grab flag values.
-			$data['amount']       = WP_CLI\Utils\get_flag_value( $assoc_args, 'amount'     , '' );
-			$data['description']  = WP_CLI\Utils\get_flag_value( $assoc_args, 'description', '' );
-			$data['reference']    = WP_CLI\Utils\get_flag_value( $assoc_args, 'reference'  , '' );
-			$data['context']      = WP_CLI\Utils\get_flag_value( $assoc_args, 'context'    , '' );
-			$data['status']       = WP_CLI\Utils\get_flag_value( $assoc_args, 'status'     , '' );
-			$data['affiliate_id'] = $affiliate->affiliate_id;
-			$data['user_id']      = $affiliate->user_id;
-
 		}
+
+		if ( ! $affiliate = affwp_get_affiliate( $args[0] ) ) {
+			WP_CLI::error( sprintf( __( 'An affiliate with the ID or username "%s" does not exist. See wp affwp affiliate create for adding affiliates.', 'affiliate-wp' ), $args[0] ) );
+		}
+
+		// Grab flag values.
+		$data['amount']       = WP_CLI\Utils\get_flag_value( $assoc_args, 'amount'     , '' );
+		$data['description']  = WP_CLI\Utils\get_flag_value( $assoc_args, 'description', '' );
+		$data['reference']    = WP_CLI\Utils\get_flag_value( $assoc_args, 'reference'  , '' );
+		$data['context']      = WP_CLI\Utils\get_flag_value( $assoc_args, 'context'    , '' );
+		$data['status']       = WP_CLI\Utils\get_flag_value( $assoc_args, 'status'     , '' );
+		$data['affiliate_id'] = $affiliate->affiliate_id;
+		$data['user_id']      = $affiliate->user_id;
 
 		if ( ! in_array( $status, array( 'unpaid', 'paid', 'pending', 'rejected' ) ) ) {
 			$status = 'pending';
