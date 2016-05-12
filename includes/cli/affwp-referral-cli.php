@@ -99,13 +99,7 @@ class AffWP_Referral_CLI extends AffWP_Object_CLI {
 		if ( empty( $args[0] ) ) {
 			WP_CLI::error( __( 'A valid affiliate username or ID must be specified as the first argument.', 'affiliate-wp' ) );
 		} else {
-			if ( is_numeric( $args[0] ) ) {
-				$affiliate = affwp_get_affiliate( $args[0] );
-			} else {
-				$affiliate = $this->get_affiliate_by_username( $args[0] );
-			}
-
-			if ( ! $affiliate ) {
+			if ( ! $affiliate = affwp_get_affiliate( $args[0] ) ) {
 				WP_CLI::error( sprintf( __( 'An affiliate with the ID or username "%s" does not exist. See wp affwp affiliate create for adding affiliates.', 'affiliate-wp' ), $args[0] ) );
 			}
 
@@ -188,19 +182,11 @@ class AffWP_Referral_CLI extends AffWP_Object_CLI {
 			WP_CLI::error( __( 'A valid referral ID is required to proceed.', 'affiliate-wp' ) );
 		}
 
-		$affiliate = WP_CLI\Utils\get_flag_value( $assoc_args, 'affiliate' );
+		$affiliate = WP_CLI\Utils\get_flag_value( $assoc_args, 'affiliate', $referral->affiliate_id );
 
-		if ( $affiliate ) {
-			if ( is_numeric( $affiliate ) ) {
-				$_affiliate = affwp_get_affiliate( $affiliate );
-			} else {
-				$_affiliate = $this->get_affiliate_by_username( $affiliate );
-			}
-
-			if ( ! $_affiliate ) {
-				WP_CLI::error( __( 'Invalid affiliate username or ID.', 'affiliate-wp' ) );
-			}
-
+		if ( ! $affiliate = affwp_get_affiliate( $affiliate ) ) {
+			WP_CLI::error( __( 'A valid affiliate username or ID is required to proceed.', 'affiliate-wp' ) );
+		} else {
 			$data['affiliate_id'] = $affiliate->affiliate_id;
 		}
 
@@ -242,11 +228,9 @@ class AffWP_Referral_CLI extends AffWP_Object_CLI {
 	public function delete( $args, $assoc_args ) {
 		if ( empty( $args[0] ) || ! is_numeric( $args[0] ) ) {
 			WP_CLI::error( __( 'A valid referral ID is required to proceed.', 'affiliate-wp' ) );
-		} else {
-			$referral = affwp_get_referral( $args[0] );
 		}
 
-		if ( ! $referral ) {
+		if ( ! $referral = affwp_get_referral( $args[0] ) ) {
 			WP_CLI::error( __( 'A valid referral ID is required to proceed.', 'affiliate-wp' ) );
 		}
 

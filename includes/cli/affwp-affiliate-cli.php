@@ -118,13 +118,9 @@ class AffWP_Affiliate_CLI extends AffWP_Object_CLI {
 		if ( empty( $args[0] ) ) {
 			WP_CLI::error( __( 'A valid username must be specified as the first argument.', 'affiliate-wp' ) );
 		} else {
-			if ( is_numeric( $args[0] ) ) {
-				$user = get_user_by( 'id', $args[0] );
-			} else {
-				$user = get_user_by( 'login', $args[0] );
-			}
+			$field = is_numeric( $args[0] ) ? 'id' : 'login';
 
-			if ( ! $user ) {
+			if ( ! $user = get_user_by( $field, $args[0] ) ) {
 				WP_CLI::error( sprintf( __( 'A user with the ID or username "%s" does not exist. See wp help user create for registering new users.', 'affiliate-wp' ), $args[0] ) );
 			}
 		}
@@ -196,17 +192,11 @@ class AffWP_Affiliate_CLI extends AffWP_Object_CLI {
 	 */
 	public function update( $args, $assoc_args ) {
 		if ( empty( $args[0] ) ) {
-			WP_CLI::error( __( 'An affiliate username or ID is required.', 'affiliate-wp' ) );
-		} else {
-			if ( is_numeric( $args[0] ) ) {
-				$affiliate = affwp_get_affiliate( $args[0] );
-			} else {
-				$affiliate = $this->get_affiliate_by_username( $args[0] );
-			}
+			WP_CLI::error( __( 'A valid affiliate username or ID is required to proceed.', 'affiliate-wp' ) );
+		}
 
-			if ( ! $affiliate ) {
-				WP_CLI::error( __( 'Invalid affiliate username or ID.', 'affiliate-wp' ) );
-			}
+		if ( ! $affiliate = affwp_get_affiliate( $args[0] ) ) {
+			WP_CLI::error( __( 'A valid affiliate username or ID is required to proceed.', 'affiliate-wp' ) );
 		}
 
 		$data['affiliate_id']  = $affiliate->affiliate_id;
@@ -263,17 +253,11 @@ class AffWP_Affiliate_CLI extends AffWP_Object_CLI {
 	 */
 	public function delete( $args, $assoc_args ) {
 		if ( empty( $args[0] ) ) {
-			WP_CLI::error( __( 'An affiliate username or ID is required.', 'affiliate-wp' ) );
-		} else {
-			if ( is_numeric( $args[0] ) ) {
-				$affiliate = affwp_get_affiliate( $args[0] );
-			} else {
-				$affiliate = $this->get_affiliate_by_username( $args[0] );
-			}
+			WP_CLI::error( __( 'A valid affiliate username or ID is required to proceed.', 'affiliate-wp' ) );
 		}
 
-		if ( ! $affiliate ) {
-			WP_CLI::error( __( 'Invalid affiliate username or ID.', 'affiliate-wp' ) );
+		if ( ! $affiliate = affwp_get_affiliate( $args[0] ) ) {
+			WP_CLI::error( __( 'A valid affiliate username or ID is required to proceed.', 'affiliate-wp' ) );
 		}
 
 		$delete_data = \WP_CLI\Utils\get_flag_value( $assoc_args, 'delete_data', false );
