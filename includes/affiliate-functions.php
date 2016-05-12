@@ -171,6 +171,7 @@ function affwp_get_affiliate_user_id( $affiliate ) {
  * Retrieves the affiliate object
  *
  * @since 1.0
+ * @since 1.9 Affiliates can now also be retrieved by username
  *
  * @param int|stdClass $affiliate Affiliate ID or object.
  * @return stdClass|false Affiliate object if found, otherwise false.
