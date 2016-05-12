@@ -273,9 +273,9 @@ class AffWP_Creative_CLI extends AffWP_Object_CLI {
 		$args = array_merge( $defaults, $assoc_args );
 
 		if ( 'count' == $formatter->format ) {
-			$affiliates = affiliate_wp()->creatives->get_creatives( $args, $count = true );
+			$creatives = affiliate_wp()->creatives->get_creatives( $args, $count = true );
 
-			WP_CLI::line( sprintf( __( 'Number of creatives: %d', 'affiliate-wp' ), $affiliates ) );
+			WP_CLI::line( sprintf( __( 'Number of creatives: %d', 'affiliate-wp' ), $creatives ) );
 		} else {
 			$creatives = affiliate_wp()->creatives->get_creatives( $args );
 			$creatives = $this->process_extra_fields( $fields, $creatives );
