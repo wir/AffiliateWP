@@ -185,6 +185,8 @@ function affwp_get_affiliate( $affiliate ) {
 		if ( $user = get_user_by( 'login', $affiliate ) ) {
 			if ( $affiliate = affiliate_wp()->affiliates->get_by( 'user_id', $user->ID ) ) {
 				$affiliate_id = $affiliate->affiliate_id;
+			} else {
+				return false;
 			}
 		} else {
 			return false;
