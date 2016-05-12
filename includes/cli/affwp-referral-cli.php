@@ -173,11 +173,9 @@ class AffWP_Referral_CLI extends AffWP_Object_CLI {
 	public function update( $args, $assoc_args ) {
 		if ( empty( $args[0] ) || ! is_numeric( $args[0] ) ) {
 			WP_CLI::error( __( 'A valid referral ID is required to proceed.', 'affiliate-wp' ) );
-		} else {
-			$referral = affwp_get_referral( $args[0] );
 		}
 
-		if ( ! $referral ) {
+		if ( ! $referral = affwp_get_referral( $args[0] ) ) {
 			WP_CLI::error( __( 'A valid referral ID is required to proceed.', 'affiliate-wp' ) );
 		}
 
