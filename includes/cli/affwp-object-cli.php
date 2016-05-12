@@ -150,25 +150,4 @@ abstract class AffWP_Object_CLI extends \WP_CLI\CommandWithDBObject {
 		return $fields;
 	}
 
-	/**
-	 * Retrieves an affiliate by username.
-	 *
-	 * @since 1.9
-	 * @access protected
-	 *
-	 * @param string $username Username.
-	 * @return AffWP_Affiliate|false Affiliate object on success, false otherwise.
-	 */
-	protected function get_affiliate_by_username( $username ) {
-		$user = get_user_by( 'login', $username );
-
-		if ( $user ) {
-			$affiliate = affiliate_wp()->affiliates->get_by( 'user_id', $user->ID );
-		} else {
-			$affiliate = false;
-		}
-
-		return $affiliate;
-	}
-
 }
