@@ -355,9 +355,11 @@ final class Affiliate_WP {
 
 			require_once AFFILIATEWP_PLUGIN_DIR . 'includes/cli/utilities/affiliate-fetcher.php';
 			require_once AFFILIATEWP_PLUGIN_DIR . 'includes/cli/utilities/referral-fetcher.php';
+			require_once AFFILIATEWP_PLUGIN_DIR . 'includes/cli/utilities/creative-fetcher.php';
 
 			require_once AFFILIATEWP_PLUGIN_DIR . 'includes/cli/affwp-affiliate-cli.php';
 			require_once AFFILIATEWP_PLUGIN_DIR . 'includes/cli/affwp-referral-cli.php';
+			require_once AFFILIATEWP_PLUGIN_DIR . 'includes/cli/affwp-creative-cli.php';
 		}
 	}
 
