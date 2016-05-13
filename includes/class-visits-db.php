@@ -297,16 +297,16 @@ class Affiliate_WP_Visits_DB extends Affiliate_WP_DB {
 				$data['affiliate_id'] = $visit->affiliate_id;
 			}
 		}
-		if ( $updated = $this->update( $visit_id, $data, '', 'visit' ) ) {
-			$_visit = affiliate_wp()->visits->get( $updated );
+		if ( $this->update( $visit_id, $data, '', 'visit' ) ) {
+			$updated_visit = affiliate_wp()->visits->get( $visit_id );
 
 			// Handle visit counts if the affiliate was changed.
-			if ( $_visit->affiliate_id != $visit->affiliate_id ) {
+			if ( $updated_visit->affiliate_id !== $visit->affiliate_id ) {
 				affwp_decrease_affiliate_visit_count( $visit->affiliate_id );
-				affwp_increase_affiliate_visit_count( $_visit->affiliate_id );
+				affwp_increase_affiliate_visit_count( $updated_visit->affiliate_id );
 			}
 
-			return $updated;
+			return $visit_id;
 		}
 
 		return false;
