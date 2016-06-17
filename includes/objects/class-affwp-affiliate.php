@@ -54,7 +54,7 @@ final class Affiliate extends Object {
 	 * @access protected
 	 * @var string
 	 *
-	 * @see AffWP_Affiliate::get_rate()
+	 * @see Affiliate::get_rate()
 	 */
 	protected $rate;
 
@@ -65,7 +65,7 @@ final class Affiliate extends Object {
 	 * @access protected
 	 * @var string
 	 *
-	 * @see AffWP_Affiliate::get_rate_type()
+	 * @see Affiliate::get_rate_type()
 	 */
 	protected $rate_type;
 
@@ -131,7 +131,7 @@ final class Affiliate extends Object {
 	 * @static
 	 * @var string
 	 *
-	 * @see AffWP_Object::get_cache_key()
+	 * @see AffiliateWP\Object::get_cache_key()
 	 */
 	public static $cache_token = 'affwp_affiliates';
 
@@ -188,7 +188,7 @@ final class Affiliate extends Object {
 	 * @since 1.9
 	 * @access public
 	 *
-	 * @param AffWP_Affiliate $affiliate Affiliate object.
+	 * @param Affiliate $affiliate Affiliate object.
 	 */
 	public function __construct( $affiliate ) {
 		parent::__construct( $affiliate );

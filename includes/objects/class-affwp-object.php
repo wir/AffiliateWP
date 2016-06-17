@@ -84,7 +84,7 @@ abstract class Object {
 	 * @access public
 	 * @static
 	 *
-	 * @see AFfWP_Object::get_instance()
+	 * @see Object::get_instance()
 	 * @see affwp_clean_item_cache()
 	 *
 	 * @param int $object_id Object ID.

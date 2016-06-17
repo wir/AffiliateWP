@@ -109,7 +109,7 @@ final class Creative extends Object {
 	 * @static
 	 * @var string
 	 *
-	 * @see AffWP_Object::get_cache_key()
+	 * @see AffWP\Object::get_cache_key()
 	 */
 	public static $cache_token = 'affwp_creatives';
 
@@ -165,7 +165,7 @@ final class Creative extends Object {
 	 * @since 1.9
 	 * @access public
 	 *
-	 * @param AffWP_Creative $creative Creative object.
+	 * @param Creative $creative Creative object.
 	 */
 	public function __construct( $creative ) {
 		parent::__construct( $creative );

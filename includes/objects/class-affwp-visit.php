@@ -109,7 +109,7 @@ final class Visit extends Object {
 	 * @static
 	 * @var string
 	 *
-	 * @see AffWP_Object::get_cache_key()
+	 * @see AffWP\Object::get_cache_key()
 	 */
 	public static $cache_token = 'affwp_visits';
 
@@ -165,7 +165,7 @@ final class Visit extends Object {
 	 * @since 1.9
 	 * @access public
 	 *
-	 * @param AffWP_Visit $visit Visit object.
+	 * @param Visit $visit Visit object.
 	 */
 	public function __construct( $visit ) {
 		parent::__construct( $visit );
