@@ -1,6 +1,6 @@
 <?php
 /**
- * Objects: AffWP_Referral class
+ * Objects: Referral
  *
  * @package AffiliateWP
  * @category Core
@@ -8,15 +8,17 @@
  * @since 1.9
  */
 
+namespace AffWP;
+
 /**
  * Implements a referral object.
  *
  * @since 1,9
  *
- * @see AffWP_Object
+ * @see AffWP\Object
  * @see affwp_get_referral()
  */
-final class AffWP_Referral extends AffWP_Object {
+final class Referral extends Object {
 
 	/**
 	 * Referral ID.

@@ -21,7 +21,7 @@ class Affiliate_WP_Referrals_DB extends Affiliate_WP_DB  {
 	 * @access public
 	 * @var string
 	 */
-	public $query_object_type = 'AffWP_Referral';
+	public $query_object_type = 'AffWP\Referral';
 
 	/**
 	 * Get things started

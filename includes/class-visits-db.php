@@ -21,7 +21,7 @@ class Affiliate_WP_Visits_DB extends Affiliate_WP_DB {
 	 * @access public
 	 * @var string
 	 */
-	public $query_object_type = 'AffWP_Visit';
+	public $query_object_type = 'AffWP\Visit';
 
 	public function __construct() {
 		global $wpdb;

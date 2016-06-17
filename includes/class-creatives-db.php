@@ -21,7 +21,7 @@ class Affiliate_WP_Creatives_DB extends Affiliate_WP_DB {
 	 * @access public
 	 * @var string
 	 */
-	public $query_object_type = 'AffWP_Creative';
+	public $query_object_type = 'AffWP\Creative';
 
 	/**
 	 * Get things started

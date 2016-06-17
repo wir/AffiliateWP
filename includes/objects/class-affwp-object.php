@@ -1,6 +1,6 @@
 <?php
 /**
- * Objects: Base AffWP_Object class
+ * Objects: Base Object
  *
  * @package AffiliateWP
  * @category Core
@@ -8,13 +8,15 @@
  * @since 1.9
  */
 
+namespace AffWP;
+
 /**
  * Implements a base object to be extended by core objects.
  *
  * @since 1.9
  * @abstract
  */
-abstract class AffWP_Object {
+abstract class Object {
 
 	/**
 	 * Whether the object members have been filled.

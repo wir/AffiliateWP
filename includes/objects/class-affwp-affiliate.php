@@ -1,6 +1,6 @@
 <?php
 /**
- * Objects: AffWP_Affiliate class
+ * Objects: Affiliate
  *
  * @package AffiliateWP
  * @category Core
@@ -8,15 +8,17 @@
  * @since 1.9
  */
 
+namespace AffWP;
+
 /**
  * Implements an affiliate object.
  *
  * @since 1,9
  *
- * @see AffWP_Object
+ * @see AffWP\Object
  * @see affwp_get_affiliate()
  */
-final class AffWP_Affiliate extends AffWP_Object {
+final class Affiliate extends Object {
 
 	/**
 	 * Affiliate ID.
