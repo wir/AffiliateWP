@@ -69,7 +69,6 @@ abstract class AffWP_Object {
 			$_object = self::fill_vars( $_object );
 
 			wp_cache_add( $cache_key, $_object, $cache_group );
-
 		} elseif ( empty( $_object->filled ) ) {
 			$_object = self::fill_vars( $_object );
 		}
@@ -82,6 +81,9 @@ abstract class AffWP_Object {
 	 * @since 1.9
 	 * @access public
 	 * @static
+	 *
+	 * @see AFfWP_Object::get_instance()
+	 * @see affwp_clean_item_cache()
 	 *
 	 * @param int $object_id Object ID.
 	 * @return string Cache key for the object type and ID.

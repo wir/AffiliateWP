@@ -49,28 +49,32 @@ final class AffWP_Affiliate extends AffWP_Object {
 	 * Affiliate rate.
 	 *
 	 * @since 1.9
-	 * @access public
+	 * @access protected
 	 * @var string
+	 *
+	 * @see AffWP_Affiliate::get_rate()
 	 */
-	public $rate;
+	protected $rate;
 
 	/**
 	 * Affiliate rate type.
 	 *
 	 * @since 1.9
-	 * @access public
+	 * @access protected
 	 * @var string
+	 *
+	 * @see AffWP_Affiliate::get_rate_type()
 	 */
-	public $rate_type;
+	protected $rate_type;
 
 	/**
 	 * Affiliate payment email.
 	 *
 	 * @since 1.9
-	 * @access public
+	 * @access protected
 	 * @var string
 	 */
-	public $payment_email;
+	protected $payment_email;
 
 	/**
 	 * Affiliate status.
@@ -124,6 +128,8 @@ final class AffWP_Affiliate extends AffWP_Object {
 	 * @access public
 	 * @static
 	 * @var string
+	 *
+	 * @see AffWP_Object::get_cache_key()
 	 */
 	public static $cache_token = 'affwp_affiliates';
 
@@ -285,5 +291,4 @@ final class AffWP_Affiliate extends AffWP_Object {
 	public function has_custom_rate() {
 		return empty( $this->rate ) ? false : true;
 	}
-
 }
