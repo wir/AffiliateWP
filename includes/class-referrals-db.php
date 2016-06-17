@@ -1,4 +1,5 @@
 <?php
+use AffWP\Referral as Referral;
 
 class Affiliate_WP_Referrals_DB extends Affiliate_WP_DB  {
 
@@ -52,8 +53,8 @@ class Affiliate_WP_Referrals_DB extends Affiliate_WP_DB  {
 	 *
 	 * @see Affiliate_WP_DB::get_core_object()
 	 *
-	 * @param int|object|AffWP_Referral $referral Referral ID or object.
-	 * @return AffWP_Referral|null Referral object, null otherwise.
+	 * @param int|object|Referral $referral Referral ID or object.
+	 * @return Referral|null Referral object, null otherwise.
 	 */
 	public function get_object( $referral ) {
 		return $this->get_core_object( $referral, $this->query_object_type );
@@ -155,12 +156,12 @@ class Affiliate_WP_Referrals_DB extends Affiliate_WP_DB  {
 	}
 
 	/**
-	 * Update a referral
+	 * Update a referral.
 	 *
 	 * @access  public
 	 * @since   1.5
 	 *
-	 * @param int|AffWP_Referral $referral Referral ID or object.
+	 * @param int|Referral $referral Referral ID or object.
 	*/
 	public function update_referral( $referral = 0, $data = array() ) {
 

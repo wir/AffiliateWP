@@ -1,4 +1,5 @@
 <?php
+use AffWP\Creative as Creative;
 
 class Affiliate_WP_Creatives_DB extends Affiliate_WP_DB {
 
@@ -50,8 +51,8 @@ class Affiliate_WP_Creatives_DB extends Affiliate_WP_DB {
 	 *
 	 * @see Affiliate_WP_DB::get_core_object()
 	 *
-	 * @param int|object|AffWP_Creative $creative Creative ID or object.
-	 * @return AffWP_Creative|null Creative object, null otherwise.
+	 * @param int|object|Creative $creative Creative ID or object.
+	 * @return Creative|null Creative object, null otherwise.
 	 */
 	public function get_object( $creative ) {
 		return $this->get_core_object( $creative, $this->query_object_type );

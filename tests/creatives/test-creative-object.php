@@ -2,7 +2,7 @@
 use AffWP\Creative as Creative;
 
 /**
- * Tests for AffWP_Creative
+ * Tests for AffWP\Creative
  *
  * @covers AffWP\Creative
  * @covers AffWP\Object

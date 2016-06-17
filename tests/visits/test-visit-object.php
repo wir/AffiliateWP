@@ -2,7 +2,7 @@
 use AffWP\Visit as Visit;
 
 /**
- * Tests for AffWP_Visit
+ * Tests for AffWP\Visit
  *
  * @covers AffWP\Visit
  * @covers AffWP\Object
@@ -22,7 +22,7 @@ class AffWP_Visit_Tests extends WP_UnitTestCase {
 	/**
 	 * @covers AffWP\Object::get_instance()
 	 */
-	public function test_get_instance_with_visit_id_should_return_AffWP_Visit_object() {
+	public function test_get_instance_with_visit_id_should_return_Visit_object() {
 		$user_id = $this->factory->user->create();
 
 		$affiliate_id = affiliate_wp()->affiliates->add( array(
