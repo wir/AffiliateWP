@@ -1,5 +1,5 @@
 <?php
-use AffiliateWP\Affiliate as Affiliate;
+use AffWP\Affiliate as Affiliate;
 
 /**
  * Determines if the specified user ID is an affiliate.
