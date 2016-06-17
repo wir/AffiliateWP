@@ -21,6 +21,6 @@ class AffWP_Visit_Fetcher extends WP_CLI\Fetchers\Base {
 	 * @return AffWP_Visit|false Visit object, false otherwise.
 	 */
 	public function get( $arg ) {
-		return affiliate_wp()->visits->get( $arg );
+		return affwp_get_visit( $arg );
 	}
 }

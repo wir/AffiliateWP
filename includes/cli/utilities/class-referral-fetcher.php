@@ -21,6 +21,6 @@ class AffWP_Referral_Fetcher extends WP_CLI\Fetchers\Base {
 	 * @return AffWP_Referral|false Referral object, false otherwise.
 	 */
 	public function get( $arg ) {
-		return affiliate_wp()->referrals->get( $arg );
+		return affwp_get_referral( $arg );
 	}
 }

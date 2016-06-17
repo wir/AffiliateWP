@@ -24,6 +24,6 @@ class AffWP_Affiliate_Fetcher extends WP_CLI\Fetchers\Base {
 	 * @return AffWP_Affiliate|false Affiliate object, false otherwise.
 	 */
 	public function get( $arg ) {
-		return affiliate_wp()->affiliates->get( $arg );
+		return affwp_get_affiliate( $arg );
 	}
 }
