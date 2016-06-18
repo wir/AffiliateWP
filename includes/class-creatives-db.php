@@ -167,6 +167,9 @@ class Affiliate_WP_Creatives_DB extends Affiliate_WP_DB {
 			}
 		}
 
+		// Convert to AffWP\Creative objects.
+		$results = array_map( 'affwp_get_creative', $results );
+
 		wp_cache_add( $cache_key, $results, $this->cache_group, HOUR_IN_SECONDS );
 
 		return $results;

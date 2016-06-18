@@ -335,6 +335,9 @@ class Affiliate_WP_DB_Affiliates extends Affiliate_WP_DB {
 			}
 		}
 
+		// Convert to AffWP\Affiliate objects.
+		$results = array_map( 'affwp_get_affiliate', $results );
+
 		wp_cache_add( $cache_key, $results, $this->cache_group, HOUR_IN_SECONDS );
 
 		return $results;
