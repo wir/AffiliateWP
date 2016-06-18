@@ -1,5 +1,4 @@
 <?php
-use AffWP\Affiliate as Affiliate;
 
 class Affiliate_WP_DB_Affiliates extends Affiliate_WP_DB {
 
@@ -51,8 +50,8 @@ class Affiliate_WP_DB_Affiliates extends Affiliate_WP_DB {
 	 *
 	 * @see Affiliate_WP_DB::get_core_object()
 	 *
-	 * @param int|object|Affiliate $affiliate Affiliate ID or object.
-	 * @return Affiliate|null Affiliate object, null otherwise.
+	 * @param int|object|AffWP\Affiliate $affiliate Affiliate ID or object.
+	 * @return AffWP\Affiliate|null Affiliate object, null otherwise.
 	 */
 	public function get_object( $affiliate ) {
 		return $this->get_core_object( $affiliate, $this->query_object_type );
