@@ -1,13 +1,11 @@
 <?php
-use AffWP\Creative as Creative;
-
 /**
  * Retrieves the creative object
  *
  * @since 1.1.4
  *
- * @param int|Creative $creative Creative ID or object.
- * @return Creative|false Creative object, otherwise false.
+ * @param int|AffWP\Creative $creative Creative ID or object.
+ * @return AffWP\Creative|false Creative object, otherwise false.
  */
 function affwp_get_creative( $creative = null ) {
 
@@ -100,8 +98,8 @@ function affwp_delete_creative( $creative ) {
  *
  * @since 1.0
  *
- * @param int|Creative $creative Creative ID or object.
- * @param string       $status   Optional. Status to give the creative. Default empty.
+ * @param int|AffWP\Creative $creative Creative ID or object.
+ * @param string             $status   Optional. Status to give the creative. Default empty.
  * @return bool True if the creative was updated with the new status, otherwise false.
  */
 function affwp_set_creative_status( $creative, $status = '' ) {
