@@ -131,7 +131,7 @@ final class Affiliate extends Object {
 	 * @static
 	 * @var string
 	 *
-	 * @see AffiliateWP\Object::get_cache_key()
+	 * @see AffWP\Object::get_cache_key()
 	 */
 	public static $cache_token = 'affwp_affiliates';
 
