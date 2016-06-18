@@ -1,5 +1,4 @@
 <?php
-use AffWP\Visit as Visit;
 
 class Affiliate_WP_Visits_DB extends Affiliate_WP_DB {
 
@@ -45,8 +44,8 @@ class Affiliate_WP_Visits_DB extends Affiliate_WP_DB {
 	 *
 	 * @see Affiliate_WP_DB::get_core_object()
 	 *
-	 * @param int|object|Visit $visit Visit ID or object.
-	 * @return Visit|null Visit object, null otherwise.
+	 * @param int|object|AffWP\Visit $visit Visit ID or object.
+	 * @return AffWP\Visit|null Visit object, null otherwise.
 	 */
 	public function get_object( $visit ) {
 		return $this->get_core_object( $visit, $this->query_object_type );
@@ -316,8 +315,8 @@ class Affiliate_WP_Visits_DB extends Affiliate_WP_DB {
 	 * @since 1.9
 	 * @access public
 	 *
-	 * @param int|Visit $visit_id Visit ID or object.
-	 * @param array     $data     Optional. Data array. Default empty array.
+	 * @param int|AffWP\Visit $visit_id Visit ID or object.
+	 * @param array           $data     Optional. Data array. Default empty array.
 	 * @return int|false The visit ID if successfully updated, false otherwise.
 	 */
 	public function update_visit( $visit, $data = array() ) {
