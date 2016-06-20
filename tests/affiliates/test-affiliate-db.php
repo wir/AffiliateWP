@@ -38,6 +38,26 @@ class Affiliate_DB_Tests extends WP_UnitTestCase {
 	/**
 	 * @covers Affiliate_WP_DB_Affiliates::get_affiliates()
 	 */
+	public function test_get_affiliates_should_return_array_of_Affiliate_objects_if_not_count_query() {
+		$users = $this->factory->user->create_many( 4 );
+		$affiliates = array();
+
+		// Add affiliates.
+		foreach ( $users as $user_id ) {
+			affiliate_wp()->affiliates->add( array(
+				'user_id' => $user_id
+			) );
+		}
+
+		$results = affiliate_wp()->affiliates->get_affiliates();
+
+		// Check a random affiliate.
+		$this->assertInstanceOf( 'AffWP\Affiliate', $results[ rand( 0, 3 ) ] );
+	}
+
+	/**
+	 * @covers Affiliate_WP_DB_Affiliates::get_affiliates()
+	 */
 	public function test_get_affiliates_method_should_allow_searching_by_display_name() {
 		$display_name = 'Foo';
 
