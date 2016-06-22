@@ -41,7 +41,7 @@ class CLI extends \AffWP\Object\CLI {
 	 * @see \AffWP\Affiliate\CLI\Fetcher
 	 */
 	public function __construct() {
-		$this->fetcher = new \AffWP\Affiliate\CLI\Fetcher();
+		$this->fetcher = new CLI\Fetcher();
 	}
 
 	/**
