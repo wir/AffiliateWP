@@ -333,21 +333,7 @@ function affwp_get_affiliate_rate( $affiliate = 0, $formatted = false, $product_
 	}
 
 	// Format the rate based on the type
-	switch ( $type ) {
-
-		case 'percentage' :
-
-			$rate = affwp_abs_number_round( $rate * 100 ) . '%';
-
-			break;
-
-		case 'flat' :
-
-			$rate = affwp_currency_filter( $rate );
-
-			break;
-
-	}
+	$rate = affwp_format_rate( $rate, $type );
 
 	return $rate;
 

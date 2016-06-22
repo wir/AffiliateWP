@@ -176,6 +176,30 @@ function affwp_get_decimal_count() {
 }
 
 /**
+ * Formats referral rate based on the given type.
+ *
+ * @since 1.9
+ *
+ * @param int    $rate   Referral rate.
+ * @param string $type   Optional. Rate type. Accepts 'percentage' or 'flat'. Default 'percentage'.
+ * @param bool   $decode Optional. Whether to decode HTML entities in the resulting rate string.
+ * @return string Formatted rate string.
+ */
+function affwp_format_rate( $rate, $type = 'percentage', $decode = false ) {
+	if ( 'percentage' === $type ) {
+		var_dump( $rate );
+		$rate = affwp_abs_number_round( $rate * 100 ) . '%';
+	} else {
+		$rate = affwp_currency_filter( $rate );
+	}
+
+	if ( false !== $decode ) {
+		$rate = html_entity_decode( $rate );
+	}
+	return $rate;
+}
+
+/**
  * Formats the currency display
  *
  * @since 1.0

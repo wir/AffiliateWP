@@ -2,6 +2,7 @@
 /**
  * Tests for includes/misc-functions.php
  *
+ * @group misc
  * @group functions
  */
 class Misc_Functions_Tests extends WP_UnitTestCase {
@@ -140,4 +141,17 @@ class Misc_Functions_Tests extends WP_UnitTestCase {
 		);
 	}
 
+	/**
+	 * @covers affwp_format_rate()
+	 */
+	public function test_affwp_format_rate_should_format_percentage_as_percentage() {
+		$this->assertSame( '20%', affwp_format_rate( 0.2 ) );
+	}
+
+	/**
+	 * @covers affwp_format_rate()
+	 */
+	public function test_affwp_format_rate_should_format_non_percentage_as_flat() {
+		$this->assertSame( '&#36;20', affwp_format_rate( 20, 'flat' ) );
+	}
 }
