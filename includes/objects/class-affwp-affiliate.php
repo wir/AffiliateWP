@@ -51,32 +51,32 @@ final class Affiliate extends Object {
 	 * Affiliate rate.
 	 *
 	 * @since 1.9
-	 * @access protected
+	 * @access public
 	 * @var string
 	 *
 	 * @see Affiliate::get_rate()
 	 */
-	protected $rate;
+	public $rate;
 
 	/**
 	 * Affiliate rate type.
 	 *
 	 * @since 1.9
-	 * @access protected
+	 * @access public
 	 * @var string
 	 *
 	 * @see Affiliate::get_rate_type()
 	 */
-	protected $rate_type;
+	public $rate_type;
 
 	/**
 	 * Affiliate payment email.
 	 *
 	 * @since 1.9
-	 * @access protected
+	 * @access public
 	 * @var string
 	 */
-	protected $payment_email;
+	public $payment_email;
 
 	/**
 	 * Affiliate status.
@@ -233,11 +233,11 @@ final class Affiliate extends Object {
 	 * Retrieves the affiliate rate type.
 	 *
 	 * @since 1.9
-	 * @access protected
+	 * @access public
 	 *
 	 * @return string Rate type. If empty, defaults to the global referral rate type.
 	 */
-	protected function get_rate_type() {
+	public function get_rate_type() {
 
 		if ( empty( $this->rate_type ) ) {
 			return affiliate_wp()->settings->get( 'referral_rate_type', 'percentage' );
@@ -250,11 +250,11 @@ final class Affiliate extends Object {
 	 * Retrieves the affiliate rate.
 	 *
 	 * @since 1.9
-	 * @access private
+	 * @access public
 	 *
 	 * @return int Rate. If empty, defaults to the global referral rate.
 	 */
-	private function get_rate() {
+	public function get_rate() {
 		if ( empty( $this->rate ) ) {
 			return affiliate_wp()->settings->get( 'referral_rate', 20 );
 		}
@@ -268,11 +268,11 @@ final class Affiliate extends Object {
 	 * If not set or invalid, the affiliate's account email is used instead.
 	 *
 	 * @since 1.9
-	 * @access private
+	 * @access public
 	 *
 	 * @return string Payment email.
 	 */
-	private function get_payment_email() {
+	public function get_payment_email() {
 		if ( empty( $this->payment_email ) || ! is_email( $this->payment_email ) ) {
 			$email = affwp_get_affiliate_email( $this->ID );
 		} else {
@@ -286,7 +286,7 @@ final class Affiliate extends Object {
 	 * Determines if the current affiliate has a custom rate value.
 	 *
 	 * @since 1.9
-	 * @access protected
+	 * @access public
 	 *
 	 * @return bool True if the affiliate has a custom rate, otherwise false.
 	 */
