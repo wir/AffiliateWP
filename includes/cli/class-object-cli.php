@@ -1,9 +1,18 @@
 <?php
+namespace AffWP\Object;
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-abstract class AffWP_Object_CLI extends \WP_CLI\CommandWithDBObject {
+/**
+ * Foundation superclass for AffWP CLI commands.
+ *
+ * @since 1.9
+ * @abstract
+ *
+ * @see \WP_CLI\CommandWithDBObject
+ */
+abstract class CLI extends \WP_CLI\CommandWithDBObject {
 
 	/**
 	 * Object fields.
