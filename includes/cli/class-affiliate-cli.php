@@ -1,9 +1,17 @@
 <?php
+namespace AffWP\Affiliate;
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-class AffWP_Affiliate_CLI extends AffWP_Object_CLI {
+/**
+ * Implements basic CRUD CLI sub-commands for affiliates.
+ *
+ * @since 1.9
+ *
+ * @see \AffWP\Object\CLI
+ */
+class CLI extends \AffWP\Object\CLI {
 
 	/**
 	 * Affiliate display fields.
@@ -25,9 +33,11 @@ class AffWP_Affiliate_CLI extends AffWP_Object_CLI {
 	 *
 	 * @since 1.9
 	 * @access public
+	 *
+	 * @see \AffWP\Affiliate\CLI\Fetcher
 	 */
 	public function __construct() {
-		$this->fetcher = new AffWP_Affiliate_Fetcher();
+		$this->fetcher = new \AffWP\Affiliate\CLI\Fetcher();
 	}
 
 	/**
@@ -116,18 +126,18 @@ class AffWP_Affiliate_CLI extends AffWP_Object_CLI {
 
 		// Check validity of username or ID, retrieve the user object.
 		if ( empty( $args[0] ) ) {
-			WP_CLI::error( __( 'A valid username must be specified as the first argument.', 'affiliate-wp' ) );
+			\WP_CLI::error( __( 'A valid username must be specified as the first argument.', 'affiliate-wp' ) );
 		} else {
 			$field = is_numeric( $args[0] ) ? 'id' : 'login';
 
 			if ( ! $user = get_user_by( $field, $args[0] ) ) {
-				WP_CLI::error( sprintf( __( 'A user with the ID or username "%s" does not exist. See wp help user create for registering new users.', 'affiliate-wp' ), $args[0] ) );
+				\WP_CLI::error( sprintf( __( 'A user with the ID or username "%s" does not exist. See wp help user create for registering new users.', 'affiliate-wp' ), $args[0] ) );
 			}
 		}
 
 		// Bail if this user already has an affiliate account.
 		if ( affiliate_wp()->affiliates->get_by( 'user_id', $user->ID ) ) {
-			WP_CLI::error( __( 'An affiliate already exists for this user account.', 'affiliate-wp' ) );
+			\WP_CLI::error( __( 'An affiliate already exists for this user account.', 'affiliate-wp' ) );
 		}
 
 		// Grab flag values.
@@ -144,9 +154,9 @@ class AffWP_Affiliate_CLI extends AffWP_Object_CLI {
 		$affiliate = affwp_add_affiliate( $data );
 
 		if ( $affiliate ) {
-			WP_CLI::success( sprintf( __( 'An affiliate with the username "%s" has been created.', 'affiliate-wp' ), $user->user_login ) );
+			\WP_CLI::success( sprintf( __( 'An affiliate with the username "%s" has been created.', 'affiliate-wp' ), $user->user_login ) );
  		} else {
-			WP_CLI::error( __( 'The affiliate account could not be added.', 'affiliate-wp' ) );
+			\WP_CLI::error( __( 'The affiliate account could not be added.', 'affiliate-wp' ) );
 		}
 	}
 
@@ -192,11 +202,11 @@ class AffWP_Affiliate_CLI extends AffWP_Object_CLI {
 	 */
 	public function update( $args, $assoc_args ) {
 		if ( empty( $args[0] ) ) {
-			WP_CLI::error( __( 'A valid affiliate username or ID is required to proceed.', 'affiliate-wp' ) );
+			\WP_CLI::error( __( 'A valid affiliate username or ID is required to proceed.', 'affiliate-wp' ) );
 		}
 
 		if ( ! $affiliate = affwp_get_affiliate( $args[0] ) ) {
-			WP_CLI::error( __( 'A valid affiliate username or ID is required to proceed.', 'affiliate-wp' ) );
+			\WP_CLI::error( __( 'A valid affiliate username or ID is required to proceed.', 'affiliate-wp' ) );
 		}
 
 		$data['affiliate_id']  = $affiliate->affiliate_id;
@@ -209,9 +219,9 @@ class AffWP_Affiliate_CLI extends AffWP_Object_CLI {
 		$update = affwp_update_affiliate( $data );
 
 		if ( $update ) {
-			WP_CLI::success( __( 'The affiliate was updated successfully.', 'affiliate-wp' ) );
+			\WP_CLI::success( __( 'The affiliate was updated successfully.', 'affiliate-wp' ) );
 		} else {
-			WP_CLI::error( __( 'The affiliate account could not be updated.', 'affiliate-wp' ) );
+			\WP_CLI::error( __( 'The affiliate account could not be updated.', 'affiliate-wp' ) );
 		}
 	}
 
@@ -253,11 +263,11 @@ class AffWP_Affiliate_CLI extends AffWP_Object_CLI {
 	 */
 	public function delete( $args, $assoc_args ) {
 		if ( empty( $args[0] ) ) {
-			WP_CLI::error( __( 'A valid affiliate username or ID is required to proceed.', 'affiliate-wp' ) );
+			\WP_CLI::error( __( 'A valid affiliate username or ID is required to proceed.', 'affiliate-wp' ) );
 		}
 
 		if ( ! $affiliate = affwp_get_affiliate( $args[0] ) ) {
-			WP_CLI::error( __( 'A valid affiliate username or ID is required to proceed.', 'affiliate-wp' ) );
+			\WP_CLI::error( __( 'A valid affiliate username or ID is required to proceed.', 'affiliate-wp' ) );
 		}
 
 		$delete_data = \WP_CLI\Utils\get_flag_value( $assoc_args, 'delete_data', false );
@@ -275,7 +285,7 @@ class AffWP_Affiliate_CLI extends AffWP_Object_CLI {
 		}
 
 		// Affiliate deletion.
-		WP_CLI::confirm( $message, $assoc_args );
+		\WP_CLI::confirm( $message, $assoc_args );
 
 		$affiliate_deleted = affwp_delete_affiliate( $affiliate, $delete_data );
 
@@ -294,10 +304,10 @@ class AffWP_Affiliate_CLI extends AffWP_Object_CLI {
 				$success = __( 'The affiliate account has been successfully deleted.', 'affiliate-wp' );
 			}
 		} else {
-			WP_CLI::error( __( 'The affiliate account could not be deleted.', 'affiliate-wp' ) );
+			\WP_CLI::error( __( 'The affiliate account could not be deleted.', 'affiliate-wp' ) );
 		}
 
-		WP_CLI::success( $success );
+		\WP_CLI::success( $success );
 	}
 
 	/**
@@ -367,7 +377,7 @@ class AffWP_Affiliate_CLI extends AffWP_Object_CLI {
 		if ( 'count' == $formatter->format ) {
 			$affiliates = affiliate_wp()->affiliates->get_affiliates( $args, $count = true );
 
-			WP_CLI::line( sprintf( __( 'Number of affiliates: %d', 'affiliate-wp' ), $affiliates ) );
+			\WP_CLI::line( sprintf( __( 'Number of affiliates: %d', 'affiliate-wp' ), $affiliates ) );
 		} else {
 			$affiliates = affiliate_wp()->affiliates->get_affiliates( $args );
 
@@ -416,4 +426,5 @@ class AffWP_Affiliate_CLI extends AffWP_Object_CLI {
 		$item->user_login = $user->user_login;
 	}
 }
-WP_CLI::add_command( 'affwp affiliate', 'AffWP_Affiliate_CLI' );
+
+\WP_CLI::add_command( 'affwp affiliate', 'AffWP\Affiliate\CLI' );

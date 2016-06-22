@@ -1,9 +1,17 @@
 <?php
+namespace AffWP\Affiliate\CLI;
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-class AffWP_Affiliate_Fetcher extends WP_CLI\Fetchers\Base {
+/**
+ * Implements a single object fetcher for affiliates.
+ *
+ * @since 1.9
+ *
+ * @see \WP_CLI\Fetchers\Base
+ */
+class Fetcher extends \WP_CLI\Fetchers\Base {
 
 	/**
 	 * Not found message.
