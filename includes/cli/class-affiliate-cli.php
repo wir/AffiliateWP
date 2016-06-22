@@ -23,6 +23,7 @@ class CLI extends \AffWP\Object\CLI {
 	protected $obj_fields = array(
 		'ID',
 		'user_login',
+		'user_id',
 		'rate',
 		'rate_type',
 		'status',
@@ -337,6 +338,7 @@ class CLI extends \AffWP\Object\CLI {
 	 *
 	 * * ID (alias for affiliate_id)
 	 * * user_login
+	 * * user_id
 	 * * rate
 	 * * rate_type
 	 * * status
@@ -344,10 +346,6 @@ class CLI extends \AffWP\Object\CLI {
 	 * * referrals
 	 * * visits
 	 * * date_registered
-	 *
-	 * These fields are optionally available:
-	 *
-	 * * user_id
 	 *
 	 * ## EXAMPLES
 	 *
