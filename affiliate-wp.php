@@ -359,10 +359,10 @@ final class Affiliate_WP {
 			require_once AFFILIATEWP_PLUGIN_DIR . 'includes/cli/class-cli.php';
 			require_once AFFILIATEWP_PLUGIN_DIR . 'includes/cli/class-object-cli.php';
 
-			require_once AFFILIATEWP_PLUGIN_DIR . 'includes/cli/utilities/class-affiliate-fetcher.php';
-			require_once AFFILIATEWP_PLUGIN_DIR . 'includes/cli/utilities/class-referral-fetcher.php';
-			require_once AFFILIATEWP_PLUGIN_DIR . 'includes/cli/utilities/class-creative-fetcher.php';
-			require_once AFFILIATEWP_PLUGIN_DIR . 'includes/cli/utilities/class-visit-fetcher.php';
+			require_once AFFILIATEWP_PLUGIN_DIR . 'includes/cli/utils/class-affiliate-cli-fetcher.php';
+			require_once AFFILIATEWP_PLUGIN_DIR . 'includes/cli/utils/class-referral-cli-fetcher.php';
+			require_once AFFILIATEWP_PLUGIN_DIR . 'includes/cli/utils/class-creative-cli-fetcher.php';
+			require_once AFFILIATEWP_PLUGIN_DIR . 'includes/cli/utils/class-visit-cli-fetcher.php';
 
 			require_once AFFILIATEWP_PLUGIN_DIR . 'includes/cli/class-affiliate-cli.php';
 			require_once AFFILIATEWP_PLUGIN_DIR . 'includes/cli/class-referral-cli.php';
