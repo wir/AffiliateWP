@@ -23,9 +23,12 @@ class CLI extends \AffWP\Object\CLI {
 	protected $obj_fields = array(
 		'ID',
 		'user_login',
+		'rate',
+		'rate_type',
+		'status',
 		'earnings',
 		'referrals',
-		'status'
+		'registered',
 	);
 
 	/**
@@ -403,7 +406,7 @@ class CLI extends \AffWP\Object\CLI {
 	 * @since 1.9
 	 * @access protected
 	 *
-	 * @param AffWP_Affiliate &$item Affiliate object (passed by reference).
+	 * @param \AffWP\Affiliate &$item Affiliate object (passed by reference).
 	 */
 	protected function ID_field( &$item ) {
 		$item->ID = $item->affiliate_id;
@@ -415,7 +418,7 @@ class CLI extends \AffWP\Object\CLI {
 	 * @since 1.9
 	 * @access protected
 	 *
-	 * @param AffWP_Affiliate &$item Affiliate object (passed by reference).
+	 * @param \AffWP\Affiliate &$item Affiliate object (passed by reference).
 	 */
 	protected function payment_email_field( &$item ) {
 		if ( empty( $item->payment_email ) ) {
@@ -429,12 +432,27 @@ class CLI extends \AffWP\Object\CLI {
 	 * @since 1.9
 	 * @access protected
 	 *
-	 * @param AffWP_Affiliate &$item Affiliate object (passed by reference).
+	 * @param \AffWP\Affiliate &$item Affiliate object (passed by reference).
 	 */
 	protected function user_login_field( &$item ) {
 		$user = get_user_by( 'id', $item->user_id );
 		$item->user_login = $user->user_login;
 	}
+
+	/**
+	 * Handler for the 'registered' field.
+	 *
+	 * Reformats the registration date for display.
+	 *
+	 * @since 1.9
+	 * @access protected
+	 *
+	 * @param \AffWP\Affiliate &$item Affiliate object (passed by reference).
+	 */
+	protected function registered_field( &$item ) {
+		$item->registered = mysql2date( 'M j, Y', $item->date_registered, false );
+	}
+
 }
 
 \WP_CLI::add_command( 'affwp affiliate', 'AffWP\Affiliate\CLI' );
