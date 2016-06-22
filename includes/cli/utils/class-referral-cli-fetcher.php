@@ -29,7 +29,7 @@ class Fetcher extends \WP_CLI\Fetchers\Base {
 	 * @access public
 	 *
 	 * @param int $arg Referral ID.
-	 * @return AffWP_Referral|false Referral object, false otherwise.
+	 * @return \AffWP\Referral|false Referral object, false otherwise.
 	 */
 	public function get( $arg ) {
 		return affwp_get_referral( $arg );

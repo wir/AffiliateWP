@@ -29,7 +29,7 @@ class Fetcher extends \WP_CLI\Fetchers\Base {
 	 * @access public
 	 *
 	 * @param int $arg Affiliate ID.
-	 * @return AffWP_Affiliate|false Affiliate object, false otherwise.
+	 * @return \AffWP\Affiliate|false Affiliate object, false otherwise.
 	 */
 	public function get( $arg ) {
 		return affwp_get_affiliate( $arg );

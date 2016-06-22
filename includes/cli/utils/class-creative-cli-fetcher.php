@@ -29,7 +29,7 @@ class Fetcher extends \WP_CLI\Fetchers\Base {
 	 * @access public
 	 *
 	 * @param int $arg Creative ID.
-	 * @return AffWP_Creative|false Creative object, false otherwise.
+	 * @return \AffWP\Creative|false Creative object, false otherwise.
 	 */
 	public function get( $arg ) {
 		return affwp_get_creative( $arg );

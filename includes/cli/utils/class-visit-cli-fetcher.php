@@ -29,7 +29,7 @@ class Fetcher extends \WP_CLI\Fetchers\Base {
 	 * @access public
 	 *
 	 * @param int $arg Visit ID.
-	 * @return AffWP_Visit|false Visit object, false otherwise.
+	 * @return \AffWP\Visit|false Visit object, false otherwise.
 	 */
 	public function get( $arg ) {
 		return affwp_get_visit( $arg );
