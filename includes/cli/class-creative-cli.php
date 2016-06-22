@@ -1,6 +1,17 @@
 <?php
+namespace AffWP\Creative;
 
-class AffWP_Creative_CLI extends AffWP_Object_CLI {
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+/**
+ * Implements basic CRUD CLI sub-commands for creatives.
+ *
+ * @since 1.9
+ * 
+ * @see \AffWP\Object\CLI
+ */
+class CLI extends \AffWP\Object\CLI {
 
 	/**
 	 * Referral display fields.
@@ -22,9 +33,11 @@ class AffWP_Creative_CLI extends AffWP_Object_CLI {
 	 *
 	 * @since 1.9
 	 * @access public
+	 *
+	 * @see \AffWP\Creative\CLI\Fetcher
 	 */
 	public function __construct() {
-		$this->fetcher = new AffWP_Creative_Fetcher();
+		$this->fetcher = new \AffWP\Creative\CLI\Fetcher();
 	}
 
 	/**
@@ -96,26 +109,26 @@ class AffWP_Creative_CLI extends AffWP_Object_CLI {
 	 * @param array $assoc_args Associated arguments (flags).
 	 */
 	public function create( $_, $assoc_args ) {
-		$name = WP_CLI\Utils\get_flag_value(  $assoc_args, 'name', '' );
+		$name = \WP_CLI\Utils\get_flag_value(  $assoc_args, 'name', '' );
 
 		if ( empty( $name ) ) {
-			WP_CLI::error( __( 'A --name value must be specified to add a new creative.', 'affiliate-wp' ) );
+			\WP_CLI::error( __( 'A --name value must be specified to add a new creative.', 'affiliate-wp' ) );
 		}
 
 		$data['name']        = $name;
-		$data['description'] = WP_CLI\Utils\get_flag_value(  $assoc_args, 'description', ''       );
-		$data['url']         = WP_CLI\Utils\get_flag_value(  $assoc_args, 'link',        ''       );
-		$data['text']        = WP_CLI\Utils\get_flag_value(  $assoc_args, 'text',        ''       );
-		$data['image']       = WP_CLI\Utils\get_flag_value(  $assoc_args, 'image',       ''       );
-		$data['status']      = WP_CLI\Utils\get_flag_value(  $assoc_args, 'status',      'active' );
+		$data['description'] = \WP_CLI\Utils\get_flag_value(  $assoc_args, 'description', ''       );
+		$data['url']         = \WP_CLI\Utils\get_flag_value(  $assoc_args, 'link',        ''       );
+		$data['text']        = \WP_CLI\Utils\get_flag_value(  $assoc_args, 'text',        ''       );
+		$data['image']       = \WP_CLI\Utils\get_flag_value(  $assoc_args, 'image',       ''       );
+		$data['status']      = \WP_CLI\Utils\get_flag_value(  $assoc_args, 'status',      'active' );
 
 		$created = affwp_add_creative( $data );
 
 		if ( $created ) {
 			$creative = affiliate_wp()->creatives->get_by( 'name', $data['name'] );
-			WP_CLI::success( sprintf( __( 'A creative with the ID %d has been successfully created.', 'affiliate-wp' ), $creative->creative_id ) );
+			\WP_CLI::success( sprintf( __( 'A creative with the ID %d has been successfully created.', 'affiliate-wp' ), $creative->creative_id ) );
 		} else {
-			WP_CLI::error( __( 'The creative could not be created.', 'affiliate-wp' ) );
+			\WP_CLI::error( __( 'The creative could not be created.', 'affiliate-wp' ) );
 		}
 	}
 
@@ -161,27 +174,27 @@ class AffWP_Creative_CLI extends AffWP_Object_CLI {
 	 */
 	public function update( $args, $assoc_args ) {
 		if ( empty( $args[0] ) ) {
-			WP_CLI::error( __( 'A valid creative ID is required to proceed.', 'affiliate-wp' ) );
+			\WP_CLI::error( __( 'A valid creative ID is required to proceed.', 'affiliate-wp' ) );
 		}
 
 		if ( ! $creative = affwp_get_creative( $args[0] ) ) {
-			WP_CLI::error( __( 'A valid creative ID is required to proceed.', 'affiliate-wp' ) );
+			\WP_CLI::error( __( 'A valid creative ID is required to proceed.', 'affiliate-wp' ) );
 		}
 
-		$data['name']        = WP_CLI\Utils\get_flag_value( $assoc_args, 'name', $creative->name        );
-		$data['description'] = WP_CLI\Utils\get_flag_value( $assoc_args, 'name', $creative->description );
-		$data['url']         = WP_CLI\Utils\get_flag_value( $assoc_args, 'name', $creative->link        );
-		$data['text']        = WP_CLI\Utils\get_flag_value( $assoc_args, 'name', $creative->text        );
-		$data['image']       = WP_CLI\Utils\get_flag_value( $assoc_args, 'name', $creative->image       );
-		$data['status']      = WP_CLI\Utils\get_flag_value( $assoc_args, 'name', $creative->status      );
+		$data['name']        = \WP_CLI\Utils\get_flag_value( $assoc_args, 'name', $creative->name        );
+		$data['description'] = \WP_CLI\Utils\get_flag_value( $assoc_args, 'name', $creative->description );
+		$data['url']         = \WP_CLI\Utils\get_flag_value( $assoc_args, 'name', $creative->link        );
+		$data['text']        = \WP_CLI\Utils\get_flag_value( $assoc_args, 'name', $creative->text        );
+		$data['image']       = \WP_CLI\Utils\get_flag_value( $assoc_args, 'name', $creative->image       );
+		$data['status']      = \WP_CLI\Utils\get_flag_value( $assoc_args, 'name', $creative->status      );
 		$data['creative_id'] = $creative->creative_id;
 
 		$updated = affwp_update_creative( $data );
 
 		if ( $updated ) {
-			WP_CLI::success( __( 'The creative was successfully updated.', 'affiliate-wp' ) );
+			\WP_CLI::success( __( 'The creative was successfully updated.', 'affiliate-wp' ) );
 		} else {
-			WP_CLI::error( __( 'The creative could not be updated.', 'affiliate-wp' ) );
+			\WP_CLI::error( __( 'The creative could not be updated.', 'affiliate-wp' ) );
 		}
 	}
 
@@ -196,19 +209,19 @@ class AffWP_Creative_CLI extends AffWP_Object_CLI {
 	 */
 	public function delete( $args, $assoc_args ) {
 		if ( empty( $args[0] ) ) {
-			WP_CLI::error( __( 'A valid creative ID is required to proceed.', 'affiliate-wp' ) );
+			\WP_CLI::error( __( 'A valid creative ID is required to proceed.', 'affiliate-wp' ) );
 		}
 
 		if ( ! $creative = affwp_get_creative( $args[0] ) ) {
-			WP_CLI::error( __( 'A valid creative ID is required to proceed.', 'affiliate-wp' ) );
+			\WP_CLI::error( __( 'A valid creative ID is required to proceed.', 'affiliate-wp' ) );
 		}
 
 		$deleted = affwp_delete_creative( $creative );
 
 		if ( $deleted ) {
-			WP_CLI::success( __( 'The creative was successfully deleted.', 'affiliate-wp' ) );
+			\WP_CLI::success( __( 'The creative was successfully deleted.', 'affiliate-wp' ) );
 		} else {
-			WP_CLI::error( __( 'The creative could not be deleted.', 'affiliate-wp' ) );
+			\WP_CLI::error( __( 'The creative could not be deleted.', 'affiliate-wp' ) );
 		}
 	}
 
@@ -275,7 +288,7 @@ class AffWP_Creative_CLI extends AffWP_Object_CLI {
 		if ( 'count' == $formatter->format ) {
 			$creatives = affiliate_wp()->creatives->get_creatives( $args, $count = true );
 
-			WP_CLI::line( sprintf( __( 'Number of creatives: %d', 'affiliate-wp' ), $creatives ) );
+			\WP_CLI::line( sprintf( __( 'Number of creatives: %d', 'affiliate-wp' ), $creatives ) );
 		} else {
 			$creatives = affiliate_wp()->creatives->get_creatives( $args );
 			$creatives = $this->process_extra_fields( $fields, $creatives );
@@ -311,4 +324,5 @@ class AffWP_Creative_CLI extends AffWP_Object_CLI {
 	}
 
 }
-WP_CLI::add_command( 'affwp creative', 'AffWP_Creative_CLI' );
+
+\WP_CLI::add_command( 'affwp creative', 'AffWP\Creative\CLI' );

@@ -1,6 +1,17 @@
 <?php
+namespace AffWP\Creative\CLI;
 
-class AffWP_Creative_Fetcher extends WP_CLI\Fetchers\Base {
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+/**
+ * Implements a single object fetcher for creatives.
+ *
+ * @since 1.9
+ *
+ * @see \WP_CLI\Fetchers\Base
+ */
+class Fetcher extends \WP_CLI\Fetchers\Base {
 
 	/**
 	 * Not found message.
