@@ -26,7 +26,7 @@ class CLI extends \AffWP\Object\CLI {
 		'referrer',
 		'affiliate_name',
 		'referral_id',
-		'IP',
+		'ip',
 		'converted',
 		'date'
 	);
@@ -327,7 +327,7 @@ class CLI extends \AffWP\Object\CLI {
 	 * * referrer
 	 * * affiliate_name
 	 * * referral_id
-	 * * IP
+	 * * ip (IP address)
 	 * * converted
 	 * * date
 	 *
@@ -424,19 +424,6 @@ class CLI extends \AffWP\Object\CLI {
 	 */
 	protected function affiliate_name_field( &$item ) {
 		$item->affiliate_name = affwp_get_affiliate_name( $item->affiliate_id );
-	}
-
-	/**
-	 * Handler for the 'IP' field.
-	 *
-	 * @since 1.9
-	 * @access protected
-	 *
-	 * @param \AffWP\Visit $item Visit object (passed by reference).
-	 */
-	protected function IP_field( &$item ) {
-		// Can haz case-sensitivity?
-		$item->IP = $item->ip;
 	}
 
 	/**
