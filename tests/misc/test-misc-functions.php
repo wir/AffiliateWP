@@ -151,21 +151,8 @@ class Misc_Functions_Tests extends WP_UnitTestCase {
 	/**
 	 * @covers affwp_format_rate()
 	 */
-	public function test_format_rate_with_decode_true_should_format_percentage_as_percentage() {
-		$this->assertSame( '20%', affwp_format_rate( 0.2, 'percentage', true ) );
-	}
-
-	/**
-	 * @covers affwp_format_rate()
-	 */
 	public function test_format_rate_should_format_non_percentage_as_flat() {
 		$this->assertSame( '&#36;20', affwp_format_rate( 20, 'flat' ) );
 	}
 
-	/**
-	 * @covers affwp_format_rate()
-	 */
-	public function test_format_rate_with_decode_true_should_format_flat_rate_as_currency() {
-		$this->assertSame( '$20', affwp_format_rate( 20, 'flat', true ) );
-	}
 }

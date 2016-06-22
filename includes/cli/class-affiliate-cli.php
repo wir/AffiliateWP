@@ -486,9 +486,10 @@ class CLI extends \AffWP\Object\CLI {
 			$rate = $rate / 100;
 		}
 
+		/** This filter is documented in includes/affiliate-functions.php */
 		$rate = apply_filters( 'affwp_get_affiliate_rate', $rate, $item->ID, $type, $item->reference );
 
-		$item->rate = affwp_format_rate( $rate, $item->rate_type(), true );
+		$item->rate = html_entity_decode( affwp_format_rate( $rate, $item->rate_type() ) );
 	}
 
 	/**
