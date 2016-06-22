@@ -384,7 +384,7 @@ class CLI extends \AffWP\Object\CLI {
 		$args = array_merge( $defaults, $assoc_args );
 
 		if ( 'count' == $formatter->format ) {
-			$affiliates = affiliate_wp()->affiliates->get_affiliates( $args, $count = true );
+			$affiliates = affiliate_wp()->affiliates->count( $args );
 
 			\WP_CLI::line( sprintf( __( 'Number of affiliates: %d', 'affiliate-wp' ), $affiliates ) );
 		} else {

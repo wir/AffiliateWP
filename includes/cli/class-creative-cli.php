@@ -292,7 +292,7 @@ class CLI extends \AffWP\Object\CLI {
 		$args = array_merge( $defaults, $assoc_args );
 
 		if ( 'count' == $formatter->format ) {
-			$creatives = affiliate_wp()->creatives->get_creatives( $args, $count = true );
+			$creatives = affiliate_wp()->creatives->count( $args );
 
 			\WP_CLI::line( sprintf( __( 'Number of creatives: %d', 'affiliate-wp' ), $creatives ) );
 		} else {
