@@ -22,9 +22,12 @@ class CLI extends \AffWP\Object\CLI {
 	 */
 	protected $obj_fields = array(
 		'ID',
-		'affiliate_name',
 		'visit_url',
 		'referrer',
+		'affiliate_name',
+		'referral_id',
+		'IP',
+		'converted',
 		'date'
 	);
 
@@ -304,6 +307,8 @@ class CLI extends \AffWP\Object\CLI {
 	 * [--<field>=<value>]
 	 * : One or more args to pass to get_visits().
 	 *
+	 * 'converted' is not a visit field and will be ignored. Use 'visit_url' for 'url'.
+	 *
 	 * [--field=<field>]
 	 * : Prints the value of a single field for each visit.
 	 *
@@ -318,16 +323,17 @@ class CLI extends \AffWP\Object\CLI {
 	 * These fields will be displayed by default for each referral:
 	 *
 	 * * ID (alias for visit_id)
-	 * * affiliate_name
-	 * * visit_url
+	 * * visit_url (alias for 'url')
 	 * * referrer
+	 * * affiliate_name
+	 * * referral_id
+	 * * IP
+	 * * converted
 	 * * date
 	 *
 	 * These fields are optionally available:
 	 *
 	 * * campaign
-	 * * IP
-	 * * referral_id
 	 * * affiliate_id
 	 *
 	 * ## EXAMPLES
@@ -352,10 +358,16 @@ class CLI extends \AffWP\Object\CLI {
 			'order' => 'ASC',
 		);
 
-		// Handle ID alias.
+		// Handle 'visit_id' alias.
 		if ( isset( $assoc_args['ID'] ) ) {
 			$assoc_args['visit_id'] = $assoc_args['ID'];
 			unset( $assoc_args['ID'] );
+		}
+
+		// Handle 'url' alias.
+		if ( isset( $assoc_args['visit_url'] ) ) {
+			$assoc_args['url'] = $assoc_args['visit_url'];
+			unset( $assoc_args['visit_url'] );
 		}
 
 		$args = array_merge( $defaults, $assoc_args );
@@ -403,6 +415,43 @@ class CLI extends \AffWP\Object\CLI {
 	}
 
 	/**
+	 * Handler for the 'affiliate_name' field.
+	 *
+	 * @since 1.9
+	 * @access protected
+	 *
+	 * @param \AffWP\Visit $item Visit object (passed by reference).
+	 */
+	protected function affiliate_name_field( &$item ) {
+		$item->affiliate_name = affwp_get_affiliate_name( $item->affiliate_id );
+	}
+
+	/**
+	 * Handler for the 'IP' field.
+	 *
+	 * @since 1.9
+	 * @access protected
+	 *
+	 * @param \AffWP\Visit $item Visit object (passed by reference).
+	 */
+	protected function IP_field( &$item ) {
+		// Can haz case-sensitivity?
+		$item->IP = $item->ip;
+	}
+
+	/**
+	 * Handler for the 'converted' field.
+	 *
+	 * @since 1.9
+	 * @access protected
+	 *
+	 * @param \AffWP\Visit $item Visit object (passed by reference).
+	 */
+	protected function converted_field( &$item ) {
+		$item->converted = ! empty( $item->referral_id ) ? 'yes' : 'no';
+	}
+
+	/**
 	 * Handler for the 'date' field.
 	 *
 	 * Re-formats the date for display.
@@ -414,18 +463,6 @@ class CLI extends \AffWP\Object\CLI {
 	 */
 	protected function date_field( &$item ) {
 		$item->date = mysql2date( 'M j, Y', $item->date, false );
-	}
-
-	/**
-	 * Handler for the 'affiliate_name' field.
-	 *
-	 * @since 1.9
-	 * @access protected
-	 *
-	 * @param \AffWP\Visit $item Visit object (passed by reference).
-	 */
-	protected function affiliate_name_field( &$item ) {
-		$item->affiliate_name = affwp_get_affiliate_name( $item->affiliate_id );
 	}
 
 }
