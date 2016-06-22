@@ -315,7 +315,7 @@ class CLI extends \AffWP\Object\CLI {
 	 * @since 1.9
 	 * @access protected
 	 *
-	 * @param AffWP_Affiliate &$item Affiliate object (passed by reference).
+	 * @param \AffWP\Creative $item Affiliate object (passed by reference).
 	 */
 	protected function date_field( &$item ) {
 		$item->date = mysql2date( 'M j, Y', $item->date, false );

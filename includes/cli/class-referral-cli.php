@@ -349,7 +349,7 @@ class CLI extends \AffWP\Object\CLI {
 	 * @since 1.9
 	 * @access protected
 	 *
-	 * @param AffWP_Affiliate &$item Affiliate object (passed by reference).
+	 * @param \AffWP\Referral $item Referral object (passed by reference).
 	 */
 	protected function date_field( &$item ) {
 		$item->date = mysql2date( 'M j, Y', $item->date, false );
@@ -361,7 +361,7 @@ class CLI extends \AffWP\Object\CLI {
 	 * @since 1.9
 	 * @access protected
 	 *
-	 * @param AffWP_Affiliate &$item Affiliate object (passed by reference).
+	 * @param \AffWP\Referral $item Referral object (passed by reference).
 	 */
 	protected function affiliate_name_field( &$item ) {
 		$item->affiliate_name = affwp_get_affiliate_name( $item->affiliate_id );
