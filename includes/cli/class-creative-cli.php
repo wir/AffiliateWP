@@ -23,8 +23,11 @@ class CLI extends \AffWP\Object\CLI {
 	protected $obj_fields = array(
 		'ID',
 		'name',
-		'url',
 		'status',
+		'url',
+		'description',
+		'text',
+		'image',
 		'date'
 	);
 
@@ -249,14 +252,11 @@ class CLI extends \AffWP\Object\CLI {
 	 * * ID (alias for creative_id)
 	 * * name
 	 * * url
-	 * * status
-	 * * date
-	 *
-	 * These fields are optionally available:
-	 *
 	 * * description
 	 * * text
 	 * * image
+	 * * status
+	 * * date
 	 *
 	 * ## EXAMPLES
 	 *
