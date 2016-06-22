@@ -477,19 +477,7 @@ class CLI extends \AffWP\Object\CLI {
 	 * @param \AffWP\Affiliate &$item Affiliate object (passed by reference).
 	 */
 	protected function rate_field( &$item ) {
-		if ( empty( $item->rate ) ) {
-			$rate = $item->rate();
-		}
-		$type = $item->rate_type();
-
-		if ( 'percentage' === $type ) {
-			$rate = $rate / 100;
-		}
-
-		/** This filter is documented in includes/affiliate-functions.php */
-		$rate = apply_filters( 'affwp_get_affiliate_rate', $rate, $item->ID, $type, $item->reference );
-
-		$item->rate = html_entity_decode( affwp_format_rate( $rate, $item->rate_type() ) );
+		$item->rate = html_entity_decode( affwp_get_affiliate_rate( $item, true ) );
 	}
 
 	/**
