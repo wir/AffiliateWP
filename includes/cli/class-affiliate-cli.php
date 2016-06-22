@@ -389,6 +389,10 @@ class CLI extends \AffWP\Object\CLI {
 
 			$affiliates = $this->process_extra_fields( $fields, $affiliates );
 
+			if ( 'ids' == $formatter->format ) {
+				$affiliates = wp_list_pluck( $affiliates, 'affiliate_id' );
+			}
+
 			$formatter->display_items( $affiliates );
 		}
 	}

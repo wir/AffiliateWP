@@ -299,6 +299,10 @@ class CLI extends \AffWP\Object\CLI {
 			$creatives = affiliate_wp()->creatives->get_creatives( $args );
 			$creatives = $this->process_extra_fields( $fields, $creatives );
 
+			if ( 'ids' == $formatter->format ) {
+				$creatives = wp_list_pluck( $creatives, 'creative_id' );
+			}
+
 			$formatter->display_items( $creatives );
 		}
 	}

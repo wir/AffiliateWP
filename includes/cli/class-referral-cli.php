@@ -333,6 +333,10 @@ class CLI extends \AffWP\Object\CLI {
 			$referrals = affiliate_wp()->referrals->get_referrals( $args );
 			$referrals = $this->process_extra_fields( $fields, $referrals );
 
+			if ( 'ids' == $formatter->format ) {
+				$referrals = wp_list_pluck( $referrals, 'referral_id' );
+			}
+
 			$formatter->display_items( $referrals );
 		}
 	}

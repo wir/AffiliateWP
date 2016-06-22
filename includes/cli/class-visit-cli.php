@@ -368,6 +368,10 @@ class CLI extends \AffWP\Object\CLI {
 			$visits = affiliate_wp()->visits->get_visits( $args );
 			$visits = $this->process_extra_fields( $fields, $visits );
 
+			if ( 'ids' == $formatter->format ) {
+				$visits = wp_list_pluck( $visits, 'visit_id' );
+			}
+
 			$formatter->display_items( $visits );
 		}
 	}
