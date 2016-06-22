@@ -1,6 +1,17 @@
 <?php
+namespace AffWP\Referral\CLI;
 
-class AffWP_Referral_Fetcher extends WP_CLI\Fetchers\Base {
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+/**
+ * Implements a single object fetcher for referrals.
+ *
+ * @since 1.9
+ *
+ * @see \WP_CLI\Fetchers\Base
+ */
+class Fetcher extends \WP_CLI\Fetchers\Base {
 
 	/**
 	 * Not found message.
