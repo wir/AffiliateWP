@@ -451,7 +451,7 @@ class CLI extends \AffWP\Object\CLI {
 		if ( empty( $item->earnings ) ) {
 			$item->earnings = 0;
 		}
-		$item->earnings = affwp_format_amount( $item->earnings );
+		$item->earnings = html_entity_decode( affwp_currency_filter( affwp_format_amount( $item->earnings ) ) );
 	}
 
 	/**
