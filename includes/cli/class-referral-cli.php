@@ -24,6 +24,8 @@ class CLI extends \AffWP\Object\CLI {
 		'ID',
 		'amount',
 		'affiliate_name',
+		'affiliate_id',
+		'visit_id',
 		'reference',
 		'description',
 		'status',
@@ -281,6 +283,8 @@ class CLI extends \AffWP\Object\CLI {
 	 * * ID (alias for referral_id)
 	 * * amount
 	 * * affiliate_name
+	 * * affiliate_id
+	 * * visit_id
 	 * * reference
 	 * * description
 	 * * status
@@ -291,8 +295,6 @@ class CLI extends \AffWP\Object\CLI {
 	 * * currency
 	 * * custom
 	 * * campaign
-	 * * visit_id
-	 * * affiliate_id
 	 *
 	 * ## EXAMPLES
 	 *
