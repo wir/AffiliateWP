@@ -47,7 +47,7 @@ final class Affiliate extends Object {
 	 * @access public
 	 * @var string
 	 *
-	 * @see Affiliate::get_rate()
+	 * @see Affiliate::rate()
 	 */
 	public $rate;
 
@@ -58,7 +58,7 @@ final class Affiliate extends Object {
 	 * @access public
 	 * @var string
 	 *
-	 * @see Affiliate::get_rate_type()
+	 * @see Affiliate::rate_type()
 	 */
 	public $rate_type;
 
@@ -199,8 +199,7 @@ final class Affiliate extends Object {
 	 *
 	 * @return string Rate type. If empty, defaults to the global referral rate type.
 	 */
-	public function get_rate_type() {
-
+	public function rate_type() {
 		if ( empty( $this->rate_type ) ) {
 			return affiliate_wp()->settings->get( 'referral_rate_type', 'percentage' );
 		}
@@ -216,7 +215,7 @@ final class Affiliate extends Object {
 	 *
 	 * @return int Rate. If empty, defaults to the global referral rate.
 	 */
-	public function get_rate() {
+	public function rate() {
 		if ( empty( $this->rate ) ) {
 			return affiliate_wp()->settings->get( 'referral_rate', 20 );
 		}
@@ -234,7 +233,7 @@ final class Affiliate extends Object {
 	 *
 	 * @return string Payment email.
 	 */
-	public function get_payment_email() {
+	public function payment_email() {
 		if ( empty( $this->payment_email ) || ! is_email( $this->payment_email ) ) {
 			$email = affwp_get_affiliate_email( $this->ID );
 		} else {

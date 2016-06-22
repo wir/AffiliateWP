@@ -463,7 +463,7 @@ class CLI extends \AffWP\Object\CLI {
 	 */
 	protected function rate_field( &$item ) {
 		if ( empty( $item->rate ) ) {
-			$item->rate = $item->get_rate();
+			$item->rate = $item->rate();
 		}
 	}
 
@@ -477,7 +477,7 @@ class CLI extends \AffWP\Object\CLI {
 	 */
 	protected function rate_type_field( &$item ) {
 		if ( empty( $item->rate_type ) ) {
-			$item->rate_type = $item->get_rate_type();
+			$item->rate_type = $item->rate_type();
 		}
 	}
 }
