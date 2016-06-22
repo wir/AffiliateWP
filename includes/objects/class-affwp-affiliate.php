@@ -192,37 +192,6 @@ final class Affiliate extends Object {
 	}
 
 	/**
-	 * Gets values of non-public properties.
-	 *
-	 * @since 1.9
-	 * @access public
-	 *
-	 * @param string $key Property to retrieve a value for.
-	 * @return mixed Property value.
-	 */
-	public function __get( $key ) {
-		switch ( $key ) {
-			// Derived properties.
-			case 'rate':
-				$value = $this->get_rate();
-				break;
-			case 'rate_type':
-				$value = $this->get_rate_type();
-				break;
-			case 'payment_email':
-				$value = $this->get_payment_email();
-				break;
-
-			// Everything else.
-			default:
-				$value = parent::__get( $key );
-				break;
-		}
-
-		return $value;
-	}
-
-	/**
 	 * Retrieves the affiliate rate type.
 	 *
 	 * @since 1.9
