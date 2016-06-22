@@ -17,6 +17,8 @@ namespace AffWP;
  *
  * @see AffWP\Object
  * @see affwp_get_referral()
+ *
+ * @property-read int $ID Alias for `$referral_id`
  */
 final class Referral extends Object {
 
@@ -28,15 +30,6 @@ final class Referral extends Object {
 	 * @var int
 	 */
 	public $referral_id = 0;
-
-	/**
-	 * Object ID (alias for referral_id).
-	 *
-	 * @since 1.9
-	 * @access public
-	 * @var int
-	 */
-	public $ID = 0;
 
 	/**
 	 * Affiliate ID.
