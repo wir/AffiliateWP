@@ -187,7 +187,6 @@ function affwp_get_decimal_count() {
  */
 function affwp_format_rate( $rate, $type = 'percentage', $decode = false ) {
 	if ( 'percentage' === $type ) {
-		var_dump( $rate );
 		$rate = affwp_abs_number_round( $rate * 100 ) . '%';
 	} else {
 		$rate = affwp_currency_filter( $rate );
