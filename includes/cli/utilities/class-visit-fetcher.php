@@ -1,6 +1,17 @@
 <?php
+namespace AffWP\Visit\CLI;
 
-class AffWP_Visit_Fetcher extends WP_CLI\Fetchers\Base {
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+/**
+ * Implements a single object fetcher for visits.
+ *
+ * @since 1.9
+ *
+ * @see \WP_CLI\Fetchers\Base
+ */
+class Fetcher extends \WP_CLI\Fetchers\Base {
 
 	/**
 	 * Not found message.

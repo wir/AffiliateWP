@@ -1,6 +1,17 @@
 <?php
+namespace AffWP\Visit;
 
-class AffWP_Visit_CLI extends AffWP_Object_CLI {
+// Exit if accessed directly
+if ( ! defined( 'ABSPATH' ) ) exit;
+
+/**
+ * Implements basic CRUD CLI sub-commands for visits.
+ *
+ * @since 1.9
+ *
+ * @see \AffWP\Object\CLI
+ */
+class CLI extends \AffWP\Object\CLI {
 
 	/**
 	 * Visit display fields.
@@ -22,9 +33,11 @@ class AffWP_Visit_CLI extends AffWP_Object_CLI {
 	 *
 	 * @since 1.9
 	 * @access public
+	 * 
+	 * @see \AffWP\Visit\CLI\Fetcher
 	 */
 	public function __construct() {
-		$this->fetcher = new AffWP_Visit_Fetcher();
+		$this->fetcher = new \AffWP\Visit\CLI\Fetcher();
 	}
 
 	/**
@@ -96,57 +109,57 @@ class AffWP_Visit_CLI extends AffWP_Object_CLI {
 	public function create( $args, $assoc_args ) {
 		// Affiliate ID or username.
 		if ( empty( $args[0] ) ) {
-			WP_CLI::error( __( 'A valid affiliate username or ID must be specified as the first argument.', 'affiliate-wp' ) );
+			\WP_CLI::error( __( 'A valid affiliate username or ID must be specified as the first argument.', 'affiliate-wp' ) );
 		}
 
 		if ( ! $affiliate = affwp_get_affiliate( $args[0] ) ) {
-			WP_CLI::error( sprintf( __( 'An affiliate with the ID or username "%s" does not exist. See wp affwp affiliate create for adding affiliates.', 'affiliate-wp' ), $args[0] ) );
+			\WP_CLI::error( sprintf( __( 'An affiliate with the ID or username "%s" does not exist. See wp affwp affiliate create for adding affiliates.', 'affiliate-wp' ), $args[0] ) );
 		} else {
 			$data['affiliate_id'] = $affiliate->affiliate_id;
 		}
 
 		// URL.
 		if ( empty( $args[1] ) ) {
-			WP_CLI::error( __( 'A URL must be specified as the second argument to proceed.', 'affiliate-wp' ) );
+			\WP_CLI::error( __( 'A URL must be specified as the second argument to proceed.', 'affiliate-wp' ) );
 		}
 		$data['url'] = affwp_sanitize_visit_url( $args[1] );
 
 		// Referral ID.
-		$referral_id = WP_CLI\Utils\get_flag_value( $assoc_args, 'referral_id' );
+		$referral_id = \WP_CLI\Utils\get_flag_value( $assoc_args, 'referral_id' );
 
 		if ( $referral_id ) {
 			if ( ! $referral = affwp_get_referral( $referral_id ) ) {
 				// If the referral_id is invalid, fall back to the column default.
-				WP_CLI::warning( __( 'An invalid referral ID was specified. Using 0 (none) instead.', 'affiliate-wp' ) );
+				\WP_CLI::warning( __( 'An invalid referral ID was specified. Using 0 (none) instead.', 'affiliate-wp' ) );
 			} else {
 				$data['referral_id'] = $referral->referral_id;
 			}
 		}
 
 		// Date.
-		$_date = WP_CLI\Utils\get_flag_value( $assoc_args, 'date' );
+		$_date = \WP_CLI\Utils\get_flag_value( $assoc_args, 'date' );
 
 		if ( is_string( $_date ) ) {
 
 			if ( ! preg_match( '/^([0-9]{4}\-[0-9]{2}\-[0-9]{2}\s[0-9]{2}\:[0-9]{2}\:[0-9]{2})$/', $_date ) ) {
 				// If the supplied date string is invalid, fall back to the column default.
-				WP_CLI::warning( __( 'A valid date string must be supplied. Using the current time.', 'affiliate-wp' ) );
+				\WP_CLI::warning( __( 'A valid date string must be supplied. Using the current time.', 'affiliate-wp' ) );
 			} else {
 				$data['date'] = $_date;
 			}
 		}
 
-		$data['referrer'] = WP_CLI\Utils\get_flag_value( $assoc_args, 'referrer', '' );
-		$data['campaign'] = WP_CLI\Utils\get_flag_value( $assoc_args, 'campaign', '' );
-		$data['ip']       = WP_CLI\Utils\get_flag_value( $assoc_args, 'ip'      , '' );
+		$data['referrer'] = \WP_CLI\Utils\get_flag_value( $assoc_args, 'referrer', '' );
+		$data['campaign'] = \WP_CLI\Utils\get_flag_value( $assoc_args, 'campaign', '' );
+		$data['ip']       = \WP_CLI\Utils\get_flag_value( $assoc_args, 'ip'      , '' );
 
 
 		$visit_id = affiliate_wp()->visits->add( $data );
 
 		if ( $visit_id ) {
-			WP_CLI::success( __( 'The visit was successfully created.', 'affiliate-wp' ) );
+			\WP_CLI::success( __( 'The visit was successfully created.', 'affiliate-wp' ) );
 		} else {
-			WP_CLI::error( __( 'The visit could not be created.', 'affiliate-wp' ) );
+			\WP_CLI::error( __( 'The visit could not be created.', 'affiliate-wp' ) );
 		}
 	}
 
@@ -198,30 +211,30 @@ class AffWP_Visit_CLI extends AffWP_Object_CLI {
 	 */
 	public function update( $args, $assoc_args ) {
 		if ( empty( $args[0] ) || ! is_numeric( $args[0] ) ) {
-			WP_CLI::error( __( 'A valid visit ID is required to proceed.', 'affiliate-wp' ) );
+			\WP_CLI::error( __( 'A valid visit ID is required to proceed.', 'affiliate-wp' ) );
 		} else {
 			if ( ! $visit = affiliate_wp()->visits->get( $args[0] ) ) {
-				WP_CLI::error( __( 'A valid visit ID is required to proceed.', 'affiliate-wp' ) );
+				\WP_CLI::error( __( 'A valid visit ID is required to proceed.', 'affiliate-wp' ) );
 			}
 		}
 
 		$data = array();
 		// Affiliate by username or ID.
-		$_affiliate = WP_CLI\Utils\get_flag_value( $assoc_args, 'affiliate', $visit->affiliate_id );
+		$_affiliate = \WP_CLI\Utils\get_flag_value( $assoc_args, 'affiliate', $visit->affiliate_id );
 
 		if ( ! $_affiliate = affwp_get_affiliate( $_affiliate ) ) {
-			WP_CLI::error( __( 'A valid affiliate username or ID is required to proceed.', 'affiliate-wp' ) );
+			\WP_CLI::error( __( 'A valid affiliate username or ID is required to proceed.', 'affiliate-wp' ) );
 		} else {
 			$data['affiliate_id'] = $_affiliate->affiliate_id;
 		}
 
 		// Date. Expecting YYYY-MM-DD HH:MM:SS format.
-		$_date = WP_CLI\Utils\get_flag_value( $assoc_args, 'date', $visit->date );
+		$_date = \WP_CLI\Utils\get_flag_value( $assoc_args, 'date', $visit->date );
 
 		if ( is_string( $_date ) ) {
 
 			if ( ! preg_match( '/^([0-9]{4}\-[0-9]{2}\-[0-9]{2}\s[0-9]{2}\:[0-9]{2}\:[0-9]{2})$/', $_date ) ) {
-				WP_CLI::warning( __( 'A valid new date string must be supplied. Using the original date.', 'affiliate-wp' ) );
+				\WP_CLI::warning( __( 'A valid new date string must be supplied. Using the original date.', 'affiliate-wp' ) );
 
 				$data['date'] = $visit->date;
 			} else {
@@ -229,18 +242,18 @@ class AffWP_Visit_CLI extends AffWP_Object_CLI {
 			}
 		}
 
-		$data['referral_id'] = WP_CLI\Utils\get_flag_value( $assoc_args, 'referral_id', $visit->referral_id );
-		$data['url']         = WP_CLI\Utils\get_flag_value( $assoc_args, 'visit_url',   $visit->url         );
-		$data['referrer']    = WP_CLI\Utils\get_flag_value( $assoc_args, 'referrer',    $visit->referrer    );
-		$data['campaign']    = WP_CLI\Utils\get_flag_value( $assoc_args, 'campaign',    $visit->campaign    );
-		$data['ip']          = WP_CLI\Utils\get_flag_value( $assoc_args, 'ip',          $visit->ip          );
+		$data['referral_id'] = \WP_CLI\Utils\get_flag_value( $assoc_args, 'referral_id', $visit->referral_id );
+		$data['url']         = \WP_CLI\Utils\get_flag_value( $assoc_args, 'visit_url',   $visit->url         );
+		$data['referrer']    = \WP_CLI\Utils\get_flag_value( $assoc_args, 'referrer',    $visit->referrer    );
+		$data['campaign']    = \WP_CLI\Utils\get_flag_value( $assoc_args, 'campaign',    $visit->campaign    );
+		$data['ip']          = \WP_CLI\Utils\get_flag_value( $assoc_args, 'ip',          $visit->ip          );
 
 		$updated = affiliate_wp()->visits->update_visit( $visit->visit_id, $data );
 
 		if ( $updated ) {
-			WP_CLI::success( __( 'The visit was updated successfully.', 'affiliate-wp' ) );
+			\WP_CLI::success( __( 'The visit was updated successfully.', 'affiliate-wp' ) );
 		} else {
-			WP_CLI::error( __( 'The visit could not be updated.', 'affiliate-wp' ) );
+			\WP_CLI::error( __( 'The visit could not be updated.', 'affiliate-wp' ) );
 		}
 	}
 
@@ -265,21 +278,21 @@ class AffWP_Visit_CLI extends AffWP_Object_CLI {
 	 */
 	public function delete( $args, $assoc_args ) {
 		if ( empty( $args[0] ) || ! is_numeric( $args[0] ) ) {
-			WP_CLI::error( __( 'A valid visit ID is required to proceed.', 'affiliate-wp' ) );
+			\WP_CLI::error( __( 'A valid visit ID is required to proceed.', 'affiliate-wp' ) );
 		} else {
 			if ( ! $visit = affiliate_wp()->visits->get( $args[0] ) ) {
-				WP_CLI::error( __( 'A valid visit ID is required to proceed.', 'affiliate-wp' ) );
+				\WP_CLI::error( __( 'A valid visit ID is required to proceed.', 'affiliate-wp' ) );
 			}
 		}
 
-		WP_CLI::confirm( __( 'Are you sure you want to delete this visit?', 'affiliate-wp' ), $assoc_args );
+		\WP_CLI::confirm( __( 'Are you sure you want to delete this visit?', 'affiliate-wp' ), $assoc_args );
 
 		$deleted = affwp_delete_visit( $visit );
 
 		if ( $deleted ) {
-			WP_CLI::success( __( 'The visit has been successfully deleted.', 'affiliate-wp' ) );
+			\WP_CLI::success( __( 'The visit has been successfully deleted.', 'affiliate-wp' ) );
 		} else {
-			WP_CLI::error( __( 'The visit could not be deleted.', 'affiliate-wp' ) );
+			\WP_CLI::error( __( 'The visit could not be deleted.', 'affiliate-wp' ) );
 		}
 	}
 
@@ -344,7 +357,7 @@ class AffWP_Visit_CLI extends AffWP_Object_CLI {
 		if ( 'count' == $formatter->format ) {
 			$visits = affiliate_wp()->visits->get_visits( $args, $count = true );
 
-			WP_CLI::line( sprintf( __( 'Number of visits: %d', 'affiliate-wp' ), $visits ) );
+			\WP_CLI::line( sprintf( __( 'Number of visits: %d', 'affiliate-wp' ), $visits ) );
 		} else {
 			$visits = affiliate_wp()->visits->get_visits( $args );
 			$visits = $this->process_extra_fields( $fields, $visits );
@@ -418,4 +431,5 @@ class AffWP_Visit_CLI extends AffWP_Object_CLI {
 	}
 
 }
-WP_CLI::add_command( 'affwp visit', 'AffWP_Visit_CLI' );
+
+\WP_CLI::add_command( 'affwp visit', 'AffWP\Visit\CLI' );
