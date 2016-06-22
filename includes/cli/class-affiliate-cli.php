@@ -490,7 +490,7 @@ class CLI extends \AffWP\Object\CLI {
 	 */
 	protected function rate_type_field( &$item ) {
 		if ( empty( $item->rate_type ) ) {
-			$item->rate_type = $item->rate_type();
+			$item->rate_type = affwp_get_affiliate_rate_type( $item );
 		}
 	}
 }
