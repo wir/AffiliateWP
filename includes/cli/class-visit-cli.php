@@ -25,7 +25,9 @@ class CLI extends \AffWP\Object\CLI {
 		'visit_url',
 		'referrer',
 		'affiliate_name',
+		'affiliate_id',
 		'referral_id',
+		'campaign',
 		'ip',
 		'converted',
 		'date'
@@ -326,15 +328,12 @@ class CLI extends \AffWP\Object\CLI {
 	 * * visit_url (alias for 'url')
 	 * * referrer
 	 * * affiliate_name
+	 * * affiliate_id
 	 * * referral_id
+	 * * campaign
 	 * * ip (IP address)
 	 * * converted
 	 * * date
-	 *
-	 * These fields are optionally available:
-	 *
-	 * * campaign
-	 * * affiliate_id
 	 *
 	 * ## EXAMPLES
 	 *
