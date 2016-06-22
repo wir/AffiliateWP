@@ -317,6 +317,12 @@ class CLI extends \AffWP\Object\CLI {
 			'order' => 'ASC',
 		);
 
+		// Handle ID alias.
+		if ( isset( $assoc_args['ID'] ) ) {
+			$assoc_args['referral_id'] = $assoc_args['ID'];
+			unset( $assoc_args['ID'] );
+		}
+
 		$args = array_merge( $defaults, $assoc_args );
 
 		if ( 'count' == $formatter->format ) {
