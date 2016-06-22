@@ -453,6 +453,33 @@ class CLI extends \AffWP\Object\CLI {
 		$item->registered = mysql2date( 'M j, Y', $item->date_registered, false );
 	}
 
+	/**
+	 * Handler for the 'rate' field.
+	 *
+	 * @since 1.9
+	 * @access protected
+	 *
+	 * @param \AffWP\Affiliate &$item Affiliate object (passed by reference).
+	 */
+	protected function rate_field( &$item ) {
+		if ( empty( $item->rate ) ) {
+			$item->rate = $item->get_rate();
+		}
+	}
+
+	/**
+	 * Handler for the 'rate_type' field.
+	 *
+	 * @since 1.9
+	 * @access protected
+	 *
+	 * @param \AffWP\Affiliate &$item Affiliate object (passed by reference).
+	 */
+	protected function rate_type_field( &$item ) {
+		if ( empty( $item->rate_type ) ) {
+			$item->rate_type = $item->get_rate_type();
+		}
+	}
 }
 
 \WP_CLI::add_command( 'affwp affiliate', 'AffWP\Affiliate\CLI' );
