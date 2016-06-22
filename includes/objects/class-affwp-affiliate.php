@@ -17,6 +17,8 @@ namespace AffWP;
  *
  * @see AffWP\Object
  * @see affwp_get_affiliate()
+ *
+ * @property-read int $ID Alias for `$affiliate_id`
  */
 final class Affiliate extends Object {
 
@@ -28,15 +30,6 @@ final class Affiliate extends Object {
 	 * @var int
 	 */
 	public $affiliate_id = 0;
-
-	/**
-	 * Object ID (alias for affiliate_id).
-	 *
-	 * @since 1.9
-	 * @access public
-	 * @var int
-	 */
-	public $ID = 0;
 
 	/**
 	 * Affiliate user ID.
