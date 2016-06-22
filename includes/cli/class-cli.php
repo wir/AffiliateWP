@@ -1,12 +1,17 @@
 <?php
+namespace AffWP;
 
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
- * Class AffWP_CLI
+ * Implements the top-level affwp CLI command.
+ *
+ * @since 1.9
+ *
+ * @see \WP_CLI_Command
  */
-class AffWP_CLI extends WP_CLI_Command {
+class CLI extends \WP_CLI_Command {
 
 	/**
 	 * Prints information about AffiliateWP.
@@ -16,11 +21,11 @@ class AffWP_CLI extends WP_CLI_Command {
 	 */
 	public function details( $_, $assoc_args ) {
 		if ( ! class_exists( 'Affiliate_WP' ) ) {
-			WP_CLI::error( __( 'AffiliateWP is not installed', 'affiliate-wp' ) );
+			\WP_CLI::error( __( 'AffiliateWP is not installed', 'affiliate-wp' ) );
 		}
 
 		if ( defined( 'AFFILIATEWP_VERSION' ) ) {
-			WP_CLI::line( sprintf( __( 'AffiliateWP version: %d', 'affiliate-wp' ), AFFILIATEWP_VERSION ) );
+			\WP_CLI::line( sprintf( __( 'AffiliateWP version: %d', 'affiliate-wp' ), AFFILIATEWP_VERSION ) );
 		}
 
 	}
@@ -51,7 +56,7 @@ class AffWP_CLI extends WP_CLI_Command {
 		$count = count( $sites );
 
 		if ( $count > 1 ) {
-			WP_CLI::line( sprintf( __( '%d sites found. Retrieving stats ...', 'affiliate-wp' ), $count ) );
+			\WP_CLI::line( sprintf( __( '%d sites found. Retrieving stats ...', 'affiliate-wp' ), $count ) );
 		}
 
 		foreach ( $sites as $site_id ) {
@@ -68,14 +73,15 @@ class AffWP_CLI extends WP_CLI_Command {
 		}
 
 		// Affiliates.
-		WP_CLI::line( sprintf( __( 'Total Affiliates: %d', 'affiliate-wp' ), $affiliate_count ) );
+		\WP_CLI::line( sprintf( __( 'Total Affiliates: %d', 'affiliate-wp' ), $affiliate_count ) );
 
 		// Referrals.
-		WP_CLI::line( sprintf( __( 'Total Referrals: %d', 'affiliate-wp' ), $referral_count ) );
+		\WP_CLI::line( sprintf( __( 'Total Referrals: %d', 'affiliate-wp' ), $referral_count ) );
 
 		// Visits.
-		WP_CLI::line( sprintf( __( 'Total Visits: %d', 'affiliate-wp' ), $visit_count ) );
+		\WP_CLI::line( sprintf( __( 'Total Visits: %d', 'affiliate-wp' ), $visit_count ) );
 	}
 
 }
-WP_CLI::add_command( 'affwp', 'AffWP_CLI' );
+
+\WP_CLI::add_command( 'affwp', 'AffWP\CLI' );
