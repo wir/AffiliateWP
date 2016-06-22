@@ -28,7 +28,8 @@ class CLI extends \AffWP\Object\CLI {
 		'status',
 		'earnings',
 		'referrals',
-		'registered',
+		'visits',
+		'date_registered',
 	);
 
 	/**
@@ -336,18 +337,17 @@ class CLI extends \AffWP\Object\CLI {
 	 *
 	 * * ID (alias for affiliate_id)
 	 * * user_login
+	 * * rate
+	 * * rate_type
+	 * * status
 	 * * earnings
 	 * * referrals
-	 * * status
+	 * * visits
+	 * * date_registered
 	 *
 	 * These fields are optionally available:
 	 *
 	 * * user_id
-	 * * rate
-	 * * rate_type
-	 * * payment_email
-	 * * visits
-	 * * date_registered
 	 *
 	 * ## EXAMPLES
 	 *
@@ -440,7 +440,22 @@ class CLI extends \AffWP\Object\CLI {
 	}
 
 	/**
-	 * Handler for the 'registered' field.
+	 * Handler for the 'earnings' field.
+	 *
+	 * @since 1.9
+	 * @access protected
+	 *
+	 * @param \AffWP\Affiliate &$item Affiliate object (passed by reference).
+	 */
+	protected function earnings_field( &$item ) {
+		if ( empty( $item->earnings ) ) {
+			$item->earnings = 0;
+		}
+		$item->earnings = affwp_format_amount( $item->earnings );
+	}
+
+	/**
+	 * Handler for the 'date_registered' field.
 	 *
 	 * Reformats the registration date for display.
 	 *
@@ -449,8 +464,8 @@ class CLI extends \AffWP\Object\CLI {
 	 *
 	 * @param \AffWP\Affiliate &$item Affiliate object (passed by reference).
 	 */
-	protected function registered_field( &$item ) {
-		$item->registered = mysql2date( 'M j, Y', $item->date_registered, false );
+	protected function date_registered_field( &$item ) {
+		$item->date_registered = mysql2date( 'M j, Y', $item->date_registered, false );
 	}
 
 	/**
