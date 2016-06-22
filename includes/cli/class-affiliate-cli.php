@@ -77,7 +77,7 @@ class CLI extends \AffWP\Object\CLI {
 	 *
 	 * ## OPTIONS
 	 *
-	 * <username|id>
+	 * <username>|<id>
 	 * : Username or ID for an existing user.
 	 *
 	 * [--payment_email=<email>]
