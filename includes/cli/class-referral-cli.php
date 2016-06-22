@@ -342,18 +342,6 @@ class CLI extends \AffWP\Object\CLI {
 	}
 
 	/**
-	 * Handler for the 'ID' (referral_id alias) field.
-	 *
-	 * @since 1.9
-	 * @access protected
-	 *
-	 * @param AffWP_Affiliate &$item Affiliate object (passed by reference).
-	 */
-	protected function ID_field( &$item ) {
-		$item->ID = $item->referral_id;
-	}
-
-	/**
 	 * Handler for the 'date' field.
 	 *
 	 * Reformats the date for display.

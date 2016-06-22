@@ -401,18 +401,6 @@ class CLI extends \AffWP\Object\CLI {
 	}
 
 	/**
-	 * Handler for the 'ID' (affiliate_id alias) field.
-	 *
-	 * @since 1.9
-	 * @access protected
-	 *
-	 * @param \AffWP\Affiliate &$item Affiliate object (passed by reference).
-	 */
-	protected function ID_field( &$item ) {
-		$item->ID = $item->affiliate_id;
-	}
-
-	/**
 	 * Handler for the 'payment_email' field.
 	 *
 	 * @since 1.9
