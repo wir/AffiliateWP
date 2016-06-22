@@ -22,7 +22,9 @@ class CLI extends \AffWP\Object\CLI {
 	 */
 	protected $obj_fields = array(
 		'ID',
+		'amount',
 		'affiliate_name',
+		'reference',
 		'description',
 		'status',
 		'date'
@@ -277,15 +279,15 @@ class CLI extends \AffWP\Object\CLI {
 	 * These fields will be displayed by default for each referral:
 	 *
 	 * * ID (alias for referral_id)
+	 * * amount
 	 * * affiliate_name
+	 * * reference
 	 * * description
 	 * * status
 	 * * date
 	 *
 	 * These fields are optionally available:
 	 *
-	 * * reference
-	 * * amount
 	 * * currency
 	 * * custom
 	 * * campaign
@@ -342,17 +344,20 @@ class CLI extends \AffWP\Object\CLI {
 	}
 
 	/**
-	 * Handler for the 'date' field.
-	 *
-	 * Reformats the date for display.
+	 * Handler for the 'amount' field.
 	 *
 	 * @since 1.9
 	 * @access protected
 	 *
 	 * @param \AffWP\Referral $item Referral object (passed by reference).
 	 */
-	protected function date_field( &$item ) {
-		$item->date = mysql2date( 'M j, Y', $item->date, false );
+	protected function amount_field( &$item ) {
+		$amount = affwp_currency_filter( affwp_format_amount( $item->amount ) );
+
+		/** This filter is documented in includes/admin/referrals/referrals.php */
+		$amount = apply_filters( 'affwp_referral_table_amount', $amount, $item );
+
+		$item->amount = html_entity_decode( $amount );
 	}
 
 	/**
@@ -365,6 +370,20 @@ class CLI extends \AffWP\Object\CLI {
 	 */
 	protected function affiliate_name_field( &$item ) {
 		$item->affiliate_name = affwp_get_affiliate_name( $item->affiliate_id );
+	}
+
+	/**
+	 * Handler for the 'date' field.
+	 *
+	 * Reformats the date for display.
+	 *
+	 * @since 1.9
+	 * @access protected
+	 *
+	 * @param \AffWP\Referral $item Referral object (passed by reference).
+	 */
+	protected function date_field( &$item ) {
+		$item->date = mysql2date( 'M j, Y', $item->date, false );
 	}
 
 }
