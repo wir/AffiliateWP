@@ -428,7 +428,7 @@ class CLI extends \AffWP\Object\CLI {
 	 * @param AffWP_Affiliate &$item Affiliate object (passed by reference).
 	 */
 	protected function user_login_field( &$item ) {
-		$user = get_userdata( $item->user_id );
+		$user = get_user_by( 'id', $item->user_id );
 		$item->user_login = $user->user_login;
 	}
 }
