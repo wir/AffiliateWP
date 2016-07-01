@@ -1,6 +1,8 @@
 <?php
 namespace AffWP\Creative;
 
+use \WP_CLI\Utils as Utils;
+
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
@@ -112,18 +114,18 @@ class CLI extends \AffWP\Object\CLI {
 	 * @param array $assoc_args Associated arguments (flags).
 	 */
 	public function create( $_, $assoc_args ) {
-		$name = \WP_CLI\Utils\get_flag_value(  $assoc_args, 'name', '' );
+		$name = Utils\get_flag_value(  $assoc_args, 'name', '' );
 
 		if ( empty( $name ) ) {
 			\WP_CLI::error( __( 'A --name value must be specified to add a new creative.', 'affiliate-wp' ) );
 		}
 
 		$data['name']        = $name;
-		$data['description'] = \WP_CLI\Utils\get_flag_value(  $assoc_args, 'description', ''       );
-		$data['url']         = \WP_CLI\Utils\get_flag_value(  $assoc_args, 'link',        ''       );
-		$data['text']        = \WP_CLI\Utils\get_flag_value(  $assoc_args, 'text',        ''       );
-		$data['image']       = \WP_CLI\Utils\get_flag_value(  $assoc_args, 'image',       ''       );
-		$data['status']      = \WP_CLI\Utils\get_flag_value(  $assoc_args, 'status',      'active' );
+		$data['description'] = Utils\get_flag_value(  $assoc_args, 'description', ''       );
+		$data['url']         = Utils\get_flag_value(  $assoc_args, 'link',        ''       );
+		$data['text']        = Utils\get_flag_value(  $assoc_args, 'text',        ''       );
+		$data['image']       = Utils\get_flag_value(  $assoc_args, 'image',       ''       );
+		$data['status']      = Utils\get_flag_value(  $assoc_args, 'status',      'active' );
 
 		$created = affwp_add_creative( $data );
 
@@ -184,12 +186,12 @@ class CLI extends \AffWP\Object\CLI {
 			\WP_CLI::error( __( 'A valid creative ID is required to proceed.', 'affiliate-wp' ) );
 		}
 
-		$data['name']        = \WP_CLI\Utils\get_flag_value( $assoc_args, 'name', $creative->name        );
-		$data['description'] = \WP_CLI\Utils\get_flag_value( $assoc_args, 'name', $creative->description );
-		$data['url']         = \WP_CLI\Utils\get_flag_value( $assoc_args, 'name', $creative->link        );
-		$data['text']        = \WP_CLI\Utils\get_flag_value( $assoc_args, 'name', $creative->text        );
-		$data['image']       = \WP_CLI\Utils\get_flag_value( $assoc_args, 'name', $creative->image       );
-		$data['status']      = \WP_CLI\Utils\get_flag_value( $assoc_args, 'name', $creative->status      );
+		$data['name']        = Utils\get_flag_value( $assoc_args, 'name', $creative->name        );
+		$data['description'] = Utils\get_flag_value( $assoc_args, 'name', $creative->description );
+		$data['url']         = Utils\get_flag_value( $assoc_args, 'name', $creative->link        );
+		$data['text']        = Utils\get_flag_value( $assoc_args, 'name', $creative->text        );
+		$data['image']       = Utils\get_flag_value( $assoc_args, 'name', $creative->image       );
+		$data['status']      = Utils\get_flag_value( $assoc_args, 'name', $creative->status      );
 		$data['creative_id'] = $creative->creative_id;
 
 		$updated = affwp_update_creative( $data );

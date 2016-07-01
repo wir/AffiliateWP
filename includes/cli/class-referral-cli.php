@@ -1,6 +1,8 @@
 <?php
 namespace AffWP\Referral;
 
+use \WP_CLI\Utils as Utils;
+
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
@@ -122,11 +124,11 @@ class CLI extends \AffWP\Object\CLI {
 		}
 
 		// Grab flag values.
-		$data['amount']       = \WP_CLI\Utils\get_flag_value( $assoc_args, 'amount'     , '' );
-		$data['description']  = \WP_CLI\Utils\get_flag_value( $assoc_args, 'description', '' );
-		$data['reference']    = \WP_CLI\Utils\get_flag_value( $assoc_args, 'reference'  , '' );
-		$data['context']      = \WP_CLI\Utils\get_flag_value( $assoc_args, 'context'    , '' );
-		$data['status']       = \WP_CLI\Utils\get_flag_value( $assoc_args, 'status'     , '' );
+		$data['amount']       = Utils\get_flag_value( $assoc_args, 'amount'     , '' );
+		$data['description']  = Utils\get_flag_value( $assoc_args, 'description', '' );
+		$data['reference']    = Utils\get_flag_value( $assoc_args, 'reference'  , '' );
+		$data['context']      = Utils\get_flag_value( $assoc_args, 'context'    , '' );
+		$data['status']       = Utils\get_flag_value( $assoc_args, 'status'     , '' );
 		$data['affiliate_id'] = $affiliate->affiliate_id;
 		$data['user_id']      = $affiliate->user_id;
 
@@ -196,7 +198,7 @@ class CLI extends \AffWP\Object\CLI {
 			\WP_CLI::error( __( 'A valid referral ID is required to proceed.', 'affiliate-wp' ) );
 		}
 
-		$affiliate = \WP_CLI\Utils\get_flag_value( $assoc_args, 'affiliate', $referral->affiliate_id );
+		$affiliate = Utils\get_flag_value( $assoc_args, 'affiliate', $referral->affiliate_id );
 
 		if ( ! $affiliate = affwp_get_affiliate( $affiliate ) ) {
 			\WP_CLI::error( __( 'A valid affiliate username or ID is required to proceed.', 'affiliate-wp' ) );
@@ -204,11 +206,11 @@ class CLI extends \AffWP\Object\CLI {
 			$data['affiliate_id'] = $affiliate->affiliate_id;
 		}
 
-		$data['amount']       = \WP_CLI\Utils\get_flag_value( $assoc_args, 'amount',       $referral->amount       );
-		$data['description']  = \WP_CLI\Utils\get_flag_value( $assoc_args, 'description',  $referral->description  );
-		$data['reference']    = \WP_CLI\Utils\get_flag_value( $assoc_args, 'reference',    $referral->reference    );
-		$data['context']      = \WP_CLI\Utils\get_flag_value( $assoc_args, 'context',      $referral->context      );
-		$data['status']       = \WP_CLI\Utils\get_flag_value( $assoc_args, 'status',       $referral->status       );
+		$data['amount']       = Utils\get_flag_value( $assoc_args, 'amount',       $referral->amount       );
+		$data['description']  = Utils\get_flag_value( $assoc_args, 'description',  $referral->description  );
+		$data['reference']    = Utils\get_flag_value( $assoc_args, 'reference',    $referral->reference    );
+		$data['context']      = Utils\get_flag_value( $assoc_args, 'context',      $referral->context      );
+		$data['status']       = Utils\get_flag_value( $assoc_args, 'status',       $referral->status       );
 
 		$update = affiliate_wp()->referrals->update( $referral->referral_id, $data );
 

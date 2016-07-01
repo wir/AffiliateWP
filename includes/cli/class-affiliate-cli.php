@@ -1,6 +1,8 @@
 <?php
 namespace AffWP\Affiliate;
 
+use \WP_CLI\Utils as Utils;
+
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
@@ -146,13 +148,13 @@ class CLI extends \AffWP\Object\CLI {
 		}
 
 		// Grab flag values.
-		$data['payment_email'] = \WP_CLI\Utils\get_flag_value( $assoc_args, 'payment_email', '' );
-		$data['rate']          = \WP_CLI\Utils\get_flag_value( $assoc_args, 'rate'         , '' );
-		$data['rate_type']     = \WP_CLI\Utils\get_flag_value( $assoc_args, 'rate_type'    , '' );
-		$data['status']        = \WP_CLI\Utils\get_flag_value( $assoc_args, 'status'       , '' );
-		$data['earnings']      = \WP_CLI\Utils\get_flag_value( $assoc_args, 'earnings'     , 0  );
-		$data['referrals']     = \WP_CLI\Utils\get_flag_value( $assoc_args, 'referrals'    , 0  );
-		$data['visits']        = \WP_CLI\Utils\get_flag_value( $assoc_args, 'visits'       , 0  );
+		$data['payment_email'] = Utils\get_flag_value( $assoc_args, 'payment_email', '' );
+		$data['rate']          = Utils\get_flag_value( $assoc_args, 'rate'         , '' );
+		$data['rate_type']     = Utils\get_flag_value( $assoc_args, 'rate_type'    , '' );
+		$data['status']        = Utils\get_flag_value( $assoc_args, 'status'       , '' );
+		$data['earnings']      = Utils\get_flag_value( $assoc_args, 'earnings'     , 0  );
+		$data['referrals']     = Utils\get_flag_value( $assoc_args, 'referrals'    , 0  );
+		$data['visits']        = Utils\get_flag_value( $assoc_args, 'visits'       , 0  );
 		$data['user_id']       = $user->ID;
 
 		// Add the affiliate.
@@ -215,11 +217,11 @@ class CLI extends \AffWP\Object\CLI {
 		}
 
 		$data['affiliate_id']  = $affiliate->affiliate_id;
-		$data['account_email'] = \WP_CLI\Utils\get_flag_value( $assoc_args, 'account_email', $affiliate->affiliate_id  );
-		$data['payment_email'] = \WP_CLI\Utils\get_flag_value( $assoc_args, 'payment_email', $affiliate->payment_email );
-		$data['rate']          = \WP_CLI\Utils\get_flag_value( $assoc_args, 'rate',          $affiliate->rate          );
-		$data['rate_type']     = \WP_CLI\Utils\get_flag_value( $assoc_args, 'rate_type',     $affiliate->rate_type     );
-		$data['status']        = \WP_CLI\Utils\get_flag_value( $assoc_args, 'status',        $affiliate->status        );
+		$data['account_email'] = Utils\get_flag_value( $assoc_args, 'account_email', $affiliate->affiliate_id  );
+		$data['payment_email'] = Utils\get_flag_value( $assoc_args, 'payment_email', $affiliate->payment_email );
+		$data['rate']          = Utils\get_flag_value( $assoc_args, 'rate',          $affiliate->rate          );
+		$data['rate_type']     = Utils\get_flag_value( $assoc_args, 'rate_type',     $affiliate->rate_type     );
+		$data['status']        = Utils\get_flag_value( $assoc_args, 'status',        $affiliate->status        );
 
 		$update = affwp_update_affiliate( $data );
 
@@ -275,9 +277,9 @@ class CLI extends \AffWP\Object\CLI {
 			\WP_CLI::error( __( 'A valid affiliate username or ID is required to proceed.', 'affiliate-wp' ) );
 		}
 
-		$delete_data = \WP_CLI\Utils\get_flag_value( $assoc_args, 'delete_data', false );
-		$delete_user = \WP_CLI\Utils\get_flag_value( $assoc_args, 'delete_user', false );
-		$network     = \WP_CLI\Utils\get_flag_value( $assoc_args, 'network',     false ) && is_multisite();
+		$delete_data = Utils\get_flag_value( $assoc_args, 'delete_data', false );
+		$delete_user = Utils\get_flag_value( $assoc_args, 'delete_user', false );
+		$network     = Utils\get_flag_value( $assoc_args, 'network',     false ) && is_multisite();
 
 		if ( $delete_data ) {
 			if ( $delete_user ) {

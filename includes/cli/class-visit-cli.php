@@ -1,6 +1,8 @@
 <?php
 namespace AffWP\Visit;
 
+use \WP_CLI\Utils as Utils;
+
 // Exit if accessed directly
 if ( ! defined( 'ABSPATH' ) ) exit;
 
@@ -130,7 +132,7 @@ class CLI extends \AffWP\Object\CLI {
 		$data['url'] = affwp_sanitize_visit_url( $args[1] );
 
 		// Referral ID.
-		$referral_id = \WP_CLI\Utils\get_flag_value( $assoc_args, 'referral_id' );
+		$referral_id = Utils\get_flag_value( $assoc_args, 'referral_id' );
 
 		if ( $referral_id ) {
 			if ( ! $referral = affwp_get_referral( $referral_id ) ) {
@@ -142,7 +144,7 @@ class CLI extends \AffWP\Object\CLI {
 		}
 
 		// Date.
-		$_date = \WP_CLI\Utils\get_flag_value( $assoc_args, 'date' );
+		$_date = Utils\get_flag_value( $assoc_args, 'date' );
 
 		if ( is_string( $_date ) ) {
 
@@ -154,9 +156,9 @@ class CLI extends \AffWP\Object\CLI {
 			}
 		}
 
-		$data['referrer'] = \WP_CLI\Utils\get_flag_value( $assoc_args, 'referrer', '' );
-		$data['campaign'] = \WP_CLI\Utils\get_flag_value( $assoc_args, 'campaign', '' );
-		$data['ip']       = \WP_CLI\Utils\get_flag_value( $assoc_args, 'ip'      , '' );
+		$data['referrer'] = Utils\get_flag_value( $assoc_args, 'referrer', '' );
+		$data['campaign'] = Utils\get_flag_value( $assoc_args, 'campaign', '' );
+		$data['ip']       = Utils\get_flag_value( $assoc_args, 'ip'      , '' );
 
 
 		$visit_id = affiliate_wp()->visits->add( $data );
@@ -225,7 +227,7 @@ class CLI extends \AffWP\Object\CLI {
 
 		$data = array();
 		// Affiliate by username or ID.
-		$_affiliate = \WP_CLI\Utils\get_flag_value( $assoc_args, 'affiliate', $visit->affiliate_id );
+		$_affiliate = Utils\get_flag_value( $assoc_args, 'affiliate', $visit->affiliate_id );
 
 		if ( ! $_affiliate = affwp_get_affiliate( $_affiliate ) ) {
 			\WP_CLI::error( __( 'A valid affiliate username or ID is required to proceed.', 'affiliate-wp' ) );
@@ -234,7 +236,7 @@ class CLI extends \AffWP\Object\CLI {
 		}
 
 		// Date. Expecting YYYY-MM-DD HH:MM:SS format.
-		$_date = \WP_CLI\Utils\get_flag_value( $assoc_args, 'date', $visit->date );
+		$_date = Utils\get_flag_value( $assoc_args, 'date', $visit->date );
 
 		if ( is_string( $_date ) ) {
 
@@ -247,11 +249,11 @@ class CLI extends \AffWP\Object\CLI {
 			}
 		}
 
-		$data['referral_id'] = \WP_CLI\Utils\get_flag_value( $assoc_args, 'referral_id', $visit->referral_id );
-		$data['url']         = \WP_CLI\Utils\get_flag_value( $assoc_args, 'visit_url',   $visit->url         );
-		$data['referrer']    = \WP_CLI\Utils\get_flag_value( $assoc_args, 'referrer',    $visit->referrer    );
-		$data['campaign']    = \WP_CLI\Utils\get_flag_value( $assoc_args, 'campaign',    $visit->campaign    );
-		$data['ip']          = \WP_CLI\Utils\get_flag_value( $assoc_args, 'ip',          $visit->ip          );
+		$data['referral_id'] = Utils\get_flag_value( $assoc_args, 'referral_id', $visit->referral_id );
+		$data['url']         = Utils\get_flag_value( $assoc_args, 'visit_url',   $visit->url         );
+		$data['referrer']    = Utils\get_flag_value( $assoc_args, 'referrer',    $visit->referrer    );
+		$data['campaign']    = Utils\get_flag_value( $assoc_args, 'campaign',    $visit->campaign    );
+		$data['ip']          = Utils\get_flag_value( $assoc_args, 'ip',          $visit->ip          );
 
 		$updated = affiliate_wp()->visits->update_visit( $visit->visit_id, $data );
 
